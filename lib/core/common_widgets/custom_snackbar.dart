@@ -45,11 +45,11 @@ abstract class SnackBars {
               children: [
                 Text(
                   proccessText,
-                  style: Fonts.semiLarge.copyWith(fontSize: 17),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 17),
                 ),
                 Text(
                   successtext,
-                  style: Fonts.medium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),
@@ -99,11 +99,11 @@ abstract class SnackBars {
               children: [
                 Text(
                   proccessText,
-                  style: Fonts.semiLarge.copyWith(fontSize: 17),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 17),
                 ),
                 Text(
                   failureText,
-                  style: Fonts.medium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),

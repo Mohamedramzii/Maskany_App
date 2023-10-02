@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:maskany_app/core/app_resources/fonts.dart';
 
 import '../../core/app_resources/images.dart';
 
@@ -13,7 +12,7 @@ class ProfileView extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'الحساب',
-          style: Fonts.large,
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
         centerTitle: true,
       ),
@@ -29,37 +28,37 @@ class ProfileView extends StatelessWidget {
               ),
             ),
             SizedBox(height: 5.h,),
-            Text('محمد أحمد',style: Fonts.large,),
-            Text('mohamedahmed123@gmail.com',style: Fonts.xsmall,),
+            Text('محمد أحمد',style: Theme.of(context).textTheme.displayLarge,),
+            Text('mohamedahmed123@gmail.com',style: Theme.of(context).textTheme.bodySmall,),
             SizedBox(height: 20.h,),
             ListTile(
               onTap: (){},
               leading: const Icon(Icons.info_outline_rounded),
-              title: Text('معلومات شخصية',style: Fonts.medium,),
+              title: Text('معلومات شخصية',style: Theme.of(context).textTheme.bodyMedium,),
               trailing: Icon(Icons.arrow_forward_ios,size: 20.r,),
             ),
             ListTile(
               onTap: (){},
               leading: const Icon(Icons.diamond_rounded),
-              title: Text('الباقات',style: Fonts.medium,),
+              title: Text('الباقات',style: Theme.of(context).textTheme.bodyMedium,),
               trailing: Icon(Icons.arrow_forward_ios,size: 20.r,),
             ),
             ListTile(
               onTap: (){},
               leading: const Icon(Icons.settings),
-              title: Text('الاعدادات',style: Fonts.medium,),
+              title: Text('الاعدادات',style: Theme.of(context).textTheme.bodyMedium,),
               trailing: Icon(Icons.arrow_forward_ios,size: 20.r,),
             ),
             ListTile(
               onTap: (){},
               leading: const Icon(Icons.location_on),
-              title: Text('القاهرة',style: Fonts.medium,),
+              title: Text('القاهرة',style: Theme.of(context).textTheme.bodyMedium,),
               
             ),
             ListTile(
               onTap: (){},
               leading: const Icon(Icons.add_card),
-              title: Text('طرق الدفع',style: Fonts.medium,),
+              title: Text('طرق الدفع',style: Theme.of(context).textTheme.bodyMedium,),
               // trailing: Row(
               //   children: [],
               // ),
@@ -68,7 +67,7 @@ class ProfileView extends StatelessWidget {
             ListTile(
               onTap: (){},
               leading: const Icon(Icons.logout,color: Colors.red,),
-              title: Text('تسجيل الخروج',style: Fonts.medium.copyWith(color: Colors.red),),
+              title: Text('تسجيل الخروج',style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.red),),
               
             ),
           ],

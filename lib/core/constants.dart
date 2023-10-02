@@ -1,11 +1,13 @@
+
+
 final emailValidation =
     RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
 const String baseUrl = 'http://66.45.248.247:8000';
 
 const String tokenKey = '';
- String tokenHolder = '';
- bool isviewed =false;
+String tokenHolder = '';
+bool isviewed = false;
 
 List gov = [
   {"id": "1", "governorate_name_ar": "القاهرة", "governorate_name_en": "Cairo"},

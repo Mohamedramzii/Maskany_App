@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
+import '../view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
@@ -41,7 +41,7 @@ class HomeView extends StatelessWidget {
                           ),
                           Text(
                             'السعودية, البارحة',
-                            style: Fonts.xsmall,
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -66,8 +66,8 @@ class HomeView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(S.of(context).NearestPlaces, style: Fonts.medium),
-                    Text(S.of(context).SeeMore),
+                    Text(S.of(context).NearestPlaces, style: Theme.of(context).textTheme.bodyMedium),
+                    Text(S.of(context).SeeMore,style:Theme.of(context).textTheme.bodySmall),
                   ],
                 ),
                 SizedBox(
@@ -107,9 +107,9 @@ class HomeView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(S.of(context).suggestedPlaces, style: Fonts.medium),
+                    Text(S.of(context).suggestedPlaces, style: Theme.of(context).textTheme.bodyMedium),
                     Text(
-                      S.of(context).SeeMore,
+                      S.of(context).SeeMore,style:Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),

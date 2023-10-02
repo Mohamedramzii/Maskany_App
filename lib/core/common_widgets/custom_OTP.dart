@@ -40,7 +40,7 @@ class CustomOTPWidget extends StatelessWidget {
         decoration: InputDecoration(
           // hintText: '0',
           // hintStyle:
-          //     Fonts.semiLarge.copyWith(color: ColorsManager.kprimaryColor),
+          //     Theme.of(context).textTheme.bodyLarge.copyWith(color: ColorsManager.kprimaryColor),
         ),
       ),
     );

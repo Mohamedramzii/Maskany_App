@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/app_resources/fonts.dart';
 import '../../../../data/models/services_model/services_model.dart';
 
 class CustomContainer extends StatelessWidget {
@@ -38,7 +37,7 @@ class CustomContainer extends StatelessWidget {
         ),
         Text(
           service[index].text,
-          style: Fonts.xsmall,
+          style: Theme.of(context).textTheme.bodySmall,
           textAlign: TextAlign.center,
         )
       ],

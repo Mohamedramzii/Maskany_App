@@ -49,7 +49,7 @@ class _ForgotViewStep1State extends State<ForgotViewStep1> {
                       page: OTPView(email: emailcontroller.text),
                       pageAnimationType: RightToLeftTransition()));
             } else if (state is SendOTPFailureState) {
-              SnackBars.successSnackBar(
+              SnackBars.failureSnackBar(
                   context, S.of(context).verificationcode, state.errMessage);
             }
           },
@@ -64,11 +64,11 @@ class _ForgotViewStep1State extends State<ForgotViewStep1> {
                   children: [
                     Text(
                       S.of(context).forgotpassword,
-                      style: Fonts.semiLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       S.of(context).enteremailorphoneOTP,
-                      style: Fonts.xsmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     SizedBox(
                       height: 40.h,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import '../app_resources/colors.dart';
-import '../app_resources/fonts.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -24,14 +24,14 @@ class CustomButton extends StatelessWidget {
       },
       child: Container(
         width: 345.w,
-        height: 45.h,
+        height: ResponsiveBreakpoints.of(context).isMobile ? 45.h : 55.h,
         decoration: BoxDecoration(
             color: ColorsManager.kprimaryColor,
             borderRadius: BorderRadius.circular(15.r)),
         child: Center(
             child: Text(
           text,
-          style: Fonts.semiLarge.copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
         )),
       ),
     );

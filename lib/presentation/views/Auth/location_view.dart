@@ -28,8 +28,8 @@ class LocationView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(S.of(context).location, style: Fonts.semiLarge),
-                Text(S.of(context).belowLocation, style: Fonts.xsmall),
+                Text(S.of(context).location, style: Theme.of(context).textTheme.bodyLarge),
+                Text(S.of(context).belowLocation, style: Theme.of(context).textTheme.bodySmall),
 
                 SizedBox(
                   height: 30.h,
@@ -47,7 +47,7 @@ class LocationView extends StatelessWidget {
                 //   child:
                 // )
                 DropdownButtonFormField<String>(
-                  hint: Text('المحافظة', style: Fonts.medium),
+                  hint: Text('المحافظة', style: Theme.of(context).textTheme.bodyMedium),
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15.r),
@@ -110,8 +110,8 @@ class LocationView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(S.of(context).location, style: Fonts.semiLarge),
-              Text(S.of(context).belowLocation, style: Fonts.xsmall),
+              Text(S.of(context).location, style: Theme.of(context).textTheme.bodyLarge),
+              Text(S.of(context).belowLocation, style: Theme.of(context).textTheme.bodySmall),
               SizedBox(
                 height: 30.h,
               ),

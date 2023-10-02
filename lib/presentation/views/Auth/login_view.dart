@@ -30,12 +30,12 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
 
-  @override
-  void dispose() {
-    emailcontroller.dispose();
-    passwordcontroller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   emailcontroller.dispose();
+  //   passwordcontroller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,9 @@ class _LoginViewState extends State<LoginView> {
           if (state is LoginSuccessState) {
             SnackBars.successSnackBar(
                 context, S.of(context).login, state.successMessage);
-
-            PageAnimationTransition(
+            Navigator.of(context).pushReplacement(PageAnimationTransition(
                 page: const AppLayout(),
-                pageAnimationType: LeftToRightTransition());
+                pageAnimationType: LeftToRightTransition()));
           } else if (state is LoginFailureState) {
             SnackBars.failureSnackBar(
                 context, S.of(context).login, state.errMessage);
@@ -70,11 +69,11 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     Text(
                       S.of(context).login,
-                      style: Fonts.semiLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       S.of(context).belowlogin,
-                      style: Fonts.xsmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     SizedBox(
                       height: 45.h,
@@ -133,7 +132,7 @@ class _LoginViewState extends State<LoginView> {
                       },
                       child: Text(
                         S.of(context).forgotpassword,
-                        style: Fonts.xsmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
 
@@ -165,7 +164,7 @@ class _LoginViewState extends State<LoginView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(S.of(context).donthaveaccount,
-                            style: Fonts.medium),
+                            style: Theme.of(context).textTheme.bodyMedium),
                         SizedBox(
                           width: 6.w,
                         ),
@@ -178,7 +177,7 @@ class _LoginViewState extends State<LoginView> {
                                           LeftToRightTransition()));
                             },
                             child: Text(S.of(context).soRegister,
-                                style: Fonts.xsmall)),
+                                style: Theme.of(context).textTheme.bodySmall)),
                       ],
                     ),
                     SizedBox(

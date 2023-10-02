@@ -1,14 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/core/constants.dart';
 import 'package:maskany_app/data/data_sources/network/dio_helper.dart';
 import 'package:maskany_app/data/models/propertiesModel/propertiesModel.dart';
 
-import '../../../../data/models/locationModel/locationModel.dart';
 import '../../../views/favorite_view.dart';
 import '../../../views/home_view.dart';
 import '../../../views/location_map_view.dart';

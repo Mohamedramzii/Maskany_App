@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'core/constants.dart';
 import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
@@ -30,8 +29,8 @@ void main() async {
 
   // isviewed = CacheHelper.getData(key: 'loc');
 
-  isviewed = await SessionManager().get('view') ?? false;
-  debugPrint(isviewed.toString());
+  // isviewed = await SessionManager().get('view') ?? false;
+  // debugPrint(isviewed.toString());
   runApp(DevicePreview(
     builder: (context) => const MyApp(),
     enabled: !kReleaseMode,

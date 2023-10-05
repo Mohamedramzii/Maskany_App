@@ -24,3 +24,4 @@ final class GetAllPropertiesFailureState extends AppState {
 }
 
 final class IsViewedSuccessState extends AppState{}
+final class IndexChangedSuccessState extends AppState{}

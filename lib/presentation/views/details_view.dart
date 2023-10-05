@@ -65,9 +65,12 @@ class DetailsView extends StatelessWidget {
                             ResponsiveBreakpoints.of(context).isMobile
                                 ? 15.r
                                 : 5.r),
-                        child: SvgPicture.asset(
-                          Images.houseS,
-                          fit: BoxFit.fill,
+                        child: Hero(
+                          tag: cubit.property[index].title,
+                          child: SvgPicture.asset(
+                            Images.houseS,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     ),

@@ -50,9 +50,13 @@ class CustomBtmsheetCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        model.title,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      SizedBox(
+                        width: 150.w,
+                        child: Text(
+                          model.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ),
                       Text(
                         model.city,

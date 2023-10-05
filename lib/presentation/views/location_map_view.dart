@@ -62,7 +62,7 @@ class _LocationMapViewState extends State<LocationMapView> {
               ? Stack(
                   children: [
                     CustomGoogleMapMarkerBuilder(
-                      customMarkers: cubit.property.map((e) {
+                      customMarkers: cubit.filterCategories(cubit.categoryIndex ).map((e) {
                         return MarkerData(
                             marker: Marker(
                                 markerId: MarkerId(e.locationLink),
@@ -96,10 +96,10 @@ class _LocationMapViewState extends State<LocationMapView> {
                                 double.parse(cubit.property[0].lat),
                                 double.parse(cubit.property[0].long),
                               ),
-                              zoom: 18),
+                              zoom: 8),
                           myLocationButtonEnabled: true,
                           myLocationEnabled: true,
-                          zoomControlsEnabled: true,
+                          zoomControlsEnabled: false,
                           
 
                           padding: const EdgeInsets.only(top: 100),

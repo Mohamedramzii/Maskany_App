@@ -16,78 +16,99 @@ class CustomHorizontalCOntainer extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: FittedBox(
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(15.r)),
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                  width: 150.w,
-                  // height: 200.h,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6.r),
-                    child: Image.asset(
-                      Images.villa,
-                      fit: BoxFit.fill,
-                    ),
-                  )),
-              Text(
-                model[index].title,
-                style: TextStyle(fontSize: 13.sp),
-              ),
-              Text(
-                model[index].city,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              Text(
-                '${model[index].price.toString()} جنيه / شهريأ',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: ColorsManager.kprimaryColor),
-              ),
-              Row(
+    return Stack(
+      children: [
+        Card(
+          child: FittedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(15.r)),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconRow(
-                    count: model[index].bathrooms,
-                    fontsize: 8,
-                    icon: Icon(
-                      Icons.bathtub_rounded,
-                      size: 20.r,
+                  SizedBox(
+                      width: 150.w,
+                      // height: 200.h,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6.r),
+                        child: Hero(
+                          tag: model[index].title,
+                          child: Image.asset(
+                            Images.villa,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      )),
+                  SizedBox(
+                    width: 150.w,
+                    child: Text(
+                      model[index].title,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 13.sp),
                     ),
                   ),
-                  IconRow(
-                    count: 25,
-                    fontsize: 8,
-                    icon: Icon(
-                      Icons.bathtub_rounded,
-                      size: 20.r,
-                    ),
+                  Text(
+                    model[index].city,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  IconRow(
-                    count: 25,
-                    fontsize: 8,
-                    icon: Icon(
-                      Icons.bathtub_rounded,
-                      size: 20.r,
-                    ),
+                  Text(
+                    '${model[index].price.toString()} جنيه / شهريأ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: ColorsManager.kprimaryColor),
                   ),
-                  IconRow(
-                    count: 25,
-                    fontsize: 8,
-                    icon: Icon(
-                      Icons.bathtub_rounded,
-                      size: 20.r,
-                    ),
-                  ),
+                  Row(
+                    children: [
+                      IconRow(
+                        count: model[index].bathrooms,
+                        fontsize: 8,
+                        icon: Icon(
+                          Icons.bathtub_rounded,
+                          size: 20.r,
+                        ),
+                      ),
+                      IconRow(
+                        count: 25,
+                        fontsize: 8,
+                        icon: Icon(
+                          Icons.bathtub_rounded,
+                          size: 20.r,
+                        ),
+                      ),
+                      IconRow(
+                        count: 25,
+                        fontsize: 8,
+                        icon: Icon(
+                          Icons.bathtub_rounded,
+                          size: 20.r,
+                        ),
+                      ),
+                      IconRow(
+                        count: 25,
+                        fontsize: 8,
+                        icon: Icon(
+                          Icons.bathtub_rounded,
+                          size: 20.r,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
         ),
-      ),
+        Positioned(
+            left: -2.w,
+            bottom: 15.h,
+            child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {},
+                icon: const Icon(Icons.favorite_outline_outlined)))
+      ],
     );
   }
 }

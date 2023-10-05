@@ -54,6 +54,7 @@ dependencies:
   read_more_text: ^0.0.5
   shared_preferences: ^2.2.1
   responsive_framework: ^1.1.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
 

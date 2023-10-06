@@ -24,7 +24,7 @@ class IconRow extends StatelessWidget {
         Text(
           count.toString(),
           style: style ??
-              Fonts.xsmall
+              Theme.of(context).textTheme.bodySmall!
                   .copyWith(fontSize: fontsize.sp, fontWeight: FontWeight.bold),
         ),
         icon,

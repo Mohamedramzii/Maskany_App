@@ -3,9 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:maskany_app/core/constants.dart';
-import 'package:maskany_app/data/data_sources/network/dio_helper.dart';
-import 'package:maskany_app/data/models/propertiesModel/propertiesModel.dart';
+import '../../../../core/constants.dart';
+import '../../../../data/data_sources/network/dio_helper.dart';
+import '../../../../data/models/propertiesModel/propertiesModel.dart';
 
 import '../../../views/favorite_view.dart';
 import '../../../views/home_view.dart';
@@ -132,7 +132,8 @@ class AppCubit extends Cubit<AppState> {
 
   PropertiesModel? properties;
   List<PropertiesModel> property = [];
-  List<PropertiesModel> someProp = [];
+  List<PropertiesModel> bee3Prop = [];
+  List<PropertiesModel> egaarProp = [];
   getAllproperties() async {
     emit(GetAllPropertiesLoadingState());
     //  isviewed = CacheHelper.getData(key: 'loc');
@@ -140,11 +141,13 @@ class AppCubit extends Cubit<AppState> {
       Response response = await DioHelper.getData(url: EndPoints.properties);
       for (var item in response.data) {
         property.add(PropertiesModel.fromJson(item));
-        someProp = property.where((e) => e.category.name == 'شقق').toList();
-
+        bee3Prop =
+            property.where((e) => e.category.name == 'شقق للبيع').toList();
+        egaarProp =
+            property.where((e) => e.category.name == 'شقق للأيجار').toList();
       }
 
-      debugPrint('######### ${someProp[0].city} ###############');
+      debugPrint('######### ${bee3Prop[0].city} ###############');
 
       // property.add(properties!);
       debugPrint('Get All properties Success');
@@ -152,6 +155,26 @@ class AppCubit extends Cubit<AppState> {
     } catch (e) {
       debugPrint('Get All properties Failed -- ${e.toString()}');
       emit(GetAllPropertiesFailureState());
+    }
+  }
+
+  int categoryIndex = 0;
+
+  blabla(index) {
+    categoryIndex = index;
+    emit(IndexChangedSuccessState());
+    print(categoryIndex);
+  }
+
+  List<PropertiesModel> filterCategories(int index) {
+    switch (index) {
+      case 0:
+        return egaarProp;
+      case 4:
+        return bee3Prop;
+
+      default:
+        return property;
     }
   }
 }

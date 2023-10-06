@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:maskany_app/presentation/views/widgets/location_mapView_widgets/custom_marker.dart';
-import '../../core/app_resources/fonts.dart';
+import 'widgets/location_mapView_widgets/custom_marker.dart';
 import 'widgets/location_mapView_widgets/custom_category_container.dart';
 import '../../core/app_resources/colors.dart';
 import '../../core/app_resources/images.dart';
@@ -63,7 +62,7 @@ class _LocationMapViewState extends State<LocationMapView> {
               ? Stack(
                   children: [
                     CustomGoogleMapMarkerBuilder(
-                      customMarkers: cubit.property.map((e) {
+                      customMarkers: cubit.filterCategories(cubit.categoryIndex ).map((e) {
                         return MarkerData(
                             marker: Marker(
                                 markerId: MarkerId(e.locationLink),
@@ -71,7 +70,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                                   double.parse(e.lat),
                                   double.parse(e.long),
                                 ),
-                                infoWindow: InfoWindow(),
+                                infoWindow: const InfoWindow(),
                                 onTap: () {
                                   LocationBottomSheet.locationBTMSheet(
                                       context, e);
@@ -88,7 +87,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                           mapToolbarEnabled: true,
 
                           mapType: MapType.satellite,
-                          zoomGesturesEnabled: false,
+                          zoomGesturesEnabled: true,
 
                           // cloudMapId: '961ba1ad7f1204e8',
                           // initialCameraPosition: cubit.firstVIew!,
@@ -97,10 +96,11 @@ class _LocationMapViewState extends State<LocationMapView> {
                                 double.parse(cubit.property[0].lat),
                                 double.parse(cubit.property[0].long),
                               ),
-                              zoom: 18),
+                              zoom: 8),
                           myLocationButtonEnabled: true,
                           myLocationEnabled: true,
                           zoomControlsEnabled: false,
+                          
 
                           padding: const EdgeInsets.only(top: 100),
                           markers: markers ?? {},
@@ -144,7 +144,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                 ),
                 Text(
                   'عرض القائمة',
-                  style: Fonts.medium.copyWith(color: Colors.white),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                 )
               ],
             ),

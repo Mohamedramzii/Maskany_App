@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../generated/l10n.dart';
-import '../app_resources/fonts.dart';
 import '../app_resources/images.dart';
 import 'custom_buttom.dart';
 
@@ -23,7 +22,7 @@ abstract class Dialogs {
               children: [
                 Text(
                   S.of(context).ChangedPasswordSuccess,
-                  style: Fonts.large,
+                  style: Theme.of(context).textTheme.displayLarge,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -31,7 +30,7 @@ abstract class Dialogs {
                 ),
                 Text(
                   S.of(context).ChangedPasswordSuccess2,
-                  style: Fonts.xsmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(

@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_animation_transition/animations/left_to_right_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/local/shared_pref.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
 import '../../../../data/models/login_model/login_model.dart';
 import '../../../../data/models/register_model/register_model.dart';
+import '../../../views/AppLayout.dart';
 
 part 'auth_state.dart';
 
@@ -30,6 +33,9 @@ class AuthCubit extends Cubit<AuthState> {
       debugPrint('Login Message: ${loginModel!.detail}');
       CacheHelper.saveData(key: tokenKey, value: loginModel!.token);
       // successLogin = loginModel!.detail;
+      // PageAnimationTransition(
+      //           page: const AppLayout(),
+      //           pageAnimationType: LeftToRightTransition());
       emit(LoginSuccessState(successMessage: loginModel!.detail!));
     } on DioError catch (e) {
       if (e.response != null) {

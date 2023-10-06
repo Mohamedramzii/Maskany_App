@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../core/app_resources/colors.dart';
 import '../../../core/app_resources/fonts.dart';
@@ -30,20 +31,20 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController repasswordcontroller = TextEditingController();
 
-  @override
-  void dispose() {
-    fullnamecontroller.dispose();
-    emailcontroller.dispose();
-    phonecontroller.dispose();
-    passwordcontroller.dispose();
-    repasswordcontroller.dispose();
-    fullnamecontroller.clear();
-    emailcontroller.clear();
-    phonecontroller.clear();
-    passwordcontroller.clear();
-    repasswordcontroller.clear();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   fullnamecontroller.dispose();
+  //   emailcontroller.dispose();
+  //   phonecontroller.dispose();
+  //   passwordcontroller.dispose();
+  //   repasswordcontroller.dispose();
+  //   fullnamecontroller.clear();
+  //   emailcontroller.clear();
+  //   phonecontroller.clear();
+  //   passwordcontroller.clear();
+  //   repasswordcontroller.clear();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -87,11 +88,11 @@ class _RegisterViewState extends State<RegisterView> {
                     children: [
                       Text(
                         S.of(context).CreateAccount,
-                        style: Fonts.semiLarge,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Text(
                         S.of(context).enteryouraccountdetails,
-                        style: Fonts.xsmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       SizedBox(
                         height: 45.h,
@@ -234,13 +235,13 @@ class _RegisterViewState extends State<RegisterView> {
                               }),
                       
                       SizedBox(
-                        height: 170.h,
+                        height: ResponsiveBreakpoints.of(context).isMobile ? 170.h : 140.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(S.of(context).haveAnAccount,
-                              style: Fonts.medium),
+                              style: Theme.of(context).textTheme.bodyMedium),
                           SizedBox(
                             width: 6.w,
                           ),
@@ -249,7 +250,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 Navigator.of(context).pop();
                               },
                               child: Text(S.of(context).login,
-                                  style: Fonts.xsmall)),
+                                  style: Theme.of(context).textTheme.bodySmall)),
                         ],
                       ),
                       SizedBox(

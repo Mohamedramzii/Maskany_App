@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../core/app_resources/fonts.dart';
-import 'widgets/HomeView_widgets/custom_horizontalContainer.dart';
 
 import '../../core/app_resources/colors.dart';
+import 'widgets/HomeView_widgets/custom_horizontalContainer.dart';
 
 class FavoriteView extends StatelessWidget {
   const FavoriteView({super.key});
@@ -18,7 +17,7 @@ class FavoriteView extends StatelessWidget {
           children: [
             Text(
           'المفضلة',
-          style: Fonts.large,
+          style: Theme.of(context).textTheme.displayLarge,
           textAlign: TextAlign.center,
         ),
             Row(
@@ -30,7 +29,7 @@ class FavoriteView extends StatelessWidget {
                 ),
                 Text(
                   'السعودية, البارحة',
-                  style: Fonts.xsmall,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),

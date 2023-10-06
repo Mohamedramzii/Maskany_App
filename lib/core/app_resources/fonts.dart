@@ -1,18 +1,21 @@
+import 'package:arabic_font/arabic_font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'colors.dart';
 
 abstract class Fonts {
-  static TextStyle semiLarge = GoogleFonts.poppins(
-      fontSize: 20.sp, fontWeight: FontWeight.bold, color: Colors.black);
-  static TextStyle xsmall = GoogleFonts.poppins(
-      fontSize: 12.sp,
-      fontWeight: FontWeight.bold,
-      color: ColorsManager.xsmallFontColor);
-  static TextStyle medium = GoogleFonts.poppins(
-      fontSize: 15.sp, fontWeight: FontWeight.bold, color: Colors.black);
-  static TextStyle large = GoogleFonts.poppins(
-      fontSize: 24.sp, fontWeight: FontWeight.bold, color: Colors.black);
+  static TextTheme semiLarge = TextTheme(
+      bodyLarge: TextStyle(
+          fontSize: 20.sp, fontWeight: FontWeight.bold, color: Colors.black));
+  static TextTheme xsmall = TextTheme(
+      bodySmall: TextStyle(
+          fontSize: 15.sp,
+          fontWeight: FontWeight.bold,
+          color: ColorsManager.xsmallFontColor));
+  static TextTheme medium = TextTheme(
+      bodyMedium: TextStyle(
+          fontSize: 15.sp, fontWeight: FontWeight.bold, color: Colors.black));
+  static TextTheme large = TextTheme(
+      displayLarge: TextStyle(
+          fontSize: 24.sp, fontWeight: FontWeight.bold, color: Colors.black));
 }

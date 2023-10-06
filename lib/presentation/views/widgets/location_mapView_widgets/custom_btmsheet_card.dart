@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
-import 'package:maskany_app/presentation/views/details_view.dart';
+import '../../../view_model/CUBIT/cubit/app_cubit.dart';
+import '../../details_view.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
@@ -50,13 +50,17 @@ class CustomBtmsheetCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        model.title,
-                        style: Fonts.medium,
+                      SizedBox(
+                        width: 150.w,
+                        child: Text(
+                          model.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
                       ),
                       Text(
                         model.city,
-                        style: Fonts.xsmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       RatingBar(
                         allowHalfRating: true,
@@ -80,11 +84,11 @@ class CustomBtmsheetCard extends StatelessWidget {
                       ),
                       Text(
                         '12 مشاهد',
-                        style: Fonts.xsmall,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                       Text(
                         '${model.price} جنيه',
-                        style: Fonts.medium.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           color: ColorsManager.kprimaryColor,
                         ),
                       ),
@@ -96,7 +100,7 @@ class CustomBtmsheetCard extends StatelessWidget {
                         minWidth: 140.w,
                         child: Text(
                           'أشتري الأن',
-                          style: Fonts.medium.copyWith(color: Colors.white),
+                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                         ),
                       )
                     ],

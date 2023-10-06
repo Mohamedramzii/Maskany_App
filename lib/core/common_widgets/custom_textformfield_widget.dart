@@ -42,7 +42,7 @@ class CustomTextFormFieldWIdget extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(8.r),
         hintText: hinttext,
-        hintStyle: Fonts.xsmall,
+        hintStyle: Theme.of(context).textTheme.bodySmall,
         suffixIcon: isPassword
             ? IconButton(
                 onPressed: () {},

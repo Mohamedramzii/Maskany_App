@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:maskany_app/core/app_resources/colors.dart';
+import '../../../../core/app_resources/colors.dart';
 
 class CustomMarker extends StatelessWidget {
   const CustomMarker({
@@ -25,11 +25,11 @@ class CustomMarker extends StatelessWidget {
             alignment: Alignment.center,
             child: Container(
               clipBehavior: Clip.none,
-              width: 50,
-              height: 30,
+              width: 50.w,
+              height: 30.h,
               decoration: BoxDecoration(
                   color: isviewed ? Colors.green : ColorsManager.kprimaryColor,
-                  borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(10.r)),
               child:
               // Center(child: Text(price),)
                   Center(child: Text('${(price / 10000).toStringAsFixed(0)}K')),

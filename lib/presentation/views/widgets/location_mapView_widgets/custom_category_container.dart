@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 
 import '../../../../core/app_resources/colors.dart';
-import '../../../../core/app_resources/fonts.dart';
 
 class CustomCategoryContainer extends StatelessWidget {
   const CustomCategoryContainer({
@@ -19,19 +20,34 @@ class CustomCategoryContainer extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.r),
       ),
-      child: Container(
-        width: 70.w,
-        padding: EdgeInsets.all(3.r),
-        alignment: Alignment.center,
-        height: 40.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.r),
-          color: ColorsManager.kprimaryColor,
-        ),
-        child: Text(
-          list[index],
-          style: Fonts.xsmall.copyWith(color: Colors.white),
-        ),
+      child: BlocBuilder<AppCubit, AppState>(
+        builder: (context, state) {
+          var cubit = BlocProvider.of<AppCubit>(context);
+          return GestureDetector(
+            onTap: () {
+              cubit.blabla(index);
+            },
+            child: Container(
+              width: 70.w,
+              padding: EdgeInsets.all(3.r),
+              alignment: Alignment.center,
+              height: 40.h,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.r),
+                color: index == cubit.categoryIndex
+                    ? Colors.green
+                    : ColorsManager.kprimaryColor,
+              ),
+              child: Text(
+                list[index],
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: Colors.white),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

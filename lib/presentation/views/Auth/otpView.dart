@@ -69,11 +69,11 @@ class _OTPViewState extends State<OTPView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(S.of(context).verificationcode,
-                        style: Fonts.semiLarge),
+                        style: Theme.of(context).textTheme.bodyLarge),
                     Text(S.of(context).belowVC,
-                        style: Fonts.medium.copyWith(color: Colors.grey)),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey)),
                     Text(widget.email,
-                        style: Fonts.medium
+                        style: Theme.of(context).textTheme.bodyMedium!
                             .copyWith(color: ColorsManager.kprimaryColor)),
                     SizedBox(
                       height: 25.h,

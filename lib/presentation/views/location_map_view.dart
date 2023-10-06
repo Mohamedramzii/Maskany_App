@@ -29,110 +29,104 @@ class LocationMapView extends StatefulWidget {
 class _LocationMapViewState extends State<LocationMapView> {
   @override
   Widget build(BuildContext context) {
-    
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = BlocProvider.of<AppCubit>(context);
         return Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 70.h,
-            centerTitle: true,
-            title: Card(
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 5.h),
-                height: 60.h,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15.r)),
-                child: Flex(direction: Axis.horizontal, children: [
-                  Flexible(
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) =>
-                              CustomCategoryContainer(
-                                  index: index, list: LocationMapView.category),
-                          itemCount: LocationMapView.category.length)),
-                ]),
+          body: Stack(
+            children: [
+              CustomGoogleMapMarkerBuilder(
+                customMarkers:
+                    cubit.filterCategories(cubit.categoryIndex).map((e) {
+                  return MarkerData(
+                      marker: Marker(
+                          markerId: MarkerId(e.locationLink),
+                          position: LatLng(
+                            double.parse(e.lat),
+                            double.parse(e.long),
+                          ),
+                          infoWindow: const InfoWindow(),
+                          onTap: () {
+                            LocationBottomSheet.locationBTMSheet(context, e);
+                          }),
+                      child: CustomMarker(
+                          price: e.price, isviewed: cubit.isviewedfromC));
+                }).toList(),
+                builder: (p0, Set<Marker>? markers) {
+                  return GoogleMap(
+                    compassEnabled: true,
+                    // indoorViewEnabled: true,
+                    mapToolbarEnabled: true,
+
+                    mapType: MapType.satellite,
+                    zoomGesturesEnabled: true,
+
+                    // cloudMapId: '961ba1ad7f1204e8',
+                    // initialCameraPosition: cubit.firstVIew!,
+                    initialCameraPosition: CameraPosition(
+                        target: LatLng(
+                          double.parse(cubit.property[0].lat),
+                          double.parse(cubit.property[0].long),
+                        ),
+                        zoom: 8),
+                    myLocationButtonEnabled: true,
+                    myLocationEnabled: true,
+                    zoomControlsEnabled: false,
+
+                    padding: const EdgeInsets.only(top: 100),
+                    markers: markers ?? {},
+                    // markers:
+                    //     _createMarkers(cubit.property, context, cubit),
+                    // markers: _markers.values.toSet(),
+                    onMapCreated: (GoogleMapController controller) {
+                      cubit.googleMapController = controller;
+                      // cubit.googleMapController!.setMapStyle(AutofillHints.);
+                    },
+
+                    onTap: (latlong) {},
+                  );
+                },
               ),
-            ),
-          ),
-          body: cubit.firstVIew != null
-              ? Stack(
-                  children: [
-                    CustomGoogleMapMarkerBuilder(
-                      customMarkers: cubit.filterCategories(cubit.categoryIndex ).map((e) {
-                        return MarkerData(
-                            marker: Marker(
-                                markerId: MarkerId(e.locationLink),
-                                position: LatLng(
-                                  double.parse(e.lat),
-                                  double.parse(e.long),
-                                ),
-                                infoWindow: const InfoWindow(),
-                                onTap: () {
-                                  LocationBottomSheet.locationBTMSheet(
-                                      context, e);
-                                }),
-                            child: CustomMarker(
-                              price: e.price,
-                              isviewed:cubit.isviewedfromC
-                            ));
-                      }).toList(),
-                      builder: (p0, Set<Marker>? markers) {
-                        return GoogleMap(
-                          compassEnabled: true,
-                          // indoorViewEnabled: true,
-                          mapToolbarEnabled: true,
-
-                          mapType: MapType.satellite,
-                          zoomGesturesEnabled: true,
-
-                          // cloudMapId: '961ba1ad7f1204e8',
-                          // initialCameraPosition: cubit.firstVIew!,
-                          initialCameraPosition: CameraPosition(
-                              target: LatLng(
-                                double.parse(cubit.property[0].lat),
-                                double.parse(cubit.property[0].long),
-                              ),
-                              zoom: 8),
-                          myLocationButtonEnabled: true,
-                          myLocationEnabled: true,
-                          zoomControlsEnabled: false,
-                          
-
-                          padding: const EdgeInsets.only(top: 100),
-                          markers: markers ?? {},
-                          // markers:
-                          //     _createMarkers(cubit.property, context, cubit),
-                          // markers: _markers.values.toSet(),
-                          onMapCreated: (GoogleMapController controller) {
-                            cubit.googleMapController = controller;
-                            // cubit.googleMapController!.setMapStyle(AutofillHints.);
-                          },
-
-                          onTap: (latlong) {},
-                        );
-                      },
-                    ),
-                    // Align(
-                    //   alignment: Alignment.bottomRight,
-
-                    //   child: Container(
-                    //     width: 100.w,
-                    //     height: 40.h,
-                    //     decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(20.r),
-                    //         color: ColorsManager.kprimaryColor),
-                    //   ),
-                    // )
-                  ],
-                )
-              : Center(
-                  child: LoadingAnimationWidget.staggeredDotsWave(
-                      color: ColorsManager.kprimaryColor, size: 40.r),
+              Card(
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  height: 60.h,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15.r)),
+                  child: Flex(direction: Axis.horizontal, children: [
+                    Flexible(
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) =>
+                                CustomCategoryContainer(
+                                    index: index,
+                                    list: LocationMapView.category),
+                            itemCount: LocationMapView.category.length)),
+                  ]),
                 ),
+              ),
+
+              // Align(
+              //   alignment: Alignment.bottomRight,
+
+              //   child: Container(
+              //     width: 100.w,
+              //     height: 40.h,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(20.r),
+              //         color: ColorsManager.kprimaryColor),
+              //   ),
+              // )
+            ],
+          )
+          // : Center(
+          //     child: LoadingAnimationWidget.staggeredDotsWave(
+          //         color: ColorsManager.kprimaryColor, size: 40.r),
+          //   ),
+          ,
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           floatingActionButton: FloatingActionButton.extended(
             backgroundColor: ColorsManager.kprimaryColor,
@@ -144,7 +138,10 @@ class _LocationMapViewState extends State<LocationMapView> {
                 ),
                 Text(
                   'عرض القائمة',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white),
                 )
               ],
             ),

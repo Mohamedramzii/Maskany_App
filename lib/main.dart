@@ -6,18 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'core/constants.dart';
 import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
-import 'presentation/views/AppLayout.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'classobserve.dart';
 import 'core/app_resources/colors.dart';
 import 'data/data_sources/local/shared_pref.dart';
 import 'data/data_sources/network/dio_helper.dart';
 import 'generated/l10n.dart';
-import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
-import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'presentation/views/splash_screen_view.dart';
 
 void main() async {

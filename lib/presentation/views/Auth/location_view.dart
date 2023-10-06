@@ -4,7 +4,6 @@ import 'package:page_animation_transition/animations/left_to_right_transition.da
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../core/app_resources/colors.dart';
-import '../../../core/app_resources/fonts.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
 import '../../../core/constants.dart';
 import '../../../generated/l10n.dart';
@@ -28,8 +27,10 @@ class LocationView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(S.of(context).location, style: Theme.of(context).textTheme.bodyLarge),
-                Text(S.of(context).belowLocation, style: Theme.of(context).textTheme.bodySmall),
+                Text(S.of(context).location,
+                    style: Theme.of(context).textTheme.bodyLarge),
+                Text(S.of(context).belowLocation,
+                    style: Theme.of(context).textTheme.bodySmall),
 
                 SizedBox(
                   height: 30.h,
@@ -47,7 +48,8 @@ class LocationView extends StatelessWidget {
                 //   child:
                 // )
                 DropdownButtonFormField<String>(
-                  hint: Text('المحافظة', style: Theme.of(context).textTheme.bodyMedium),
+                  hint: Text('المحافظة',
+                      style: Theme.of(context).textTheme.bodyMedium),
                   decoration: InputDecoration(
                     disabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15.r),
@@ -88,9 +90,11 @@ class LocationView extends StatelessWidget {
                 CustomButton(
                     text: 'ابدأ الأن',
                     onpressed: () {
-                      PageAnimationTransition(
-                          page: const AppLayout(),
-                          pageAnimationType: LeftToRightTransition());
+                      Navigator.pushReplacement(
+                          context,
+                          PageAnimationTransition(
+                              page: const AppLayout(),
+                              pageAnimationType: LeftToRightTransition()));
                     })
               ],
             ),

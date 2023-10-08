@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'core/constants.dart';
 import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -37,8 +38,8 @@ void main() async {
     enabled: !kReleaseMode,
   ));
   // Widget widget;
-  // tokenHolder = CacheHelper.getData(key: tokenKey);
-  // debugPrint('USER TOKEN : $tokenHolder');
+  tokenHolder = CacheHelper.getData(key: tokenKey);
+  debugPrint('USER TOKEN : $tokenHolder');
 
   // if(tokenHolder != null){
   //   widget= AppLayout();
@@ -65,10 +66,12 @@ class MyApp extends StatelessWidget {
               create: (context) => AuthCubit(),
             ),
             BlocProvider(
-                create: (context) => AppCubit()
-                  ..getPermission(context)
-                  ..getCurrentLatLong()
-                  ..getAllproperties()),
+              create: (context) => AppCubit()
+                ..getPermission(context)
+                ..getCurrentLatLong()
+                ..getAllFavorites()
+                ..getAllproperties()
+            ),
             // BlocProvider(
             //   create: (context) => LocationCubit()
             //     ..getPermission(context)
@@ -112,10 +115,10 @@ class MyApp extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: ColorsManager.xsmallFontColor),
                   bodyMedium: TextStyle(
-                      fontSize:   15.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),
-                  displayLarge:  TextStyle(
+                  displayLarge: TextStyle(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),

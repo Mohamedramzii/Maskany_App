@@ -38,10 +38,10 @@ class CustomOTPWidget extends StatelessWidget {
         onSaved: onsave,
         validator: onvalidate,
         decoration: InputDecoration(
-          // hintText: '0',
-          // hintStyle:
-          //     Theme.of(context).textTheme.bodyLarge.copyWith(color: ColorsManager.kprimaryColor),
-        ),
+            // hintText: '0',
+            // hintStyle:
+            //     Theme.of(context).textTheme.bodyLarge.copyWith(color: ColorsManager.kprimaryColor),
+            ),
       ),
     );
   }

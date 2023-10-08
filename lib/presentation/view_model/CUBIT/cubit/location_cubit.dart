@@ -6,5 +6,4 @@ part 'location_state.dart';
 
 class LocationCubit extends Cubit<LocationState> {
   LocationCubit() : super(LocationInitial());
-
 }

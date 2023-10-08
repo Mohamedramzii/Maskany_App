@@ -46,11 +46,11 @@ class _OTPViewState extends State<OTPView> {
             // Dialogs.successDialog(
             //     context,
             //   );
-               SnackBars.successSnackBar(
+            SnackBars.successSnackBar(
                 context, S.of(context).changePassword, state.successMessage);
-                 Navigator.of(context).pushReplacement(PageAnimationTransition(
-                    page: const LoginView(),
-                    pageAnimationType: BottomToTopTransition()));
+            Navigator.of(context).pushReplacement(PageAnimationTransition(
+                page: const LoginView(),
+                pageAnimationType: BottomToTopTransition()));
           } else if (state is ChangePasswordFailureState) {
             SnackBars.failureSnackBar(
                 context, S.of(context).changePassword, state.errMessage);
@@ -71,9 +71,14 @@ class _OTPViewState extends State<OTPView> {
                     Text(S.of(context).verificationcode,
                         style: Theme.of(context).textTheme.bodyLarge),
                     Text(S.of(context).belowVC,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(color: Colors.grey)),
                     Text(widget.email,
-                        style: Theme.of(context).textTheme.bodyMedium!
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
                             .copyWith(color: ColorsManager.kprimaryColor)),
                     SizedBox(
                       height: 25.h,
@@ -182,8 +187,7 @@ class _OTPViewState extends State<OTPView> {
                     state is ChangePasswordLoadingState
                         ? Center(
                             child: LoadingAnimationWidget.staggeredDotsWave(
-                                color: ColorsManager.kprimaryColor,
-                                size: 40.r),
+                                color: ColorsManager.kprimaryColor, size: 40.r),
                           )
                         : CustomButton(
                             text: S.of(context).change,
@@ -198,8 +202,6 @@ class _OTPViewState extends State<OTPView> {
                                         pin4.text,
                                     newPassword:
                                         passwordcontroller.text.trim());
-                              
-                            
                               }
                             })
                   ],

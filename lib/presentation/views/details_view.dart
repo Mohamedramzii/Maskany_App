@@ -37,12 +37,20 @@ class DetailsView extends StatelessWidget {
             ),
             centerTitle: true,
             actions: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  ))
+              cubit.allfavorites
+                      .map((e) => e.property!.id)
+                      .contains(model.id)
+                  ? IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      ))
+                  : IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.favorite_border,
+                      ))
             ],
           ),
           body: Padding(
@@ -66,7 +74,7 @@ class DetailsView extends StatelessWidget {
                                 ? 15.r
                                 : 5.r),
                         child: Hero(
-                          tag: cubit.property[index].title,
+                          tag: '${cubit.property[index].title}+vertical',
                           child: SvgPicture.asset(
                             Images.houseS,
                             fit: BoxFit.fill,
@@ -240,7 +248,7 @@ class DetailsView extends StatelessWidget {
                       compassEnabled: false,
                       // indoorViewEnabled: true,
                       mapToolbarEnabled: false,
-                                    
+
                       mapType: MapType.hybrid,
                       // cloudMapId: '961ba1ad7f1204e8',
                       initialCameraPosition: CameraPosition(
@@ -252,7 +260,7 @@ class DetailsView extends StatelessWidget {
                       myLocationEnabled: false,
                       zoomControlsEnabled: false,
                       zoomGesturesEnabled: false,
-                                    
+
                       padding: const EdgeInsets.only(top: 100),
                       markers: {
                         Marker(
@@ -265,7 +273,7 @@ class DetailsView extends StatelessWidget {
                       //   cubit.googleMapController = controller;
                       //   // cubit.googleMapController!.setMapStyle(AutofillHints.);
                       // },
-                                    
+
                       onTap: (latlong) {},
                     ),
                   ),

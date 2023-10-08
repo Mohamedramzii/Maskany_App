@@ -1,8 +1,8 @@
 import 'category.dart';
-import 'image.dart';
 
-class Properties {
-  List<Image>? images;
+class FavModel2 {
+  int? id;
+  List<dynamic>? images;
   String? title;
   Category? category;
   String? city;
@@ -20,7 +20,8 @@ class Properties {
   String? lat;
   String? long;
 
-  Properties({
+  FavModel2({
+    this.id,
     this.images,
     this.title,
     this.category,
@@ -40,14 +41,13 @@ class Properties {
     this.long,
   });
 
-  factory Properties.fromJson(Map<String, dynamic> json) => Properties(
-        images: (json['images'] as List<dynamic>?)
-            ?.map((e) => Image.fromJson(e as Map<String, dynamic>))
-            .toList(),
+  factory FavModel2.fromJson(Map<String, dynamic> json) => FavModel2(
+        id: json['id'] as int?,
+        images: json['images'] as List<dynamic>?,
         title: json['title'] as String?,
         category: json['category'] == null
             ? null
-            : Category.fromJson(json['category']),
+            : Category.fromJson(json['category'] as Map<String, dynamic>),
         city: json['city'] as String?,
         locationLink: json['location_link'] as String?,
         details: json['details'] as String?,
@@ -65,7 +65,8 @@ class Properties {
       );
 
   Map<String, dynamic> toJson() => {
-        'images': images?.map((e) => e.toJson()).toList(),
+        'id': id,
+        'images': images,
         'title': title,
         'category': category?.toJson(),
         'city': city,

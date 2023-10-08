@@ -45,7 +45,10 @@ abstract class SnackBars {
               children: [
                 Text(
                   proccessText,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 17),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontSize: 17),
                 ),
                 Text(
                   successtext,
@@ -58,6 +61,7 @@ abstract class SnackBars {
       ),
     ));
   }
+
   static failureSnackBar(context, proccessText, failureText) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       width: double.infinity,
@@ -99,7 +103,10 @@ abstract class SnackBars {
               children: [
                 Text(
                   proccessText,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 17),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontSize: 17),
                 ),
                 Text(
                   failureText,

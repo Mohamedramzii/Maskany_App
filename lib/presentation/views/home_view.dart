@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = BlocProvider.of<AppCubit>(context);
-          return state is GetAllPropertiesLoadingState
+          return cubit.property.isEmpty
               ? const HomeLoadingView()
               : Padding(
                   padding: EdgeInsets.only(top: 20.h, left: 16.w, right: 16.w),
@@ -86,13 +86,7 @@ class HomeView extends StatelessWidget {
                       SizedBox(
                         height: 15.h,
                       ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minWidth: 160.w,
-                          maxWidth: 350.w,
-                          maxHeight: 210.h,
-                          minHeight: 200.h,
-                        ),
+                      Expanded(
                         child: ListView.separated(
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
@@ -133,12 +127,21 @@ class HomeView extends StatelessWidget {
                       ),
                       Expanded(
                         child: ListView.separated(
-                            itemBuilder: (context, index) =>
-                                const CustomVerticalContainer(),
+                            itemBuilder: (context, index) => GestureDetector(
+                                onTap: () => Navigator.of(context).push(
+                                    PageAnimationTransition(
+                                        page: DetailsView(
+                                            model: cubit.property[index]),
+                                        pageAnimationType:
+                                            RightToLeftTransition())),
+                                child: CustomVerticalContainer(
+                                  model: cubit.property[index],
+                                  index: index,
+                                )),
                             separatorBuilder: (context, index) => SizedBox(
                                   height: 10.h,
                                 ),
-                            itemCount: 8),
+                            itemCount: cubit.property.length),
                       )
                     ],
                   ),

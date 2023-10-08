@@ -5,7 +5,6 @@ sealed class AuthState {}
 
 final class AuthInitial extends AuthState {}
 
-
 //! LOGIN
 final class LoginSuccessState extends AuthState {
   final String successMessage;
@@ -52,7 +51,6 @@ final class SendOTPFailureState extends AuthState {
 
   SendOTPFailureState({required this.errMessage});
 }
-
 
 //! Change Password
 

@@ -1,13 +1,13 @@
 class Image {
-	String? image;
+  String? image;
 
-	Image({this.image});
+  Image({this.image});
 
-	factory Image.fromJson(Map<String, dynamic> json) => Image(
-				image: json['image'] as String?,
-			);
+  factory Image.fromJson(Map<String, dynamic> json) => Image(
+        image: json['image'] as String?,
+      );
 
-	Map<String, dynamic> toJson() => {
-				'image': image,
-			};
+  Map<String, dynamic> toJson() => {
+        'image': image,
+      };
 }

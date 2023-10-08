@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../data/models/propertiesModel/propertiesModel.dart';
 import 'custom_btmsheet_card.dart';
 import 'custom_divider.dart';
 
 abstract class LocationBottomSheet {
-  static Future<dynamic> locationBTMSheet(context, PropertiesModel model) {
+  static Future<dynamic> locationBTMSheet(context, model) {
     return showModalBottomSheet(
       enableDrag: true,
       useSafeArea: true,
@@ -18,7 +17,7 @@ abstract class LocationBottomSheet {
       builder: (context) {
         //! Outer Container
         return Container(
-          height:  300.h,
+          height: 300.h,
           // width: ResponsiveBreakpoints.of(context).isTablet ? 700.w : 350.w,
           alignment: Alignment.center,
           child: Padding(

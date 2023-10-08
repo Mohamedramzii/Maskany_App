@@ -6,7 +6,6 @@ import 'package:page_animation_transition/animations/left_to_right_transition.da
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../core/app_resources/colors.dart';
-import '../../../core/app_resources/fonts.dart';
 import '../../../core/app_resources/strings.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
 import '../../../core/common_widgets/custom_snackbar.dart';

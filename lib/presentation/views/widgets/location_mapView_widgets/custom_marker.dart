@@ -31,7 +31,7 @@ class CustomMarker extends StatelessWidget {
                   color: isviewed ? Colors.green : ColorsManager.kprimaryColor,
                   borderRadius: BorderRadius.circular(10.r)),
               child:
-              // Center(child: Text(price),)
+                  // Center(child: Text(price),)
                   Center(child: Text('${(price / 10000).toStringAsFixed(0)}K')),
             ),
           ),

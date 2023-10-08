@@ -25,7 +25,10 @@ class HorizontalShimmer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.r)),
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
           ),
-        ), separatorBuilder: (BuildContext context, int index) => SizedBox(width: 10.w,),
+        ),
+        separatorBuilder: (BuildContext context, int index) => SizedBox(
+          width: 10.w,
+        ),
       ),
     );
   }

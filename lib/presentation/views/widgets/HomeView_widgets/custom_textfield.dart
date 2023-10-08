@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maskany_app/presentation/views/search_view.dart';
+import 'package:page_animation_transition/animations/top_to_bottom_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({super.key});
@@ -7,8 +10,10 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        
+      onTap: () {
+        Navigator.of(context).push(PageAnimationTransition(
+            page: const SearchView(),
+            pageAnimationType: TopToBottomTransition()));
       },
       child: Container(
         width: double.infinity,

@@ -1,5 +1,3 @@
-
-
 // ignore_for_file: constant_identifier_names
 
 final emailValidation =
@@ -115,4 +113,5 @@ abstract class EndPoints {
   static const sendOTP = '/auth/otp-request/';
   static const changePassword = '/auth/reset-password/';
   static const properties = '/properties/';
+  static const favorites = '/properties/fav/';
 }

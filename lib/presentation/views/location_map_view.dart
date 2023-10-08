@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'widgets/location_mapView_widgets/custom_marker.dart';
 import 'widgets/location_mapView_widgets/custom_category_container.dart';
 import '../../core/app_resources/colors.dart';
@@ -14,13 +13,6 @@ import 'widgets/location_mapView_widgets/custom_btmsheet.dart';
 
 class LocationMapView extends StatefulWidget {
   const LocationMapView({super.key});
-  static const List<String> category = [
-    'شقق للايجار',
-    'أراضي للبيع',
-    'فلل للبيع',
-    'دور للايجار',
-    'شقق للبيع',
-  ];
 
   @override
   State<LocationMapView> createState() => _LocationMapViewState();
@@ -102,9 +94,8 @@ class _LocationMapViewState extends State<LocationMapView> {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) =>
                                 CustomCategoryContainer(
-                                    index: index,
-                                    list: LocationMapView.category),
-                            itemCount: LocationMapView.category.length)),
+                                    index: index, list: cubit.category),
+                            itemCount: cubit.category.length)),
                   ]),
                 ),
               ),

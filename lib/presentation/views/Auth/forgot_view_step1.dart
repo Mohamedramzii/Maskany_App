@@ -41,8 +41,8 @@ class _ForgotViewStep1State extends State<ForgotViewStep1> {
         child: BlocConsumer<AuthCubit, AuthState>(
           listener: (BuildContext context, AuthState state) {
             if (state is SendOTPSuccessState) {
-              SnackBars.successSnackBar(context,
-                  S.of(context).verificationcode, state.successMessage);
+              SnackBars.successSnackBar(context, S.of(context).verificationcode,
+                  state.successMessage);
               Navigator.push(
                   context,
                   PageAnimationTransition(
@@ -99,8 +99,7 @@ class _ForgotViewStep1State extends State<ForgotViewStep1> {
                     state is SendOTPLoadingState
                         ? Center(
                             child: LoadingAnimationWidget.staggeredDotsWave(
-                                color: ColorsManager.kprimaryColor,
-                                size: 40.r),
+                                color: ColorsManager.kprimaryColor, size: 40.r),
                           )
                         : CustomButton(
                             text: S.of(context).Send,

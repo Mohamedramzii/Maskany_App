@@ -6,8 +6,10 @@ import '../app_resources/images.dart';
 import 'custom_buttom.dart';
 
 abstract class Dialogs {
-  static successDialog(context,
-   ) => showDialog(
+  static successDialog(
+    context,
+  ) =>
+      showDialog(
         context: context,
         builder: (context) => AlertDialog.adaptive(
           backgroundColor: Colors.white,
@@ -37,10 +39,52 @@ abstract class Dialogs {
                   height: 16.h,
                 ),
                 const Spacer(),
+                CustomButton(text: 'ابدأ الان', onpressed: () {})
+              ],
+            ),
+          ),
+        ),
+      );
+  static failureDialog(
+    context,
+  ) =>
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog.adaptive(
+          backgroundColor: Colors.white,
+          title: Center(
+            child: Icon(
+              Icons.info_outline,
+              color: Colors.red,
+            ),
+          ),
+          content: Container(
+            alignment: Alignment.center,
+            height: 200.h,
+            width: 400.w,
+            child: Column(
+              children: [
+                Text(
+                  'Location Access',
+                  style: Theme.of(context).textTheme.displayLarge,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                Text(
+                  'Please check your location settings',
+                  style: Theme.of(context).textTheme.bodySmall,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                const Spacer(),
                 CustomButton(
                     text: 'ابدأ الان',
                     onpressed: () {
-                       
+                      Navigator.pop(context);
                     })
               ],
             ),

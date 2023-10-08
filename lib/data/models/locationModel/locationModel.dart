@@ -3,7 +3,7 @@ class Location {
   final double latitude;
   final double longitude;
   final String name;
-   bool isviewed;
+  bool isviewed;
 
   Location({
     required this.id,

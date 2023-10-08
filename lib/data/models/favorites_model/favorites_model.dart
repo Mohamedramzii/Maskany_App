@@ -1,19 +1,37 @@
 // To parse this JSON data, do
 //
-//     final propertiesModel = propertiesModelFromJson(jsonString);
+//     final favoritesModel = favoritesModelFromJson(jsonString);
 
 import 'dart:convert';
 
-List<PropertiesModel> propertiesModelFromJson(String str) =>
-    List<PropertiesModel>.from(
-        json.decode(str).map((x) => PropertiesModel.fromJson(x)));
+FavoritesModel favoritesModelFromJson(String str) =>
+    FavoritesModel.fromJson(json.decode(str));
 
-String propertiesModelToJson(List<PropertiesModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String favoritesModelToJson(FavoritesModel data) => json.encode(data.toJson());
 
-class PropertiesModel {
+class FavoritesModel {
+  int? id;
+  Property? property;
+
+  FavoritesModel({
+    required this.id,
+    required this.property,
+  });
+
+  factory FavoritesModel.fromJson(Map<String, dynamic> json) => FavoritesModel(
+        id: json["id"],
+        property: Property.fromJson(json["property"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "property": property!.toJson(),
+      };
+}
+
+class Property {
   int id;
-  List<dynamic> images;
+  List<Image> images;
   String title;
   Category category;
   String city;
@@ -30,8 +48,9 @@ class PropertiesModel {
   String payWay;
   String lat;
   String long;
+  bool isSeen;
 
-  PropertiesModel({
+  Property({
     required this.id,
     required this.images,
     required this.title,
@@ -50,12 +69,12 @@ class PropertiesModel {
     required this.payWay,
     required this.lat,
     required this.long,
+    required this.isSeen,
   });
 
-  factory PropertiesModel.fromJson(Map<String, dynamic> json) =>
-      PropertiesModel(
+  factory Property.fromJson(Map<String, dynamic> json) => Property(
         id: json["id"],
-        images: List<dynamic>.from(json["images"].map((x) => x)),
+        images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
         title: json["title"],
         category: Category.fromJson(json["category"]),
         city: json["city"],
@@ -72,11 +91,12 @@ class PropertiesModel {
         payWay: json["pay_way"],
         lat: json["lat"],
         long: json["long"],
+        isSeen: json["is_seen"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "images": List<dynamic>.from(images.map((x) => x)),
+        "images": List<dynamic>.from(images.map((x) => x.toJson())),
         "title": title,
         "category": category.toJson(),
         "city": city,
@@ -94,6 +114,7 @@ class PropertiesModel {
         "pay_way": payWay,
         "lat": lat,
         "long": long,
+        "is_seen": isSeen,
       };
 }
 
@@ -114,5 +135,21 @@ class Category {
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+      };
+}
+
+class Image {
+  String image;
+
+  Image({
+    required this.image,
+  });
+
+  factory Image.fromJson(Map<String, dynamic> json) => Image(
+        image: json["image"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "image": image,
       };
 }

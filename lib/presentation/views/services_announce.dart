@@ -41,13 +41,18 @@ class ServicesAnnouncementView extends StatelessWidget {
                 ),
               ),
               RichText(
-                text: TextSpan(text: 'مسكني', style: Theme.of(context).textTheme.displayLarge, children: [
-                  const TextSpan(text: ' '),
-                  TextSpan(
-                      text: 'بلس',
-                      style: Theme.of(context).textTheme.displayLarge!
-                          .copyWith(color: ColorsManager.kprimaryColor))
-                ]),
+                text: TextSpan(
+                    text: 'مسكني',
+                    style: Theme.of(context).textTheme.displayLarge,
+                    children: [
+                      const TextSpan(text: ' '),
+                      TextSpan(
+                          text: 'بلس',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(color: ColorsManager.kprimaryColor))
+                    ]),
               ),
               SizedBox(
                 height: 10.h,
@@ -75,7 +80,10 @@ class ServicesAnnouncementView extends StatelessWidget {
               ),
               Text(
                 '29.99' 'جنية/شهريا ',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey.shade500),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.grey.shade500),
               ),
               SizedBox(
                 height: 8.h,

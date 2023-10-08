@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../view_model/CUBIT/cubit/app_cubit.dart';
-import '../../details_view.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../../core/app_resources/colors.dart';
-import '../../../../core/app_resources/fonts.dart';
 import '../../../../core/app_resources/images.dart';
 import '../../../../data/models/propertiesModel/propertiesModel.dart';
+import '../../../view_model/CUBIT/cubit/app_cubit.dart';
+import '../../details_view.dart';
 
 class CustomBtmsheetCard extends StatelessWidget {
-  const CustomBtmsheetCard({super.key, required this.model});
+  const CustomBtmsheetCard({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
   final PropertiesModel model;
+
   static double rate = 2.5;
   @override
   Widget build(BuildContext context) {
@@ -89,8 +92,8 @@ class CustomBtmsheetCard extends StatelessWidget {
                       Text(
                         '${model.price} جنيه',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: ColorsManager.kprimaryColor,
-                        ),
+                              color: ColorsManager.kprimaryColor,
+                            ),
                       ),
                       MaterialButton(
                         onPressed: () {},
@@ -100,7 +103,10 @@ class CustomBtmsheetCard extends StatelessWidget {
                         minWidth: 140.w,
                         child: Text(
                           'أشتري الأن',
-                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: Colors.white),
                         ),
                       )
                     ],

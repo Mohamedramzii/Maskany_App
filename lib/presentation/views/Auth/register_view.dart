@@ -224,18 +224,17 @@ class _RegisterViewState extends State<RegisterView> {
                                   formKey2.currentState!.save();
 
                                   cubit.register(
-                                      username:
-                                          fullnamecontroller.text.trim(),
+                                      username: fullnamecontroller.text.trim(),
                                       email: emailcontroller.text.trim(),
                                       phone: phonecontroller.text.trim(),
-                                      password:
-                                          passwordcontroller.text.trim());
+                                      password: passwordcontroller.text.trim());
                                 }
-                            
                               }),
-                      
+
                       SizedBox(
-                        height: ResponsiveBreakpoints.of(context).isMobile ? 170.h : 140.h,
+                        height: ResponsiveBreakpoints.of(context).isMobile
+                            ? 170.h
+                            : 140.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -250,7 +249,8 @@ class _RegisterViewState extends State<RegisterView> {
                                 Navigator.of(context).pop();
                               },
                               child: Text(S.of(context).login,
-                                  style: Theme.of(context).textTheme.bodySmall)),
+                                  style:
+                                      Theme.of(context).textTheme.bodySmall)),
                         ],
                       ),
                       SizedBox(

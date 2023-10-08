@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/app_resources/fonts.dart';
-
 class IconRow extends StatelessWidget {
   const IconRow({
     Key? key,
@@ -24,7 +22,9 @@ class IconRow extends StatelessWidget {
         Text(
           count.toString(),
           style: style ??
-              Theme.of(context).textTheme.bodySmall!
+              Theme.of(context)
+                  .textTheme
+                  .bodySmall!
                   .copyWith(fontSize: fontsize.sp, fontWeight: FontWeight.bold),
         ),
         icon,

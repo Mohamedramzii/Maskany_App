@@ -80,8 +80,7 @@ class AuthCubit extends Cubit<AuthState> {
         SnackBars.successSnackBar(
             context, S.of(context).CreateAccount, registerModel!.detail);
         Navigator.of(context).pushReplacement(PageAnimationTransition(
-            page:  LocationView(),
-            pageAnimationType: LeftToRightTransition()));
+            page: LocationView(), pageAnimationType: LeftToRightTransition()));
       } else {
         SnackBars.failureSnackBar(
             context, S.of(context).CreateAccount, registerModel!.detail);
@@ -135,5 +134,11 @@ class AuthCubit extends Cubit<AuthState> {
             ChangePasswordFailureState(errMessage: e.response!.data['detail']));
       }
     }
+  }
+
+  bool isvisible = false;
+  toggleVisibility() {
+    isvisible = !isvisible;
+    emit(ToggleVisibilitystate());
   }
 }

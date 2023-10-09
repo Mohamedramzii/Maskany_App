@@ -25,7 +25,7 @@ class CustomVerticalContainer extends StatelessWidget {
           padding: EdgeInsets.all(8.r),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
-              color: Colors.grey.shade100),
+              color: Colors.white),
           child: Row(
             children: [
               Expanded(

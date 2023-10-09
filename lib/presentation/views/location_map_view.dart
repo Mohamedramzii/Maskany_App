@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:maskany_app/presentation/views/AppLayout.dart';
+import 'package:maskany_app/presentation/views/home_view.dart';
+import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 import 'widgets/location_mapView_widgets/custom_marker.dart';
 import 'widgets/location_mapView_widgets/custom_category_container.dart';
 import '../../core/app_resources/colors.dart';
@@ -40,7 +44,11 @@ class _LocationMapViewState extends State<LocationMapView> {
                           ),
                           infoWindow: const InfoWindow(),
                           onTap: () {
-                            LocationBottomSheet.locationBTMSheet(context, e);
+                            Future.delayed(
+                              const Duration(milliseconds: 500),
+                              () => LocationBottomSheet.locationBTMSheet(
+                                  context, e),
+                            );
                           }),
                       child: CustomMarker(
                           price: e.price, isviewed: cubit.isviewedfromC));
@@ -51,9 +59,9 @@ class _LocationMapViewState extends State<LocationMapView> {
                     // indoorViewEnabled: true,
                     mapToolbarEnabled: true,
 
-                    mapType: MapType.satellite,
+                    // mapType: MapType.terrain,
                     zoomGesturesEnabled: true,
-
+                    // onCameraMoveStarted: () => true,
                     // cloudMapId: '961ba1ad7f1204e8',
                     // initialCameraPosition: cubit.firstVIew!,
                     initialCameraPosition: CameraPosition(
@@ -61,7 +69,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                           double.parse(cubit.property[0].lat),
                           double.parse(cubit.property[0].long),
                         ),
-                        zoom: 8),
+                        zoom: 9),
                     myLocationButtonEnabled: true,
                     myLocationEnabled: true,
                     zoomControlsEnabled: false,
@@ -75,28 +83,32 @@ class _LocationMapViewState extends State<LocationMapView> {
                       cubit.googleMapController = controller;
                       // cubit.googleMapController!.setMapStyle(AutofillHints.);
                     },
-
-                    onTap: (latlong) {},
+                    // onCameraMove: (position) => true,
+                    onTap: (latlong) {
+                      cubit.googleMapController!.moveCamera(
+                          CameraUpdate.newCameraPosition(
+                              cubit.currentLocation as CameraPosition));
+                    },
                   );
                 },
               ),
               Card(
                 child: Container(
-                  width: double.infinity,
+                  // width: double.infinity,
+                  alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(vertical: 5.h),
                   height: 60.h,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15.r)),
-                  child: Flex(direction: Axis.horizontal, children: [
-                    Flexible(
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) =>
-                                CustomCategoryContainer(
-                                    index: index, list: cubit.category),
-                            itemCount: cubit.category.length)),
-                  ]),
+                  child: SizedBox(
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) =>
+                              CustomCategoryContainer(
+                                  index: index, list: cubit.allcategories),
+                          itemCount: cubit.allcategories.length)),
                 ),
               ),
 
@@ -136,7 +148,14 @@ class _LocationMapViewState extends State<LocationMapView> {
                 )
               ],
             ),
-            onPressed: () {},
+            onPressed: () {
+              cubit.isNotNavBar = true;
+              Navigator.push(
+                  context,
+                  PageAnimationTransition(
+                      page: const HomeView(),
+                      pageAnimationType: BottomToTopTransition()));
+            },
           ),
         );
       },

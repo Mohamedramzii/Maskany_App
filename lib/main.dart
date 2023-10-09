@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:maskany_app/presentation/views/Auth/login_view.dart';
 import 'core/constants.dart';
 import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
@@ -24,7 +23,7 @@ void main() async {
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.white));
+       SystemUiOverlayStyle(statusBarColor: Colors.grey.shade100));
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -39,7 +38,7 @@ void main() async {
     enabled: !kReleaseMode,
   ));
   // Widget widget;
-   CacheHelper.getData(key: tokenKey);
+  CacheHelper.getData(key: tokenKey);
   debugPrint('USER TOKEN : ${CacheHelper.getData(key: tokenKey)}');
 
   // if(tokenHolder != null){
@@ -67,12 +66,12 @@ class MyApp extends StatelessWidget {
               create: (context) => AuthCubit(),
             ),
             BlocProvider(
-              create: (context) => AppCubit()
-                ..getPermission(context)
-                ..getCurrentLatLong()
-                ..getAllFavorites()
-                ..getAllproperties()
-            ),
+                create: (context) => AppCubit()
+                  ..getPermission(context)
+                  ..getCurrentLatLong()
+                  ..getAllFavorites()
+                  ..getCategories()
+                  ..getAllproperties()),
             // BlocProvider(
             //   create: (context) => LocationCubit()
             //     ..getPermission(context)

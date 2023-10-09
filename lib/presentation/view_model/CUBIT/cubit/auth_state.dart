@@ -67,3 +67,6 @@ final class ChangePasswordFailureState extends AuthState {
 
   ChangePasswordFailureState({required this.errMessage});
 }
+
+
+final class ToggleVisibilitystate extends AuthState{}

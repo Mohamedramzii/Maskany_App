@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
+import 'package:maskany_app/data/models/categories_model/categories_model.dart';
 import 'package:maskany_app/data/models/favorites_model/favorites_model.dart';
 import '../../../../core/common_widgets/custom_dialog.dart';
 import '../../../../core/common_widgets/custom_snackbar.dart';
@@ -52,10 +55,12 @@ class AppCubit extends Cubit<AppState> {
   //   // Do nothing to prevent the Cubit from being closed
   //   return Future.value();
   // }
+
+  bool isNotNavBar = false;
   //! Bottom Nav bar
   btmNavBar(index) {
     currentindex = index;
-    if (currentindex == 1) {
+    if (index == 0) {
       // getAllFavorites();
     }
     emit(NavBarIndexChangedSuccess());
@@ -140,14 +145,17 @@ class AppCubit extends Cubit<AppState> {
     );
   }
 
-  List<String> category = [
-    'الكل',
-    'شقق للايجار',
-    'أراضي للبيع',
-    'فلل للبيع',
-    'دور للايجار',
-    'شقق للبيع',
-  ];
+  List<String> category = ['الكل', 'شقق للأيجار', 'شقق للبيع'];
+  List<CategoriesModel> allcategories = [];
+  getCategories() {
+    DioHelper.getData(url: EndPoints.categories).then((value) {
+      for (var category in value.data) {
+        allcategories.add(CategoriesModel.fromJson(category));
+      }
+      emit(GetCategoriesState());
+    });
+  }
+
   PropertiesModel? properties;
   List<PropertiesModel> property = [];
   List<PropertiesModel> bee3Prop = [];
@@ -158,14 +166,15 @@ class AppCubit extends Cubit<AppState> {
     //  isviewed = CacheHelper.getData(key: 'loc');
     try {
       Response response = await DioHelper.getData(
-          url: EndPoints.properties, token: 'Token ${CacheHelper.getData(key: tokenKey)}');
+          url: EndPoints.properties,
+          token: 'Token ${CacheHelper.getData(key: tokenKey)}');
       for (var item in response.data) {
         property.add(PropertiesModel.fromJson(item));
-        bee3Prop = property
-            .where((e) => e.category.name == category[5].toString())
-            .toList();
         egaarProp = property
-            .where((e) => e.category.name == category[1].toString())
+            .where((e) => e.category.name == allcategories[0].name)
+            .toList();
+        bee3Prop = property
+            .where((e) => e.category.name == allcategories[1].name)
             .toList();
       }
 
@@ -190,12 +199,12 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<PropertiesModel> filterCategories(int index) {
-    switch (categoryIndex) {
+    switch (index) {
+      // case 0:
+      //   return property;
       case 0:
-        return property;
-      case 1:
         return egaarProp;
-      case 5:
+      case 1:
         return bee3Prop;
 
       default:
@@ -232,6 +241,23 @@ class AppCubit extends Cubit<AppState> {
       // debugPrint('Get Favs Success : ${allfavorites[0].property!.title}');
       emit(GetFavoritesSuccessState());
     }).catchError((e) {
+      if (e is DioError) {
+        if (e.error is SocketException && e.error == 113) {
+          // Handle "No route to host" error
+          print(
+              '*-*-*-*-*-*-*-No route to host error occurred*-*-*-*-*-*-*-*-');
+          // Display an appropriate error message to the user
+        } else {
+          // Handle other Dio errors
+          print('Dio error occurred: ${e.error}');
+          // Display an appropriate error message to the user
+        }
+      } else {
+        // Handle other exceptions
+        print('Exception occurred: $e');
+        // Display an appropriate error message to the user
+      }
+
       debugPrint('Get Favs Failed ${e.toString()}');
       emit(GetFavoritesFailureState(e.toString()));
     });

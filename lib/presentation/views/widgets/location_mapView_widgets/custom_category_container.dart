@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maskany_app/data/models/categories_model/categories_model.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 
 import '../../../../core/app_resources/colors.dart';
@@ -11,7 +12,7 @@ class CustomCategoryContainer extends StatelessWidget {
     required this.list,
     required this.index,
   }) : super(key: key);
-  final List<String> list;
+  final List<CategoriesModel> list;
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class CustomCategoryContainer extends StatelessWidget {
                     : ColorsManager.kprimaryColor,
               ),
               child: Text(
-                list[index],
+                list[index].name!,
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!

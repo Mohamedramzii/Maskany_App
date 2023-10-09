@@ -114,4 +114,5 @@ abstract class EndPoints {
   static const changePassword = '/auth/reset-password/';
   static const properties = '/properties/';
   static const favorites = '/properties/fav/';
+  static const categories = '/properties/categories/';
 }

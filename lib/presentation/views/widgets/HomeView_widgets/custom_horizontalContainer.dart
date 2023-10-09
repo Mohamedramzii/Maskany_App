@@ -25,7 +25,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
       height: 330.h,
       width: 230.w,
       decoration: BoxDecoration(
-          color: Colors.grey.shade100,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(15.r)),
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       child: FittedBox(
@@ -38,7 +38,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6.r),
                 child: Hero(
-                  tag: model[index].title,
+                  tag: '${model[index].title}+hor',
                   child: SvgPicture.asset(
                     Images.houseS,
                     fit: BoxFit.cover,

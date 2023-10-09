@@ -83,3 +83,7 @@ final class DeleteFavoritesFailureState extends AppState {
 
   DeleteFavoritesFailureState(this.errMsg);
 }
+
+
+final class GetCategoriesState extends AppState {}
+// final class IsNOtNavBarsState extends AppState {}

@@ -90,7 +90,7 @@ class _ForgotViewStep1State extends State<ForgotViewStep1> {
                         return null;
                       },
                       textInputType: TextInputType.emailAddress,
-                      textinputaction: TextInputAction.next,
+                      textinputaction: TextInputAction.next, obsecure: false,
                     ),
 
                     SizedBox(

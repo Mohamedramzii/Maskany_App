@@ -89,7 +89,7 @@ class _LoginViewState extends State<LoginView> {
                         return null;
                       },
                       textInputType: TextInputType.emailAddress,
-                      textinputaction: TextInputAction.next,
+                      textinputaction: TextInputAction.next, obsecure: false,
                     ),
 
                     SizedBox(
@@ -101,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
                       // controller: passwordcontroller,
                       hinttext: S.of(context).enterpassword,
                       isEmail: true,
-                      isPassword: true,
+                      isPassword: cubit.isvisible,
                       onsave: (newValue) {
                         passwordcontroller.text = newValue!;
                       },
@@ -112,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
                         return null;
                       },
                       textInputType: TextInputType.emailAddress,
-                      textinputaction: TextInputAction.done,
+                      textinputaction: TextInputAction.done, obsecure: true,
                     ),
                     SizedBox(
                       height: 9.h,

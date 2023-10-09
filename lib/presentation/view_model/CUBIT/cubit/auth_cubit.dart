@@ -136,7 +136,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  bool isvisible = false;
+  bool isvisible = true;
   toggleVisibility() {
     isvisible = !isvisible;
     emit(ToggleVisibilitystate());

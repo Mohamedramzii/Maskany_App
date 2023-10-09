@@ -158,7 +158,7 @@ class _OTPViewState extends State<OTPView> {
                         return null;
                       },
                       textInputType: TextInputType.text,
-                      textinputaction: TextInputAction.next,
+                      textinputaction: TextInputAction.next, obsecure: true,
                     ),
                     SizedBox(
                       height: 20.h,
@@ -179,7 +179,7 @@ class _OTPViewState extends State<OTPView> {
                         return null;
                       },
                       textInputType: TextInputType.text,
-                      textinputaction: TextInputAction.done,
+                      textinputaction: TextInputAction.done, obsecure: true,
                     ),
                     SizedBox(
                       height: 30.h,

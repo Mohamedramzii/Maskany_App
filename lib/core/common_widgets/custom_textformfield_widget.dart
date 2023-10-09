@@ -15,13 +15,14 @@ class CustomTextFormFieldWIdget extends StatelessWidget {
     required this.textInputType,
     required this.textinputaction,
     required this.onsave,
-    required this.onvalidate,
+    required this.onvalidate, required this.obsecure,
   }) : super(key: key);
 
   final String hinttext;
   final TextEditingController controller;
   final bool isPassword;
-
+  final bool obsecure;
+// final Widget prefixIcon;
   final bool isEmail;
   final TextInputType textInputType;
   final TextInputAction textinputaction;
@@ -35,27 +36,29 @@ class CustomTextFormFieldWIdget extends StatelessWidget {
         return TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           // scrollPadding: EdgeInsets.all(5.r),
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.sp),
+          style:
+              Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.sp),
           controller: controller,
           // style: TextStyle(),
           textDirection: isEmail ? TextDirection.ltr : TextDirection.rtl,
           onSaved: onsave,
           validator: onvalidate,
-          obscureText: cubit.isvisible,
+          obscureText: isPassword,
           keyboardType: textInputType,
           textInputAction: textinputaction,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.all(8.r),
             hintText: hinttext,
             hintStyle: Theme.of(context).textTheme.bodySmall,
-            prefixIcon: isPassword
+            prefixIcon: obsecure
                 ? IconButton(
                     onPressed: () {
                       cubit.toggleVisibility();
                     },
-                    icon:  Icon(
-                      !cubit.isvisible ? Icons.visibility_off:
-                      Icons.visibility,
+                    icon: Icon(
+                      cubit.isvisible
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: Colors.grey,
                     ))
                 : null,

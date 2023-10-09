@@ -170,13 +170,14 @@ class AppCubit extends Cubit<AppState> {
           token: 'Token ${CacheHelper.getData(key: tokenKey)}');
       for (var item in response.data) {
         property.add(PropertiesModel.fromJson(item));
-      }
         egaarProp = property
             .where((e) => e.category.name == allcategories[0].name)
             .toList();
         bee3Prop = property
             .where((e) => e.category.name == allcategories[1].name)
             .toList();
+      }
+        
 
       debugPrint('######### ${egaarProp.length} ###############');
       debugPrint('######### ${bee3Prop.length} ###############');

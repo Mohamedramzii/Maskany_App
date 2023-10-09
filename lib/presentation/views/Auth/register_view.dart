@@ -112,7 +112,7 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.text,
-                        textinputaction: TextInputAction.next,
+                        textinputaction: TextInputAction.next, obsecure: false,
                       ),
 
                       SizedBox(
@@ -135,7 +135,7 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.emailAddress,
-                        textinputaction: TextInputAction.next,
+                        textinputaction: TextInputAction.next, obsecure: false,
                       ),
 
                       SizedBox(
@@ -158,7 +158,7 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.number,
-                        textinputaction: TextInputAction.next,
+                        textinputaction: TextInputAction.next, obsecure: false,
                       ),
 
                       SizedBox(
@@ -170,7 +170,7 @@ class _RegisterViewState extends State<RegisterView> {
                         controller: passwordcontroller,
                         hinttext: S.of(context).password,
                         isEmail: false,
-                        isPassword: true,
+                        isPassword: cubit.isvisible,
                         onsave: (newValue) {
                           passwordcontroller.text = newValue!;
                         },
@@ -181,7 +181,7 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.text,
-                        textinputaction: TextInputAction.next,
+                        textinputaction: TextInputAction.next, obsecure: true,
                       ),
                       SizedBox(
                         height: 20.h,
@@ -192,7 +192,7 @@ class _RegisterViewState extends State<RegisterView> {
                         // controller: passwordcontroller,
                         hinttext: S.of(context).repassword,
                         isEmail: false,
-                        isPassword: true,
+                        isPassword: cubit.isvisible,
                         onsave: (newValue) {
                           repasswordcontroller.text = newValue!;
                         },
@@ -204,7 +204,7 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.text,
-                        textinputaction: TextInputAction.done,
+                        textinputaction: TextInputAction.done, obsecure: true,
                       ),
 
                       SizedBox(
@@ -226,7 +226,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       username: fullnamecontroller.text.trim(),
                                       email: emailcontroller.text.trim(),
                                       phone: phonecontroller.text.trim(),
-                                      password: passwordcontroller.text.trim(),context:context);
+                                      password: passwordcontroller.text.trim());
                                 }
                               }),
 

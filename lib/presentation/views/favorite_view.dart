@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
-import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/vertical_shimmer.dart';
 import 'package:maskany_app/presentation/views/widgets/favoritesView_widgets/custom_horizontal_items.dart';
 
 import '../../core/app_resources/colors.dart';

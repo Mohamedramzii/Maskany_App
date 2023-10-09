@@ -7,7 +7,6 @@ import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../core/app_resources/colors.dart';
-import '../../../core/app_resources/fonts.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
 import '../../../core/common_widgets/custom_snackbar.dart';
 import '../../../core/common_widgets/custom_textformfield_widget.dart';
@@ -55,18 +54,18 @@ class _RegisterViewState extends State<RegisterView> {
         // ),
         body: BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is RegisterSuccessState) {
-          SnackBars.successSnackBar(
-              context, S.of(context).CreateAccount, state.successMessage);
-          Navigator.push(
-              context,
-              PageAnimationTransition(
-                  page: LocationView(),
-                  pageAnimationType: RightToLeftTransition()));
-        } else if (state is RegisterFailureState) {
-          SnackBars.failureSnackBar(
-              context, S.of(context).CreateAccount, state.errMessage);
-        }
+        // if (state is RegisterSuccessState) {
+        //   SnackBars.successSnackBar(
+        //       context, S.of(context).CreateAccount, state.successMessage);
+        //   Navigator.push(
+        //       context,
+        //       PageAnimationTransition(
+        //           page: LocationView(),
+        //           pageAnimationType: RightToLeftTransition()));
+        // } else if (state is RegisterFailureState) {
+        //   SnackBars.failureSnackBar(
+        //       context, S.of(context).CreateAccount, state.errMessage);
+        // }
       },
       builder: (context, state) {
         var cubit = BlocProvider.of<AuthCubit>(context);
@@ -227,7 +226,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       username: fullnamecontroller.text.trim(),
                                       email: emailcontroller.text.trim(),
                                       phone: phonecontroller.text.trim(),
-                                      password: passwordcontroller.text.trim());
+                                      password: passwordcontroller.text.trim(),context:context);
                                 }
                               }),
 

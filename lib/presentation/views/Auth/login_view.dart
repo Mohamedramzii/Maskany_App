@@ -46,14 +46,8 @@ class _LoginViewState extends State<LoginView> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is LoginSuccessState) {
-            SnackBars.successSnackBar(
-                context, S.of(context).login, state.successMessage);
-            Navigator.of(context).pushReplacement(PageAnimationTransition(
-                page: const AppLayout(),
-                pageAnimationType: LeftToRightTransition()));
           } else if (state is LoginFailureState) {
-            SnackBars.failureSnackBar(
-                context, S.of(context).login, state.errMessage);
+           
           }
         },
         builder: (context, state) {
@@ -151,7 +145,8 @@ class _LoginViewState extends State<LoginView> {
 
                                 await cubit.login(
                                     emailOrphone: emailcontroller.text.trim(),
-                                    password: passwordcontroller.text.trim());
+                                    password: passwordcontroller.text.trim(),
+                                    context: context);
 
                                 emailcontroller.clear();
                                 passwordcontroller.clear();

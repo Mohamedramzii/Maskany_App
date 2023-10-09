@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/favorites_model/favorites_model.dart';
 import '../../../../core/common_widgets/custom_dialog.dart';
 import '../../../../core/common_widgets/custom_snackbar.dart';
@@ -152,11 +153,12 @@ class AppCubit extends Cubit<AppState> {
   List<PropertiesModel> bee3Prop = [];
   List<PropertiesModel> egaarProp = [];
   getAllproperties() async {
+    CacheHelper.getData(key: tokenKey);
     emit(GetAllPropertiesLoadingState());
     //  isviewed = CacheHelper.getData(key: 'loc');
     try {
       Response response = await DioHelper.getData(
-          url: EndPoints.properties, token: 'Token $tokenHolder');
+          url: EndPoints.properties, token: 'Token ${CacheHelper.getData(key: tokenKey)}');
       for (var item in response.data) {
         property.add(PropertiesModel.fromJson(item));
         bee3Prop = property
@@ -216,9 +218,13 @@ class AppCubit extends Cubit<AppState> {
   // FavModel2? favoritesModel;
   List<FavoritesModel> allfavorites = [];
   getAllFavorites() {
+    CacheHelper.getData(key: tokenKey);
+
     allfavorites = [];
     emit(GetFavoritesLoadingState());
-    DioHelper.getData(url: EndPoints.favorites, token: 'Token $tokenHolder')
+    DioHelper.getData(
+            url: EndPoints.favorites,
+            token: 'Token ${CacheHelper.getData(key: tokenKey)}')
         .then((value) {
       for (var item in value.data) {
         allfavorites.add(FavoritesModel.fromJson(item));

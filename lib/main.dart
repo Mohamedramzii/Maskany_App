@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maskany_app/presentation/views/Auth/login_view.dart';
 import 'core/constants.dart';
 import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
@@ -38,8 +39,8 @@ void main() async {
     enabled: !kReleaseMode,
   ));
   // Widget widget;
-  tokenHolder = CacheHelper.getData(key: tokenKey);
-  debugPrint('USER TOKEN : $tokenHolder');
+   CacheHelper.getData(key: tokenKey);
+  debugPrint('USER TOKEN : ${CacheHelper.getData(key: tokenKey)}');
 
   // if(tokenHolder != null){
   //   widget= AppLayout();

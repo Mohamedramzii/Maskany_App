@@ -1,14 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maskany_app/generated/l10n.dart';
+import 'package:maskany_app/presentation/views/Auth/location_view.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
-
+import '../../../../core/common_widgets/custom_snackbar.dart';
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/local/shared_pref.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
 import '../../../../data/models/login_model/login_model.dart';
+import '../../../../data/models/login_model/login_model2/login_model2.dart';
 import '../../../../data/models/register_model/register_model.dart';
+import '../../../../data/models/register_model/register_model2/register_model2.dart';
 import '../../../views/AppLayout.dart';
 
 part 'auth_state.dart';
@@ -17,21 +21,29 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
 //! Login
-  LoginModel? loginModel;
+  LoginModel2? loginModel;
   // String? successLogin = '';
-  login({
-    required emailOrphone,
-    required password,
-  }) async {
+  login({required emailOrphone, required password, context}) async {
     emit(LoginLoadingState());
     try {
       var response = await DioHelper.postData(
           url: EndPoints.login,
           data: {'email': emailOrphone, 'password': password});
 
-      loginModel = LoginModel.fromJson(response.data);
+      loginModel = LoginModel2.fromJson(response.data);
       debugPrint('Login Message: ${loginModel!.detail}');
-      CacheHelper.saveData(key: tokenKey, value: loginModel!.token);
+      if (loginModel!.type == 'successful') {
+        CacheHelper.saveData(key: tokenKey, value: loginModel!.token);
+        SnackBars.successSnackBar(
+            context, S.of(context).login, loginModel!.detail);
+        Navigator.of(context).pushReplacement(PageAnimationTransition(
+            page: const AppLayout(),
+            pageAnimationType: LeftToRightTransition()));
+      } else {
+        SnackBars.failureSnackBar(
+            context, S.of(context).login, loginModel!.detail);
+      }
+      // print(CacheHelper.getData(key: tokenKey));
       // successLogin = loginModel!.detail;
       // PageAnimationTransition(
       //           page: const AppLayout(),
@@ -45,12 +57,13 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
 //! Register
-  RegisterModel? registerModel;
+  RegisterModel2? registerModel;
   register(
       {required username,
       required email,
       required phone,
-      required password}) async {
+      required password,
+      context}) async {
     emit(RegisterLoadingState());
 
     try {
@@ -60,10 +73,19 @@ class AuthCubit extends Cubit<AuthState> {
         'password': password,
       });
 
-      registerModel = RegisterModel.fromJson(response.data);
-      CacheHelper.saveData(key: tokenHolder, value: registerModel!.token);
+      registerModel = RegisterModel2.fromJson(response.data);
       debugPrint('Register Message: ${registerModel!.detail}');
-
+      if (registerModel!.type == 'successful') {
+        CacheHelper.saveData(key: tokenKey, value: registerModel!.token);
+        SnackBars.successSnackBar(
+            context, S.of(context).CreateAccount, registerModel!.detail);
+        Navigator.of(context).pushReplacement(PageAnimationTransition(
+            page:  LocationView(),
+            pageAnimationType: LeftToRightTransition()));
+      } else {
+        SnackBars.failureSnackBar(
+            context, S.of(context).CreateAccount, registerModel!.detail);
+      }
       emit(RegisterSuccessState(successMessage: registerModel!.detail!));
     } on DioError catch (e) {
       if (e.response != null) {

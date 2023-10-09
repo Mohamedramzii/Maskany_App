@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
 import 'package:maskany_app/presentation/views/detailsForhorizontal.dart';
 import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/home_loading_view.dart';
@@ -49,7 +50,7 @@ class HomeView extends StatelessWidget {
                                     CacheHelper.clearData(key: tokenKey);
                                   },
                                   child: Icon(Icons.location_on_outlined,
-                                      color: Colors.white),
+                                      color: HexColor('#B6B6B6')),
                                 ),
                                 SizedBox(
                                   width: 6.w,

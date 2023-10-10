@@ -100,10 +100,10 @@ class S {
     );
   }
 
-  /// `برجاء التأكد من كلمة المرور الخاصة بك`
+  /// `كلمة المرور ضعيفة`
   String get errorpassword {
     return Intl.message(
-      'برجاء التأكد من كلمة المرور الخاصة بك',
+      'كلمة المرور ضعيفة',
       name: 'errorpassword',
       desc: '',
       args: [],

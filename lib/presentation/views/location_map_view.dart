@@ -51,7 +51,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                             );
                           }),
                       child: CustomMarker(
-                          price: e.price!, isviewed: cubit.isviewedfromC));
+                          price: e.price!, isviewed: e.isSeen!));
                 }).toList(),
                 builder: (p0, Set<Marker>? markers) {
                   return GoogleMap(
@@ -85,9 +85,9 @@ class _LocationMapViewState extends State<LocationMapView> {
                     },
                     // onCameraMove: (position) => true,
                     onTap: (latlong) {
-                      cubit.googleMapController!.moveCamera(
-                          CameraUpdate.newCameraPosition(
-                              cubit.currentLocation as CameraPosition));
+                      // cubit.googleMapController!.moveCamera(
+                      //     CameraUpdate.newCameraPosition(
+                      //         cubit.currentLocation as CameraPosition));
                     },
                   );
                 },

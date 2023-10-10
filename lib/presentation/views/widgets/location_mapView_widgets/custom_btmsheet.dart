@@ -10,8 +10,8 @@ abstract class LocationBottomSheet {
       useSafeArea: true,
       isScrollControlled: true,
       constraints: BoxConstraints(
-        minWidth: 350.w,
-        maxWidth: 800.w,
+        minWidth: 400.w,
+        maxWidth: 900.w,
       ),
       context: context,
       builder: (context) {
@@ -22,7 +22,7 @@ abstract class LocationBottomSheet {
           alignment: Alignment.center,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: 30.w,
+              horizontal: 20.w,
             ),
             child: Column(
               children: [

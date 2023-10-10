@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:page_animation_transition/animations/right_to_left_transition.dart';
-import 'package:page_animation_transition/page_animation_transition.dart';
+
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../core/app_resources/colors.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
-import '../../../core/common_widgets/custom_snackbar.dart';
 import '../../../core/common_widgets/custom_textformfield_widget.dart';
 import '../../../core/constants.dart';
 import '../../../generated/l10n.dart';
 import '../../view_model/CUBIT/cubit/auth_cubit.dart';
-import 'location_view.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -112,7 +109,8 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.text,
-                        textinputaction: TextInputAction.next, obsecure: false,
+                        textinputaction: TextInputAction.next,
+                        obsecure: false,
                       ),
 
                       SizedBox(
@@ -135,7 +133,8 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.emailAddress,
-                        textinputaction: TextInputAction.next, obsecure: false,
+                        textinputaction: TextInputAction.next,
+                        obsecure: false,
                       ),
 
                       SizedBox(
@@ -158,7 +157,8 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.number,
-                        textinputaction: TextInputAction.next, obsecure: false,
+                        textinputaction: TextInputAction.next,
+                        obsecure: false,
                       ),
 
                       SizedBox(
@@ -172,7 +172,7 @@ class _RegisterViewState extends State<RegisterView> {
                         isEmail: false,
                         isPassword: cubit.isvisible,
                         onsave: (newValue) {
-                          passwordcontroller.text = newValue!;
+                        passwordcontroller.text = newValue!;
                         },
                         onvalidate: (value) {
                           if (value!.length < 8) {
@@ -181,7 +181,8 @@ class _RegisterViewState extends State<RegisterView> {
                           return null;
                         },
                         textInputType: TextInputType.text,
-                        textinputaction: TextInputAction.next, obsecure: true,
+                        textinputaction: TextInputAction.next,
+                        obsecure: true,
                       ),
                       SizedBox(
                         height: 20.h,
@@ -226,7 +227,8 @@ class _RegisterViewState extends State<RegisterView> {
                                       username: fullnamecontroller.text.trim(),
                                       email: emailcontroller.text.trim(),
                                       phone: phonecontroller.text.trim(),
-                                      password: passwordcontroller.text.trim());
+                                      password: passwordcontroller.text.trim(),
+                                      context: context);
                                 }
                               }),
 

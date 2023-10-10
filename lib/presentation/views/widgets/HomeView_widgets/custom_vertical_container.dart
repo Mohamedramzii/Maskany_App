@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../../../core/app_resources/colors.dart';
+import '../../../../core/app_resources/images.dart';
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import 'custom_rowIcons.dart';
 
@@ -54,38 +57,37 @@ class CustomVerticalContainer extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        // SizedBox(
+                        //   width: 120.w,
+                        // ),
                         IconRow(
-                          count: 25,
-                          fontsize: 8,
-                          icon: Icon(
-                            Icons.bathtub_rounded,
-                            size: 12.r,
-                          ),
-                        ),
+                            count: model.bathrooms!,
+                            fontsize: 10,
+                            icon: SvgPicture.asset(
+                              Images.size,
+                              width: 15.w,
+                            )),
                         IconRow(
-                          count: 25,
-                          fontsize: 8,
-                          icon: Icon(
-                            Icons.bathtub_rounded,
-                            size: 12.r,
-                          ),
-                        ),
+                            count: model.bathrooms!,
+                            fontsize: 10,
+                            icon: SvgPicture.asset(
+                              Images.shower,
+                              width: 15.w,
+                            )),
                         IconRow(
-                          count: 25,
-                          fontsize: 8,
-                          icon: Icon(
-                            Icons.bathtub_rounded,
-                            size: 12.r,
-                          ),
-                        ),
+                            count: model.floor!,
+                            fontsize: 10,
+                            icon: SvgPicture.asset(
+                              Images.chair,
+                              width: 15.w,
+                            )),
                         IconRow(
-                          count: 25,
-                          fontsize: 8,
-                          icon: Icon(
-                            Icons.bathtub_rounded,
-                            size: 12.r,
-                          ),
-                        ),
+                            count: model.rooms!,
+                            fontsize: 10,
+                            icon: SvgPicture.asset(
+                              Images.bed,
+                              width: 15.w,
+                            )),
                       ],
                     )
                   ],
@@ -97,18 +99,20 @@ class CustomVerticalContainer extends StatelessWidget {
 
               //   ],
               // ),
+              SizedBox(width: 2.w,),
               FittedBox(
                 child: SizedBox(
                     width: 200.w,
                     height: 150.h,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(6.r),
-                      child: Hero(
-                        tag: '${model.title}+vertical',
-                        child: Image.network(
-                                'http://66.45.248.247:8000${model.images![0].image}',
-                                fit: BoxFit.cover,
-                              ),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            'http://66.45.248.247:8000${model.images![0].image}',
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                       ),
                     )),
               ),

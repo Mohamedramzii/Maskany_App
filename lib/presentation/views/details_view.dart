@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 import '../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../view_model/CUBIT/cubit/app_cubit.dart';
@@ -37,7 +40,7 @@ class DetailsView extends StatelessWidget {
             ),
             centerTitle: true,
             actions: [
-               Visibility(
+              Visibility(
                 visible: cubit.allfavorites
                     .any((element) => element.property!.id == model.id),
 
@@ -70,7 +73,9 @@ class DetailsView extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 5.w,),
+              SizedBox(
+                width: 5.w,
+              ),
             ],
           ),
           body: Padding(
@@ -83,25 +88,40 @@ class DetailsView extends StatelessWidget {
                     height:
                         ResponsiveBreakpoints.of(context).isMobile ? 5.h : 15.h,
                   ),
-                  SizedBox(
-                    height: 200.h,
-                    width: double.infinity,
-                    child: FittedBox(
-                      fit: BoxFit.fill,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            ResponsiveBreakpoints.of(context).isMobile
-                                ? 15.r
-                                : 5.r),
-                        child: Hero(
-                          tag: '${model.title}+vertical',
-                          child: SvgPicture.asset(
-                            Images.houseS,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      height: 200.0.h,
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: false,
+                      autoPlayInterval: const Duration(seconds: 1),
                     ),
+                    items: model.images!.map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 3.0.w),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  ResponsiveBreakpoints.of(context).isMobile
+                                      ? 15.r
+                                      : 5.r),
+                              child: CachedNetworkImage(
+                                imageUrl: 'http://66.45.248.247:8000${i.image}',
+                                 fit: BoxFit.cover,
+                                placeholder: (context, url) => Center(
+                                  child:
+                                      LoadingAnimationWidget.staggeredDotsWave(
+                                          color: ColorsManager.kprimaryColor,
+                                          size: 40.r),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }).toList(),
                   ),
                   SizedBox(
                     height: 23.h,
@@ -272,8 +292,8 @@ class DetailsView extends StatelessWidget {
                       mapType: MapType.hybrid,
                       // cloudMapId: '961ba1ad7f1204e8',
                       initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                            double.parse(model.lat!), double.parse(model.long!)),
+                        target: LatLng(double.parse(model.lat!),
+                            double.parse(model.long!)),
                         zoom: 18,
                       ),
                       myLocationButtonEnabled: false,
@@ -294,7 +314,9 @@ class DetailsView extends StatelessWidget {
                       //   // cubit.googleMapController!.setMapStyle(AutofillHints.);
                       // },
 
-                      onTap: (latlong) {},
+                      onTap: (latlong) {
+                          cubit.navigateToGoogleMaps(model.locationLink!);
+                      },
                     ),
                   ),
                   SizedBox(

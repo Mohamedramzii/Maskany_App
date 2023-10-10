@@ -92,3 +92,8 @@ final class ToggleMapTypeSuccessState extends AppState {}
 
 final class AddOrRemoveSuccessState extends AppState{}
 final class AddOrRemoveFailureState extends AppState{}
+
+
+
+final class SeenOrNotSuccessState extends AppState{}
+final class SeenOrNotFailureState extends AppState{}

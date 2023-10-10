@@ -115,4 +115,5 @@ abstract class EndPoints {
   static const properties = '/properties/';
   static const favorites = '/properties/fav/';
   static const categories = '/properties/categories/';
+  static const seen = '/properties/seen/';
 }

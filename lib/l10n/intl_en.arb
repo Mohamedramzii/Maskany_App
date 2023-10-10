@@ -5,7 +5,7 @@
     "enteremailorphone":"عنوان البريد الإلكتروني",
     "erroremailorphone":"برجاء ادخال بريد الكتروني",
     "enterpassword":"ادخل كلمة المرور الخاصة بك",
-    "errorpassword":"برجاء التأكد من كلمة المرور الخاصة بك",
+    "errorpassword":"كلمة المرور ضعيفة",
     "forgotpassword":"هل نسيت كلمت المرور ؟",
     "donthaveaccount":"ليس لديك حساب ؟",
     "soRegister":"تسجيل حساب جديد",

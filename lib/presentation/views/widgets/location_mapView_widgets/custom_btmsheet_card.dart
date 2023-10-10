@@ -1,14 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../../core/app_resources/colors.dart';
-import '../../../../core/app_resources/images.dart';
-import '../../../../data/models/propertiesModel/propertiesModel.dart';
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../../../view_model/CUBIT/cubit/app_cubit.dart';
 import '../../details_view.dart';
@@ -28,14 +25,14 @@ class CustomBtmsheetCard extends StatelessWidget {
         var cubit = BlocProvider.of<AppCubit>(context);
         return GestureDetector(
           onTap: () {
+            cubit.seenOrnot(propertyID: model.id);
             Navigator.push(
-                    context,
-                    PageAnimationTransition(
-                        page: DetailsView(
-                          model: model,
-                        ),
-                        pageAnimationType: BottomToTopTransition()))
-                .then((value) => cubit.viewed());
+                context,
+                PageAnimationTransition(
+                    page: DetailsView(
+                      model: model,
+                    ),
+                    pageAnimationType: BottomToTopTransition()));
           },
           child: Card(
             shadowColor: Colors.black,
@@ -63,34 +60,38 @@ class CustomBtmsheetCard extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
-                      Text(
-                        model.city!,
-                        style: Theme.of(context).textTheme.bodySmall,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          model.city!,
+                          style: Theme.of(context).textTheme.bodySmall,
+                          textAlign: TextAlign.start,
+                        ),
                       ),
-                      RatingBar(
-                        allowHalfRating: true,
-                        initialRating: rate,
-                        // tapOnlyMode: true,
-                        // glow: true,
-                        // glowColor: Colors.yellow, unratedColor: Colors.grey,
-                        ignoreGestures: true,
-                        itemSize: 20.r,
-                        maxRating: 5,
-                        minRating: 0,
-                        ratingWidget: RatingWidget(
-                            full: const Icon(
-                              Icons.star,
-                              color: Colors.yellow,
-                            ),
-                            half: const Icon(Icons.star_half,
-                                color: Colors.yellow),
-                            empty: const Icon(Icons.star, color: Colors.grey)),
-                        onRatingUpdate: (value) => rate = value,
-                      ),
-                      Text(
-                        '12 مشاهد',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                      // RatingBar(
+                      //   allowHalfRating: true,
+                      //   initialRating: rate,
+                      //   // tapOnlyMode: true,
+                      //   // glow: true,
+                      //   // glowColor: Colors.yellow, unratedColor: Colors.grey,
+                      //   ignoreGestures: true,
+                      //   itemSize: 20.r,
+                      //   maxRating: 5,
+                      //   minRating: 0,
+                      //   ratingWidget: RatingWidget(
+                      //       full: const Icon(
+                      //         Icons.star,
+                      //         color: Colors.yellow,
+                      //       ),
+                      //       half: const Icon(Icons.star_half,
+                      //           color: Colors.yellow),
+                      //       empty: const Icon(Icons.star, color: Colors.grey)),
+                      //   onRatingUpdate: (value) => rate = value,
+                      // ),
+                      // Text(
+                      //   '12 مشاهد',
+                      //   style: Theme.of(context).textTheme.bodySmall,
+                      // ),
                       Text(
                         '${model.price} جنيه',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -117,9 +118,13 @@ class CustomBtmsheetCard extends StatelessWidget {
                     width: 7.w,
                   ),
                   Expanded(
-                    child: SvgPicture.network(
-                     model.images![0].image!,
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          'http://66.45.248.247:8000${model.images![0].image}',
                       fit: BoxFit.cover,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
                   )
                 ],

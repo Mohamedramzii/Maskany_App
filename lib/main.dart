@@ -66,14 +66,15 @@ class MyApp extends StatelessWidget {
               create: (context) => AuthCubit(),
             ),
             BlocProvider(
-              create: (context) => AppCubit()
-                ..getPermission(context)
-                ..getCurrentLatLong()
-                ..getAllFavorites()
-                ..getCategories()
-                ..getAllproperties()
+                create: (context) => AppCubit()
+                  ..getPermission(context)
+                  ..getCurrentLatLong()
+                  ..getAllproperties()
+                  ..getCategories()
+                  ..getAllFavorites()
+
                 // ..fillcategriesLists(),
-            ),
+                ),
             // BlocProvider(
             //   create: (context) => LocationCubit()
             //     ..getPermission(context)
@@ -104,7 +105,7 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
               fontFamily: ArabicThemeData.font(
-                arabicFont: ArabicFont.cairo,
+                arabicFont: ArabicFont.avenirArabic,
               ),
               package: ArabicThemeData.package,
               textTheme: TextTheme(

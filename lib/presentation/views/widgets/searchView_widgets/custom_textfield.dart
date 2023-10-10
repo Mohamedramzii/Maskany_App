@@ -27,6 +27,7 @@ class CustomTextFieldForSearchView extends StatelessWidget {
           suffixIcon: IconButton(
               onPressed: () {}, icon: const Icon(Icons.search_rounded)),
           hintText: 'أبحث',
+          
           hintStyle: Theme.of(context).textTheme.bodyMedium,
           enabledBorder: OutlineInputBorder(
               // gapPadding: 0,

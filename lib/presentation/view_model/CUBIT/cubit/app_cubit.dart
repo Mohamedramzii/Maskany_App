@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -9,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
 import 'package:maskany_app/data/models/favorites_model/favorites_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/common_widgets/custom_dialog.dart';
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
@@ -244,7 +244,8 @@ class AppCubit extends Cubit<AppState> {
   String emptyValue = '';
   getSearchedFor(String query) {
     search = property
-        .where((item) => item.title!.toLowerCase().contains(query.toLowerCase()))
+        .where(
+            (item) => item.title!.toLowerCase().contains(query.toLowerCase()))
         .toList();
     // search=[];
     emit(GetSearchSuccessState());
@@ -277,8 +278,8 @@ class AppCubit extends Cubit<AppState> {
       // favoritesID2.add(item['property']['id']);
       favsID.add(item['id']);
     }
-     print('favorites IDs length: ${favoritesID.length}');
-     print('favorites IDs length: ${favoritesID2.length}');
+    print('favorites IDs length: ${favoritesID.length}');
+    print('favorites IDs length: ${favoritesID2.length}');
     // if (CacheHelper.getData(key: 'favMap') != null) {
     //   favMap = json.decode(CacheHelper.getData(key: 'favMap'));
     //   print(favMap);
@@ -375,7 +376,7 @@ class AppCubit extends Cubit<AppState> {
 
       // favoritesID.remove(favoriteItemID);
 
-    await   getAllFavorites();
+      await getAllFavorites();
       // debugPrint('|||||||In DeleteFavs FavsID length:${favsID.length} |||||');
       emit(DeleteFavoritesSuccessState());
     } catch (e) {
@@ -422,4 +423,28 @@ class AppCubit extends Cubit<AppState> {
   //     emit(AddedToFavoritesFailureState(e.toString()));
   //   });
   // }
+
+  seenOrnot({required propertyID}) {
+    DioHelper.postData(url: EndPoints.seen, data: {'property_id': propertyID},token: 'Token $tokenHolder')
+        .then((value) {
+      debugPrint('SEEN');
+      getAllproperties();
+      emit(SeenOrNotSuccessState());
+    }).catchError((e) {
+      debugPrint('Not SEEN');
+      emit(SeenOrNotFailureState());
+    });
+  }
+  
+   Future<void> navigateToGoogleMaps(String link) async {
+    final url = link;
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(
+        Uri.parse(url),
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

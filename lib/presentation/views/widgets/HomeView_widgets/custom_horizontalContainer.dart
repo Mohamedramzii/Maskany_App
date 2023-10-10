@@ -1,10 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 import 'package:responsive_framework/responsive_framework.dart';
-import '../../../../data/models/propertiesModel/propertiesModel.dart';
 
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
@@ -37,11 +38,13 @@ class CustomHorizontalCOntainer extends StatelessWidget {
               height: 170.h,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6.r),
-                child: Hero(
-                  tag: '${model[index].title}+hor',
-                  child: SvgPicture.asset(
-                    Images.houseS,
-                    fit: BoxFit.cover,
+                child: CachedNetworkImage(
+                  imageUrl:
+                      'http://66.45.248.247:8000${model[index].images![0].image}',
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Center(
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                        color: ColorsManager.kprimaryColor, size: 40.r),
                   ),
                 ),
               ),
@@ -165,32 +168,32 @@ class CustomHorizontalCOntainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SizedBox(
-                  width: 140.w,
+                  width: 155.w,
                 ),
                 IconRow(
                     count: model[index].bathrooms!,
-                    fontsize: 8,
+                    fontsize: 10,
                     icon: SvgPicture.asset(
                       Images.size,
                       width: 15.w,
                     )),
                 IconRow(
-                    count: 25,
-                    fontsize: 8,
+                    count: model[index].bathrooms!,
+                    fontsize: 10,
                     icon: SvgPicture.asset(
                       Images.shower,
                       width: 15.w,
                     )),
                 IconRow(
-                    count: 25,
-                    fontsize: 8,
+                    count: model[index].floor!,
+                    fontsize: 10,
                     icon: SvgPicture.asset(
                       Images.chair,
                       width: 15.w,
                     )),
                 IconRow(
-                    count: 25,
-                    fontsize: 8,
+                    count: model[index].rooms!,
+                    fontsize: 10,
                     icon: SvgPicture.asset(
                       Images.bed,
                       width: 15.w,

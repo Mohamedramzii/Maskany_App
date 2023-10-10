@@ -67,8 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كلمة المرور غير متطابقة"),
         "erroremailorphone":
             MessageLookupByLibrary.simpleMessage("برجاء ادخال بريد الكتروني"),
-        "errorpassword": MessageLookupByLibrary.simpleMessage(
-            "برجاء التأكد من كلمة المرور الخاصة بك"),
+        "errorpassword":
+            MessageLookupByLibrary.simpleMessage("كلمة المرور ضعيفة"),
         "forgotpassword":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمت المرور ؟"),
         "fullname": MessageLookupByLibrary.simpleMessage("الاسم بالكامل"),

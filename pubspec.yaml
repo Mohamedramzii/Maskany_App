@@ -56,7 +56,10 @@ dependencies:
   responsive_framework: ^1.1.1
   shimmer: ^3.0.0
   lottie: ^2.6.0
-  # cached_network_image: 3.3.0
+  cached_network_image: ^3.3.0
+  carousel_slider: ^4.2.1
+  url_launcher: ^6.1.14
+ 
   
 
 dev_dependencies:

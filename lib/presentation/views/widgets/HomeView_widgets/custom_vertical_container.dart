@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../../../core/app_resources/colors.dart';
-import '../../../../core/app_resources/images.dart';
-import '../../../../data/models/propertiesModel/propertiesModel.dart';
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import 'custom_rowIcons.dart';
 
@@ -26,8 +23,7 @@ class CustomVerticalContainer extends StatelessWidget {
           height: ResponsiveBreakpoints.of(context).isMobile ? 90.h : 110.h,
           padding: EdgeInsets.all(8.r),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.r),
-              color: Colors.white),
+              borderRadius: BorderRadius.circular(15.r), color: Colors.white),
           child: Row(
             children: [
               Expanded(
@@ -110,9 +106,9 @@ class CustomVerticalContainer extends StatelessWidget {
                       child: Hero(
                         tag: '${model.title}+vertical',
                         child: Image.network(
-                        'http://66.45.248.247:8000/media/Photos/23/10/09/residence-2219972_640.jpg' ,
-                          fit: BoxFit.cover,
-                        ),
+                                'http://66.45.248.247:8000${model.images![0].image}',
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     )),
               ),

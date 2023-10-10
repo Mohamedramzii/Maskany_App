@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -10,10 +10,8 @@ import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
 import 'package:maskany_app/data/models/favorites_model/favorites_model.dart';
 import '../../../../core/common_widgets/custom_dialog.dart';
-import '../../../../core/common_widgets/custom_snackbar.dart';
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
-import '../../../../data/models/fav_model2/fav_model2.dart';
 import '../../../../data/models/propertiesModel/propertiesModel.dart';
 
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
@@ -181,15 +179,15 @@ class AppCubit extends Cubit<AppState> {
         property.add(PropertiesModel2.fromJson(item));
       }
 
-      // egaarProp = property
-      //     .where((e) => e.category.name == allcategories[0].name)
-      //     .toList();
-      // bee3Prop = property
-      //     .where((e) => e.category.name == allcategories[1].name)
-      //     .toList();
-      // debugPrint('######### ${property.length} ###############');
-      // debugPrint('######### ${egaarProp.length} ###############');
-      // debugPrint('######### ${bee3Prop.length} ###############');
+      egaarProp = property
+          .where((e) => e.category!.name == allcategories[0].name)
+          .toList();
+      bee3Prop = property
+          .where((e) => e.category!.name == allcategories[1].name)
+          .toList();
+      debugPrint('######### ${property.length} ###############');
+      debugPrint('######### ${egaarProp.length} ###############');
+      debugPrint('######### ${bee3Prop.length} ###############');
 
       // property.add(properties!);
       debugPrint('Get All properties Success');
@@ -264,9 +262,9 @@ class AppCubit extends Cubit<AppState> {
     CacheHelper.getData(key: tokenKey);
 
     allfavorites.clear();
-    favoritesID.clear();
-    favoritesID2.clear();
-    // favsID = [];
+    // favoritesID.clear();
+    // favoritesID2.clear();
+    favsID = [];
     emit(GetFavoritesLoadingState());
     Response response = await DioHelper.getData(
         url: EndPoints.favorites,
@@ -275,9 +273,9 @@ class AppCubit extends Cubit<AppState> {
     // favoritesModel = FavoritesModel.fromJson(response.data);
     for (var item in response.data) {
       allfavorites.add(FavoritesModel.fromJson(item));
-      favoritesID.add(item['id']);
-      favoritesID2.add(item['property']['id']);
-      // favsID.add(item['id']);
+      // favoritesID.add(item['id']);
+      // favoritesID2.add(item['property']['id']);
+      favsID.add(item['id']);
     }
      print('favorites IDs length: ${favoritesID.length}');
      print('favorites IDs length: ${favoritesID2.length}');
@@ -287,8 +285,8 @@ class AppCubit extends Cubit<AppState> {
     // }
 
     debugPrint('|||||||In GetFavs Allfavs length:${allfavorites.length} |||||');
-    // debugPrint('|||||||In GetFavs FavsID length:${favsID.length} |||||');
-    // debugPrint('|||||||In GetFavs FavsID length:${favsID} |||||');
+    debugPrint('|||||||In GetFavs FavsID length:${favsID.length} |||||');
+    debugPrint('|||||||In GetFavs FavsID length:${favsID} |||||');
     // debugPrint('Get Favs Success : ${allfavorites[0]!.title}');
     emit(GetFavoritesSuccessState());
   }

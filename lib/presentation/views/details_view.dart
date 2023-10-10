@@ -37,16 +37,18 @@ class DetailsView extends StatelessWidget {
             ),
             centerTitle: true,
             actions: [
-              Visibility(
+               Visibility(
                 visible: cubit.allfavorites
-                    .any((e) => e.id == model),
+                    .any((element) => element.property!.id == model.id),
 
                 replacement: GestureDetector(
                   onTap: () {
+                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
                     cubit.addtoFavorites(id: model.id);
                   },
                   child: Icon(
-                    Icons.favorite_border,
+                    Icons.favorite,
+                    color: Colors.red,
                     size: ResponsiveBreakpoints.of(context).isMobile
                         ? 25.r
                         : 30.r,
@@ -56,17 +58,19 @@ class DetailsView extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
-                    cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id!);
+                    cubit.deleteFromFav(
+                        favoriteItemID: cubit.allfavorites[index].id!);
                   },
                   child: Icon(
-                    Icons.favorite_rounded,
+                    Icons.delete,
                     color: Colors.red,
                     size: ResponsiveBreakpoints.of(context).isMobile
                         ? 25.r
                         : 30.r,
                   ),
                 ),
-              )
+              ),
+              SizedBox(width: 5.w,),
             ],
           ),
           body: Padding(

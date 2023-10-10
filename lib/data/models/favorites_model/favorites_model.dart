@@ -44,7 +44,7 @@ class Property {
   int floor;
   int price;
   String phoneNumber;
-  String overlookingAt;
+  dynamic overlookingAt;
   String payWay;
   String lat;
   String long;

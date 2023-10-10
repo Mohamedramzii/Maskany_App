@@ -52,94 +52,97 @@ class CustomHorizontalCOntainer extends StatelessWidget {
               children: [
                 SizedBox(
                   width: ResponsiveBreakpoints.of(context).isMobile
-                      ? 230.w
-                      : 240.w,
+                      ? 260.w
+                      : 270.w,
                   child: Text(
                     model[index].title!,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 15.sp),
                   ),
                 ),
-                BlocBuilder<AppCubit, AppState>(
-                  builder: (context, state) {
-                    var cubit = BlocProvider.of<AppCubit>(context);
-                    return GestureDetector(
-                        onTap: () {
-                          cubit.addtoFavorites(
-                            id: model[index].id,
-                          );
-                        },
-                        child: Icon(
-                          Icons.favorite,color: Colors.red,
-                          size: ResponsiveBreakpoints.of(context).isMobile
-                              ? 25.r
-                              : 30.r,
-                        ),
-                      );
-                    // Visibility(
-                    //   visible: cubit.favoritesID2.contains(model.id),
+                // BlocBuilder<AppCubit, AppState>(
+                //   builder: (context, state) {
 
-                    //   replacement: GestureDetector(
-                    //     onTap: () {
-                    //       cubit.addtoFavorites(
-                    //         id: model.id,
-                    //       );
-                    //     },
-                    //     child: Icon(
-                    //       Icons.favorite_border,
-                    //       size: ResponsiveBreakpoints.of(context).isMobile
-                    //           ? 25.r
-                    //           : 30.r,
-                    //     ),
-                    //   ),
-                    //   // maintainAnimation: true,
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       // print(object)
-                    //       // print(
-                    //       //     '#*#*#*#*#*#*  ID: ${cubit.allfavorites.any((e) => e.id == model.id) } #*#*#*#*#*#');
-                    //       // // var x = cubit.allfavorites.;
-                    //       // cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id!);
-                    //     },
-                    //     child: Icon(
-                    //       Icons.favorite_rounded,
-                    //       color: Colors.red,
-                    //       size: ResponsiveBreakpoints.of(context).isMobile
-                    //           ? 25.r
-                    //           : 30.r,
-                    //     ),
-                    //   ),
-                    // );
-                    //  (cubit.allfavorites
-                    //         .map((e) => e!.id)
-                    //         .contains(model[index].id) )
-                    //     ? GestureDetector(
-                    //       onTap: (){
-                    //         print(cubit.allfavorites[index].id);
-                    //         cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id);
+                //     // ! WORKING
+                //     var cubit = BlocProvider.of<AppCubit>(context);
+                //     return GestureDetector(
+                //         onTap: () {
+                //           cubit.addtoFavorites(
+                //             id: model[index].id,
+                //           );
+                //         },
+                //         child: Icon(
+                //           Icons.favorite,color: Colors.red,
+                //           size: ResponsiveBreakpoints.of(context).isMobile
+                //               ? 25.r
+                //               : 30.r,
+                //         ),
+                //       );
+                //! till here
+                // Visibility(
+                //   visible: cubit.favoritesID2.contains(model.id),
 
-                    //       },
-                    //       child: Icon(
-                    //           Icons.favorite_rounded,
-                    //           color: Colors.red,
-                    //           size: ResponsiveBreakpoints.of(context).isMobile
-                    //               ? 25.r
-                    //               : 30.r,
-                    //         ),
-                    //     )
-                    //     : GestureDetector(
-                    //       onTap: (){
-                    //          cubit.addtoFavorites(id: model[index].id);
-                    //       },
-                    //       child: Icon(
-                    //           Icons.favorite_border,
-                    //           size: ResponsiveBreakpoints.of(context).isMobile
-                    //               ? 25.r
-                    //               : 30.r,
-                    //         ),
-                    //     );
-                  },
-                )
+                //   replacement: GestureDetector(
+                //     onTap: () {
+                //       cubit.addtoFavorites(
+                //         id: model.id,
+                //       );
+                //     },
+                //     child: Icon(
+                //       Icons.favorite_border,
+                //       size: ResponsiveBreakpoints.of(context).isMobile
+                //           ? 25.r
+                //           : 30.r,
+                //     ),
+                //   ),
+                //   // maintainAnimation: true,
+                //   child: GestureDetector(
+                //     onTap: () {
+                //       // print(object)
+                //       // print(
+                //       //     '#*#*#*#*#*#*  ID: ${cubit.allfavorites.any((e) => e.id == model.id) } #*#*#*#*#*#');
+                //       // // var x = cubit.allfavorites.;
+                //       // cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id!);
+                //     },
+                //     child: Icon(
+                //       Icons.favorite_rounded,
+                //       color: Colors.red,
+                //       size: ResponsiveBreakpoints.of(context).isMobile
+                //           ? 25.r
+                //           : 30.r,
+                //     ),
+                //   ),
+                // );
+                //  (cubit.allfavorites
+                //         .map((e) => e!.id)
+                //         .contains(model[index].id) )
+                //     ? GestureDetector(
+                //       onTap: (){
+                //         print(cubit.allfavorites[index].id);
+                //         cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id);
+
+                //       },
+                //       child: Icon(
+                //           Icons.favorite_rounded,
+                //           color: Colors.red,
+                //           size: ResponsiveBreakpoints.of(context).isMobile
+                //               ? 25.r
+                //               : 30.r,
+                //         ),
+                //     )
+                //     : GestureDetector(
+                //       onTap: (){
+                //          cubit.addtoFavorites(id: model[index].id);
+                //       },
+                //       child: Icon(
+                //           Icons.favorite_border,
+                //           size: ResponsiveBreakpoints.of(context).isMobile
+                //               ? 25.r
+                //               : 30.r,
+                //         ),
+                //     );
+                //   },
+                // )
               ],
             ),
             Text(

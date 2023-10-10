@@ -47,19 +47,41 @@ class DetailsViewForHorizontal extends StatelessWidget {
               //       cubit.allfavorites.any((e) => e.id == model[index].id),
 
               // replacement:
-              if (cubit.favoritesID2.contains(model[index].id))
-                GestureDetector(
+            
+              Visibility(
+                visible: cubit.allfavorites
+                    .any((element) => element.property!.id == model[index].id),
+
+                replacement: GestureDetector(
                   onTap: () {
-                    cubit.deleteFromFav(
-                        favoriteItemID: cubit.allfavorites[index].id!);
+                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                    cubit.addtoFavorites(id: model[index].id);
                   },
                   child: Icon(
-                    Icons.delete,
+                    Icons.favorite,
+                    color: Colors.red,
                     size: ResponsiveBreakpoints.of(context).isMobile
                         ? 25.r
                         : 30.r,
                   ),
                 ),
+                // maintainAnimation: true,
+                child: GestureDetector(
+                  onTap: () {
+                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                    cubit.deleteFromFav(
+                        favoriteItemID: cubit.allfavorites[index].id!);
+                  },
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                    size: ResponsiveBreakpoints.of(context).isMobile
+                        ? 25.r
+                        : 30.r,
+                  ),
+                ),
+              ),
+              SizedBox(width: 5.w,),
               //   // maintainAnimation: true,
               //   child: GestureDetector(
               //     onTap: () {

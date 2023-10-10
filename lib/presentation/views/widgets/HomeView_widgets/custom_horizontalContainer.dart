@@ -8,6 +8,7 @@ import '../../../../data/models/propertiesModel/propertiesModel.dart';
 
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
+import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import 'custom_rowIcons.dart';
 
 class CustomHorizontalCOntainer extends StatelessWidget {
@@ -16,7 +17,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
     required this.model,
     required this.index,
   });
-  final List<PropertiesModel> model;
+  final List<PropertiesModel2> model;
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
       height: 330.h,
       width: 230.w,
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15.r)),
+          color: Colors.white, borderRadius: BorderRadius.circular(15.r)),
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
       child: FittedBox(
         child: Column(
@@ -55,7 +55,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                       ? 230.w
                       : 240.w,
                   child: Text(
-                    model[index].title,
+                    model[index].title!,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 15.sp),
                   ),
@@ -63,39 +63,55 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                 BlocBuilder<AppCubit, AppState>(
                   builder: (context, state) {
                     var cubit = BlocProvider.of<AppCubit>(context);
-                    return Visibility(
-                      visible: cubit.allfavorites
-                          .any((e) => e.property!.id == model[index].id),
+                    return GestureDetector(
+                        onTap: () {
+                          cubit.addtoFavorites(
+                            id: model[index].id,
+                          );
+                        },
+                        child: Icon(
+                          Icons.favorite,color: Colors.red,
+                          size: ResponsiveBreakpoints.of(context).isMobile
+                              ? 25.r
+                              : 30.r,
+                        ),
+                      );
+                    // Visibility(
+                    //   visible: cubit.favoritesID2.contains(model.id),
 
-                      replacement: GestureDetector(
-                        onTap: () {
-                          cubit.addtoFavorites(id: model[index].id);
-                        },
-                        child: Icon(
-                          Icons.favorite_border,
-                          size: ResponsiveBreakpoints.of(context).isMobile
-                              ? 25.r
-                              : 30.r,
-                        ),
-                      ),
-                      // maintainAnimation: true,
-                      child: GestureDetector(
-                        onTap: () {
-                          print(cubit.allfavorites[index].id);
-                          cubit.deleteFromFav(
-                              favoriteItemID: cubit.allfavorites[index].id);
-                        },
-                        child: Icon(
-                          Icons.favorite_rounded,
-                          color: Colors.red,
-                          size: ResponsiveBreakpoints.of(context).isMobile
-                              ? 25.r
-                              : 30.r,
-                        ),
-                      ),
-                    );
+                    //   replacement: GestureDetector(
+                    //     onTap: () {
+                    //       cubit.addtoFavorites(
+                    //         id: model.id,
+                    //       );
+                    //     },
+                    //     child: Icon(
+                    //       Icons.favorite_border,
+                    //       size: ResponsiveBreakpoints.of(context).isMobile
+                    //           ? 25.r
+                    //           : 30.r,
+                    //     ),
+                    //   ),
+                    //   // maintainAnimation: true,
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       // print(object)
+                    //       // print(
+                    //       //     '#*#*#*#*#*#*  ID: ${cubit.allfavorites.any((e) => e.id == model.id) } #*#*#*#*#*#');
+                    //       // // var x = cubit.allfavorites.;
+                    //       // cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id!);
+                    //     },
+                    //     child: Icon(
+                    //       Icons.favorite_rounded,
+                    //       color: Colors.red,
+                    //       size: ResponsiveBreakpoints.of(context).isMobile
+                    //           ? 25.r
+                    //           : 30.r,
+                    //     ),
+                    //   ),
+                    // );
                     //  (cubit.allfavorites
-                    //         .map((e) => e.property!.id)
+                    //         .map((e) => e!.id)
                     //         .contains(model[index].id) )
                     //     ? GestureDetector(
                     //       onTap: (){
@@ -127,7 +143,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
               ],
             ),
             Text(
-              model[index].city,
+              model[index].city!,
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
@@ -149,7 +165,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                   width: 140.w,
                 ),
                 IconRow(
-                    count: model[index].bathrooms,
+                    count: model[index].bathrooms!,
                     fontsize: 8,
                     icon: SvgPicture.asset(
                       Images.size,

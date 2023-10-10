@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
 import '../../../../data/models/propertiesModel/propertiesModel.dart';
+import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../../../view_model/CUBIT/cubit/app_cubit.dart';
 import '../../details_view.dart';
 
@@ -16,7 +18,7 @@ class CustomBtmsheetCard extends StatelessWidget {
     Key? key,
     required this.model,
   }) : super(key: key);
-  final PropertiesModel model;
+  final PropertiesModel2 model;
 
   static double rate = 2.5;
   @override
@@ -56,13 +58,13 @@ class CustomBtmsheetCard extends StatelessWidget {
                       SizedBox(
                         width: 150.w,
                         child: Text(
-                          model.title,
+                          model.title!,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       Text(
-                        model.city,
+                        model.city!,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       RatingBar(
@@ -115,8 +117,8 @@ class CustomBtmsheetCard extends StatelessWidget {
                     width: 7.w,
                   ),
                   Expanded(
-                    child: Image.asset(
-                      Images.villa,
+                    child: SvgPicture.network(
+                     model.images![0].image!,
                       fit: BoxFit.cover,
                     ),
                   )

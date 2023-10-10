@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
+import 'package:maskany_app/data/models/propertiesModel/propertiesModel.dart';
 import 'package:maskany_app/presentation/views/detailsForhorizontal.dart';
 import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/home_loading_view.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
@@ -103,19 +104,27 @@ class HomeView extends StatelessWidget {
                         child: ListView.separated(
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                      PageAnimationTransition(
-                                          page: DetailsViewForHorizontal(
-                                            model: cubit.property[index],
-                                            index: index,
-                                          ),
-                                          pageAnimationType:
-                                              RightToLeftTransition()));
-                                },
-                                child: CustomHorizontalCOntainer(
-                                    model: cubit.property, index: index)),
+                            itemBuilder: (context, index) {
+                              // final indexx = index + 1;
+                              //  final model = cubit.property.firstWhere(
+                              //       (element) => element.id == index + 1);
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        PageAnimationTransition(
+                                            page: DetailsViewForHorizontal(
+                                              model: cubit.property,
+                                              index: index,
+                                            ),
+                                            pageAnimationType:
+                                                RightToLeftTransition()));
+                                  },
+                                  child: CustomHorizontalCOntainer(
+                                    // favs: cubit.allfavorites[index],
+                                    model: cubit.property,
+                                    index:index
+                                  ));
+                            },
                             separatorBuilder: (context, index) => SizedBox(
                                   width: 20.w,
                                 ),

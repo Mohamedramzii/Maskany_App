@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
 import '../../../../data/models/propertiesModel/propertiesModel.dart';
+import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import 'custom_rowIcons.dart';
 
 class CustomVerticalContainer extends StatelessWidget {
@@ -13,7 +15,7 @@ class CustomVerticalContainer extends StatelessWidget {
     required this.model,
     required this.index,
   }) : super(key: key);
-  final PropertiesModel model;
+  final PropertiesModel2 model;
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -37,13 +39,13 @@ class CustomVerticalContainer extends StatelessWidget {
                     SizedBox(
                       width: 210.w,
                       child: Text(
-                        model.title,
+                        model.title!,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 13.sp),
                       ),
                     ),
                     Text(
-                      model.city,
+                      model.city!,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Text(
@@ -107,8 +109,8 @@ class CustomVerticalContainer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6.r),
                       child: Hero(
                         tag: '${model.title}+vertical',
-                        child: Image.asset(
-                          Images.houseP,
+                        child: Image.network(
+                        'http://66.45.248.247:8000/media/Photos/23/10/09/residence-2219972_640.jpg' ,
                           fit: BoxFit.cover,
                         ),
                       ),

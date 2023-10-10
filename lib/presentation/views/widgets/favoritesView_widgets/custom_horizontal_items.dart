@@ -67,7 +67,7 @@ class CustomHorizontalFavItems extends StatelessWidget {
                               return GestureDetector(
                                 onTap: () {
                                   cubit.deleteFromFav(
-                                      favoriteItemID: favs[index].id);
+                                      favoriteItemID: favs[index].id!);
                                 },
                                 child: Icon(
                                   Icons.delete_forever_sharp,

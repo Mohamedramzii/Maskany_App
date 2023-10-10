@@ -23,7 +23,7 @@ void main() async {
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
   SystemChrome.setSystemUIOverlayStyle(
-       SystemUiOverlayStyle(statusBarColor: Colors.grey.shade100));
+      SystemUiOverlayStyle(statusBarColor: Colors.grey.shade100));
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -66,12 +66,14 @@ class MyApp extends StatelessWidget {
               create: (context) => AuthCubit(),
             ),
             BlocProvider(
-                create: (context) => AppCubit()
-                  ..getPermission(context)
-                  ..getCurrentLatLong()
-                  ..getAllFavorites()
-                  ..getCategories()
-                  ..getAllproperties()),
+              create: (context) => AppCubit()
+                ..getPermission(context)
+                ..getCurrentLatLong()
+                ..getAllFavorites()
+                ..getCategories()
+                ..getAllproperties()
+                // ..fillcategriesLists(),
+            ),
             // BlocProvider(
             //   create: (context) => LocationCubit()
             //     ..getPermission(context)

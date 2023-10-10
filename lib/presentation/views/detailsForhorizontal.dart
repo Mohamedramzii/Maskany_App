@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
+import '../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:read_more_text/read_more_text.dart';
 import '../../core/app_resources/colors.dart';
@@ -15,8 +16,12 @@ import '../../core/app_resources/images.dart';
 import '../../generated/l10n.dart';
 
 class DetailsViewForHorizontal extends StatelessWidget {
-  const DetailsViewForHorizontal({super.key, required this.model, this.index = 0});
-  final PropertiesModel model;
+  const DetailsViewForHorizontal({
+    super.key,
+    required this.model,
+    required this.index,
+  });
+  final List<PropertiesModel2> model;
   final int index;
 
   @override
@@ -37,20 +42,39 @@ class DetailsViewForHorizontal extends StatelessWidget {
             ),
             centerTitle: true,
             actions: [
-              cubit.allfavorites
-                      .map((e) => e.property!.id)
-                      .contains(model.id)
-                  ? IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      ))
-                  : IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_border,
-                      ))
+              // Visibility(
+              //   visible:
+              //       cubit.allfavorites.any((e) => e.id == model[index].id),
+
+              // replacement:
+              if (cubit.favoritesID2.contains(model[index].id))
+                GestureDetector(
+                  onTap: () {
+                    cubit.deleteFromFav(
+                        favoriteItemID: cubit.allfavorites[index].id!);
+                  },
+                  child: Icon(
+                    Icons.delete,
+                    size: ResponsiveBreakpoints.of(context).isMobile
+                        ? 25.r
+                        : 30.r,
+                  ),
+                ),
+              //   // maintainAnimation: true,
+              //   child: GestureDetector(
+              //     onTap: () {
+              //       // print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+              //       // cubit.deleteFromFav(favoriteItemID: cubit.allfavorites.id);
+              //     },
+              //     child: Icon(
+              //       Icons.favorite_rounded,
+              //       color: Colors.red,
+              //       size: ResponsiveBreakpoints.of(context).isMobile
+              //           ? 25.r
+              //           : 30.r,
+              //     ),
+              //   ),
+              // )
             ],
           ),
           body: Padding(
@@ -73,12 +97,10 @@ class DetailsViewForHorizontal extends StatelessWidget {
                             ResponsiveBreakpoints.of(context).isMobile
                                 ? 15.r
                                 : 5.r),
-                        child: Hero(
-                          tag: '${cubit.property[index].title}+hor',
-                          child: SvgPicture.asset(
-                            Images.houseS,
-                            fit: BoxFit.fill,
-                          ),
+                        //!Hero
+                        child: SvgPicture.asset(
+                          Images.houseS,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
@@ -87,11 +109,11 @@ class DetailsViewForHorizontal extends StatelessWidget {
                     height: 23.h,
                   ),
                   Text(
-                    model.title,
+                    model[index].title!,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    model.city,
+                    model[index].city!,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Row(
@@ -128,7 +150,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       ),
                       RichText(
                           text: TextSpan(
-                              text: '${model.price}',
+                              text: '${model[index].price}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -149,7 +171,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
                   ),
                   ReadMoreText(
                       // "فاخرة بتجهيزات فندقية في حي العقيق شمال الرياض تتميز بالهدوء والخصوصية، تبعد 5 دقائق عن منطقة البوليڤارد و الرياض بارك وقريبه جدا من جميع الخدمات الصحية والترفيهية",
-                      model.details,
+                      model[index].details!,
                       numLines: 2,
                       style: Theme.of(context).textTheme.bodySmall,
                       readMoreText: 'المزيد',
@@ -170,22 +192,22 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         IconRow(
-                            count: model.space,
+                            count: model[index].space!,
                             icon: SvgPicture.asset(Images.size),
                             style: Theme.of(context).textTheme.bodyMedium,
                             fontsize: 10),
                         IconRow(
-                            count: model.bathrooms,
+                            count: model[index].bathrooms!,
                             icon: SvgPicture.asset(Images.shower),
                             style: Theme.of(context).textTheme.bodyMedium,
                             fontsize: 10),
                         IconRow(
-                            count: model.floor,
+                            count: model[index].floor!,
                             icon: SvgPicture.asset(Images.chair),
                             style: Theme.of(context).textTheme.bodyMedium,
                             fontsize: 10),
                         IconRow(
-                            count: model.rooms,
+                            count: model[index].rooms!,
                             icon: SvgPicture.asset(Images.bed),
                             style: Theme.of(context).textTheme.bodyMedium,
                             fontsize: 10),
@@ -252,8 +274,8 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       mapType: MapType.hybrid,
                       // cloudMapId: '961ba1ad7f1204e8',
                       initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                            double.parse(model.lat), double.parse(model.long)),
+                        target: LatLng(double.parse(model[index].lat!),
+                            double.parse(model[index].long!)),
                         zoom: 18,
                       ),
                       myLocationButtonEnabled: false,
@@ -265,9 +287,9 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       markers: {
                         Marker(
                             markerId: const MarkerId('homeLocation'),
-                            infoWindow: InfoWindow(title: model.title),
-                            position: LatLng(double.parse(model.lat),
-                                double.parse(model.long)))
+                            infoWindow: InfoWindow(title: model[index].title),
+                            position: LatLng(double.parse(model[index].lat!),
+                                double.parse(model[index].long!)))
                       },
                       // onMapCreated: (GoogleMapController controller) {
                       //   cubit.googleMapController = controller;

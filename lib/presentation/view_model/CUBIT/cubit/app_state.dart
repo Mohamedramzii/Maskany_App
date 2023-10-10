@@ -86,4 +86,9 @@ final class DeleteFavoritesFailureState extends AppState {
 
 
 final class GetCategoriesState extends AppState {}
-// final class IsNOtNavBarsState extends AppState {}
+final class FillListsSuccessState extends AppState {}
+final class ToggleMapTypeSuccessState extends AppState {}
+
+
+final class AddOrRemoveSuccessState extends AppState{}
+final class AddOrRemoveFailureState extends AppState{}

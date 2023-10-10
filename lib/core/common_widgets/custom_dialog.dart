@@ -45,6 +45,7 @@ abstract class Dialogs {
           ),
         ),
       );
+
   static failureDialog(
     context,
   ) =>
@@ -52,7 +53,7 @@ abstract class Dialogs {
         context: context,
         builder: (context) => AlertDialog.adaptive(
           backgroundColor: Colors.white,
-          title: Center(
+          title: const Center(
             child: Icon(
               Icons.info_outline,
               color: Colors.red,

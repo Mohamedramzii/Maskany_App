@@ -37,10 +37,10 @@ class _LocationMapViewState extends State<LocationMapView> {
                     cubit.filterCategories(cubit.categoryIndex).map((e) {
                   return MarkerData(
                       marker: Marker(
-                          markerId: MarkerId(e.locationLink),
+                          markerId: MarkerId(e.locationLink!),
                           position: LatLng(
-                            double.parse(e.lat),
-                            double.parse(e.long),
+                            double.parse(e.lat!),
+                            double.parse(e.long!),
                           ),
                           infoWindow: const InfoWindow(),
                           onTap: () {
@@ -51,7 +51,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                             );
                           }),
                       child: CustomMarker(
-                          price: e.price, isviewed: cubit.isviewedfromC));
+                          price: e.price!, isviewed: cubit.isviewedfromC));
                 }).toList(),
                 builder: (p0, Set<Marker>? markers) {
                   return GoogleMap(
@@ -59,15 +59,15 @@ class _LocationMapViewState extends State<LocationMapView> {
                     // indoorViewEnabled: true,
                     mapToolbarEnabled: true,
 
-                    // mapType: MapType.terrain,
+                    mapType: cubit.isSatalite ? MapType.hybrid : MapType.normal,
                     zoomGesturesEnabled: true,
                     // onCameraMoveStarted: () => true,
                     // cloudMapId: '961ba1ad7f1204e8',
                     // initialCameraPosition: cubit.firstVIew!,
                     initialCameraPosition: CameraPosition(
                         target: LatLng(
-                          double.parse(cubit.property[0].lat),
-                          double.parse(cubit.property[0].long),
+                          double.parse(cubit.property[0].lat!),
+                          double.parse(cubit.property[0].long!),
                         ),
                         zoom: 9),
                     myLocationButtonEnabled: true,
@@ -77,7 +77,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                     padding: const EdgeInsets.only(top: 100),
                     markers: markers ?? {},
                     // markers:
-                    //     _createMarkers(cubit.property, context, cubit),
+                    //     _createMarkers(cubit, context, cubit),
                     // markers: _markers.values.toSet(),
                     onMapCreated: (GoogleMapController controller) {
                       cubit.googleMapController = controller;
@@ -131,31 +131,50 @@ class _LocationMapViewState extends State<LocationMapView> {
           //   ),
           ,
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-          floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: ColorsManager.kprimaryColor,
-            label: Row(
-              children: [
-                Image.asset(Images.menu),
-                SizedBox(
-                  width: 5.w,
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FloatingActionButton.extended(
+                backgroundColor: ColorsManager.kprimaryColor,
+                label: const Icon(
+                  Icons.layers_rounded,
+                  color: Colors.white,
                 ),
-                Text(
-                  'عرض القائمة',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.white),
-                )
-              ],
-            ),
-            onPressed: () {
-              cubit.isNotNavBar = true;
-              Navigator.push(
-                  context,
-                  PageAnimationTransition(
-                      page: const HomeView(),
-                      pageAnimationType: BottomToTopTransition()));
-            },
+                onPressed: () {
+                  cubit.toggleMapType();
+                },
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              FloatingActionButton.extended(
+                backgroundColor: ColorsManager.kprimaryColor,
+                label: Row(
+                  children: [
+                    Image.asset(Images.menu),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Text(
+                      'عرض القائمة',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: Colors.white),
+                    )
+                  ],
+                ),
+                onPressed: () {
+                  cubit.isNotNavBar = true;
+                  Navigator.push(
+                      context,
+                      PageAnimationTransition(
+                          page: const HomeView(),
+                          pageAnimationType: BottomToTopTransition()));
+                },
+              ),
+            ],
           ),
         );
       },

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -15,6 +16,7 @@ import '../../../../data/data_sources/network/dio_helper.dart';
 import '../../../../data/models/fav_model2/fav_model2.dart';
 import '../../../../data/models/propertiesModel/propertiesModel.dart';
 
+import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../../../views/favorite_view.dart';
 import '../../../views/home_view.dart';
 import '../../../views/location_map_view.dart';
@@ -28,6 +30,12 @@ class AppCubit extends Cubit<AppState> {
   double rate = 2.5;
   int currentindex = 0;
   bool isviewedfromC = false;
+  bool isSatalite = false;
+
+  toggleMapType() {
+    isSatalite = !isSatalite;
+    emit(ToggleMapTypeSuccessState());
+  }
 
   viewed() {
     isviewedfromC = true;
@@ -157,9 +165,10 @@ class AppCubit extends Cubit<AppState> {
   }
 
   PropertiesModel? properties;
-  List<PropertiesModel> property = [];
-  List<PropertiesModel> bee3Prop = [];
-  List<PropertiesModel> egaarProp = [];
+  List<PropertiesModel2> property = [];
+
+  List<PropertiesModel2> bee3Prop = [];
+  List<PropertiesModel2> egaarProp = [];
   getAllproperties() async {
     CacheHelper.getData(key: tokenKey);
     emit(GetAllPropertiesLoadingState());
@@ -169,79 +178,23 @@ class AppCubit extends Cubit<AppState> {
           url: EndPoints.properties,
           token: 'Token ${CacheHelper.getData(key: tokenKey)}');
       for (var item in response.data) {
-        property.add(PropertiesModel.fromJson(item));
-        egaarProp = property
-            .where((e) => e.category.name == allcategories[0].name)
-            .toList();
-        bee3Prop = property
-            .where((e) => e.category.name == allcategories[1].name)
-            .toList();
+        property.add(PropertiesModel2.fromJson(item));
       }
-        
 
-      debugPrint('######### ${egaarProp.length} ###############');
-      debugPrint('######### ${bee3Prop.length} ###############');
+      // egaarProp = property
+      //     .where((e) => e.category.name == allcategories[0].name)
+      //     .toList();
+      // bee3Prop = property
+      //     .where((e) => e.category.name == allcategories[1].name)
+      //     .toList();
+      // debugPrint('######### ${property.length} ###############');
+      // debugPrint('######### ${egaarProp.length} ###############');
+      // debugPrint('######### ${bee3Prop.length} ###############');
 
       // property.add(properties!);
       debugPrint('Get All properties Success');
       emit(GetAllPropertiesSuccessState());
     } catch (e) {
-      debugPrint('Get All properties Failed -- ${e.toString()}');
-      emit(GetAllPropertiesFailureState());
-    }
-  }
-
-  int categoryIndex = 0;
-
-  blabla(index) {
-    categoryIndex = index;
-    emit(IndexChangedSuccessState());
-    print(categoryIndex);
-  }
-
-  List<PropertiesModel> filterCategories(int index) {
-    switch (index) {
-      // case 0:
-      //   return property;
-      case 0:
-        return egaarProp;
-      case 1:
-        return bee3Prop;
-
-      default:
-        return property;
-    }
-  }
-
-  List<PropertiesModel> search = [];
-  String emptyValue = '';
-  getSearchedFor(String query) {
-    search = property
-        .where((item) => item.title.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    // search=[];
-    emit(GetSearchSuccessState());
-  }
-
-  bool isalreadyinfav = false;
-  bool isFav = false;
-  // FavModel2? favoritesModel;
-  List<FavoritesModel> allfavorites = [];
-  getAllFavorites() {
-    CacheHelper.getData(key: tokenKey);
-
-    allfavorites = [];
-    emit(GetFavoritesLoadingState());
-    DioHelper.getData(
-            url: EndPoints.favorites,
-            token: 'Token ${CacheHelper.getData(key: tokenKey)}')
-        .then((value) {
-      for (var item in value.data) {
-        allfavorites.add(FavoritesModel.fromJson(item));
-      }
-      // debugPrint('Get Favs Success : ${allfavorites[0].property!.title}');
-      emit(GetFavoritesSuccessState());
-    }).catchError((e) {
       if (e is DioError) {
         if (e.error is SocketException && e.error == 113) {
           // Handle "No route to host" error
@@ -258,52 +211,129 @@ class AppCubit extends Cubit<AppState> {
         print('Exception occurred: $e');
         // Display an appropriate error message to the user
       }
-
-      debugPrint('Get Favs Failed ${e.toString()}');
-      emit(GetFavoritesFailureState(e.toString()));
-    });
+      debugPrint('Get All properties Failed -- ${e.toString()}');
+      emit(GetAllPropertiesFailureState());
+    }
   }
 
-  // void toggleFavorites(int itemID) {
-  //   emit(AddedToFavoritesLoadingState());
-  //   DioHelper.postData(
-  //           url: EndPoints.favorites,
-  //           data: {"property_id": itemID},
-  //           token: tokenHolder)
-  //       .then((value) {
-  //     bool isFav = allfavorites.any((element) => element.id == itemID);
-  //     if (isFav) {
-  //       debugPrint('Item Is In Favs And removed now');
-  //       allfavorites.removeWhere((element) => element.id == itemID);
-  //     } else {
-  //       // FavModel2 item = FavModel2(id: itemID);
-  //       debugPrint('Item Isnot In Favs And added now');
-  //       allfavorites.add(FavModel2.fromJson(value.data));
-  //     }
-  //     emit(GetAllPropertiesSuccessState());
-  //   }).catchError((e) {
-  //     emit(GetAllPropertiesFailureState());
-  //   });
-  // }
+  fillcategriesLists() {
+    emit(FillListsSuccessState());
+  }
 
+  int categoryIndex = 0;
+
+  blabla(index) {
+    categoryIndex = index;
+    emit(IndexChangedSuccessState());
+    print(categoryIndex);
+  }
+
+  List<PropertiesModel2> filterCategories(int index) {
+    switch (index) {
+      // case 0:
+      //   return property;
+      case 0:
+        return egaarProp;
+      case 1:
+        return bee3Prop;
+
+      default:
+        return property;
+    }
+  }
+
+  List<PropertiesModel2> search = [];
+  String emptyValue = '';
+  getSearchedFor(String query) {
+    search = property
+        .where((item) => item.title!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    // search=[];
+    emit(GetSearchSuccessState());
+  }
+
+  // List<int?> favsID = [];
+  bool isalreadyinfav = false;
+  // bool isFav = false;
+  // FavoritesModel? favoritesModel;
+
+  List<FavoritesModel> allfavorites = [];
+  Set<int> favoritesID = {};
+  Set<int> favoritesID2 = {};
+  getAllFavorites() async {
+    CacheHelper.getData(key: tokenKey);
+
+    allfavorites.clear();
+    favoritesID.clear();
+    favoritesID2.clear();
+    // favsID = [];
+    emit(GetFavoritesLoadingState());
+    Response response = await DioHelper.getData(
+        url: EndPoints.favorites,
+        token: 'Token ${CacheHelper.getData(key: tokenKey)}');
+
+    // favoritesModel = FavoritesModel.fromJson(response.data);
+    for (var item in response.data) {
+      allfavorites.add(FavoritesModel.fromJson(item));
+      favoritesID.add(item['id']);
+      favoritesID2.add(item['property']['id']);
+      // favsID.add(item['id']);
+    }
+     print('favorites IDs length: ${favoritesID.length}');
+     print('favorites IDs length: ${favoritesID2.length}');
+    // if (CacheHelper.getData(key: 'favMap') != null) {
+    //   favMap = json.decode(CacheHelper.getData(key: 'favMap'));
+    //   print(favMap);
+    // }
+
+    debugPrint('|||||||In GetFavs Allfavs length:${allfavorites.length} |||||');
+    // debugPrint('|||||||In GetFavs FavsID length:${favsID.length} |||||');
+    // debugPrint('|||||||In GetFavs FavsID length:${favsID} |||||');
+    // debugPrint('Get Favs Success : ${allfavorites[0]!.title}');
+    emit(GetFavoritesSuccessState());
+  }
+
+  List<int> topIDFavs = [];
+  List<int> favsID = [];
   bool isaddedtofav = false;
-  addtoFavorites({required int id}) {
+  Map<int, FavoritesModel> favMap = {};
+  addtoFavorites({required id, index}) async {
     emit(AddedToFavoritesLoadingState());
 
     try {
-      DioHelper.postData(
+      var response = await DioHelper.postData(
               url: EndPoints.favorites,
               data: {'property_id': id},
               token: 'Token $tokenHolder')
-          .then((value) {
+          .then((value) async {
+        // topIDFavs.addAll(value.data['id']);
+        // favMap[index] = FavoritesModel.fromJson(value.data);
+        // favoritesID.add(id);
+        // CacheHelper.saveData(key: 'favMap', value: json.encode(favMap));
+        // print('Added Item Index $index where its ID ${favMap[index]!.id}');
+        // favsID.addAll(value.data['property']['id']);
+        // debugPrint(
+        //     '|||||||In AddFavs topIDFavs length:${topIDFavs.length} |||||');
+        // debugPrint(
+        //     '|||||||In AddFavs FavsID length:${favsID.length} |||||');
+        // CacheHelper.saveData(key: 'favs', value: updatedFavs.toString());
         // FavoritesModel.fromJson(value.data['property']);
         // if (allfavorites.contains(value.data['property'])) {
         //   isalreadyinfav = true;
         //   debugPrint('Is Already in Favs');
         // }
-        isFav = true;
-        getAllFavorites();
-        // emit(AddedToFavoritesSuccessState(true));
+        // isFav = true;
+
+        // favsID.add(value.data['id']);
+
+        // if (response.statusCode == 400) {
+        //   print(response.data['error']);
+        // }
+        // debugPrint('|||||||In AddFavs FavsID length:${favsID.length} |||||');
+        // isaddedtofav = true;
+        // print('Is ADD to fav: $isaddedtofav');
+        await getAllFavorites();
+        emit(AddedToFavoritesSuccessState(true));
       });
     } on DioError catch (e) {
       if (e.response != null) {
@@ -320,18 +350,55 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  deleteFromFav({required favoriteItemID}) {
+  addOrdeleteFavorite({required favoriteItemID, required id}) {
+    if (favoritesID.contains(favoriteItemID)) {
+      deleteFromFav(favoriteItemID: favoriteItemID);
+    } else if (favoritesID.contains(id)) {
+      addtoFavorites(id: id);
+    }
+    emit(AddOrRemoveSuccessState());
+  }
+
+  int? indexOfDeletedItem;
+  deleteFromFav({
+    required int favoriteItemID,
+  }) async {
     emit(DeleteFavoritesLoadingState());
 
-    DioHelper.deleteData(
-            url: 'http://66.45.248.247:8000/properties/fav/$favoriteItemID/',
-            token: 'Token $tokenHolder')
-        .then((value) {
-      getAllFavorites();
-      // emit(DeleteFavoritesSuccessState());
-    }).catchError((e) {
+    try {
+      Response response = await DioHelper.deleteData(
+          url: 'http://66.45.248.247:8000/properties/fav/$favoriteItemID/',
+          token: 'Token ${CacheHelper.getData(key: tokenKey)}');
+      // favsID.remove(favoriteItemID);
+      // isaddedtofav=false;
+      // print('Is ADD to fav: $isaddedtofav');
+      // indexOfDeletedItem = updatedFavs.indexOf(favoriteItemID);
+      // updatedFavs.removeAt(indexOfDeletedItem!);
+
+      // favoritesID.remove(favoriteItemID);
+
+    await   getAllFavorites();
+      // debugPrint('|||||||In DeleteFavs FavsID length:${favsID.length} |||||');
+      emit(DeleteFavoritesSuccessState());
+    } catch (e) {
+      if (e is DioError) {
+        if (e.error is SocketException && e.error == 113) {
+          // Handle "No route to host" error
+          print(
+              '*-*-*-*-*-*-*-No route to host error occurred*-*-*-*-*-*-*-*-');
+          // Display an appropriate error message to the user
+        } else {
+          // Handle other Dio errors
+          print('Dio error occurred: ${e.error}');
+          // Display an appropriate error message to the user
+        }
+      } else {
+        // Handle other exceptions
+        print('Exception occurred: $e');
+        // Display an appropriate error message to the user
+      }
       emit(DeleteFavoritesFailureState(e.toString()));
-    });
+    }
   }
 
   // Map<int, bool> favorites = {};

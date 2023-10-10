@@ -4,19 +4,19 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
+import '../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:read_more_text/read_more_text.dart';
 import '../../core/app_resources/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/common_widgets/custom_buttom.dart';
-import '../../data/models/propertiesModel/propertiesModel.dart';
 import 'widgets/HomeView_widgets/custom_rowIcons.dart';
 import '../../core/app_resources/images.dart';
 import '../../generated/l10n.dart';
 
 class DetailsView extends StatelessWidget {
   const DetailsView({super.key, required this.model, this.index = 0});
-  final PropertiesModel model;
+  final PropertiesModel2 model;
   final int index;
 
   @override
@@ -37,20 +37,36 @@ class DetailsView extends StatelessWidget {
             ),
             centerTitle: true,
             actions: [
-              cubit.allfavorites
-                      .map((e) => e.property!.id)
-                      .contains(model.id)
-                  ? IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      ))
-                  : IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_border,
-                      ))
+              Visibility(
+                visible: cubit.allfavorites
+                    .any((e) => e.id == model),
+
+                replacement: GestureDetector(
+                  onTap: () {
+                    cubit.addtoFavorites(id: model.id);
+                  },
+                  child: Icon(
+                    Icons.favorite_border,
+                    size: ResponsiveBreakpoints.of(context).isMobile
+                        ? 25.r
+                        : 30.r,
+                  ),
+                ),
+                // maintainAnimation: true,
+                child: GestureDetector(
+                  onTap: () {
+                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                    cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id!);
+                  },
+                  child: Icon(
+                    Icons.favorite_rounded,
+                    color: Colors.red,
+                    size: ResponsiveBreakpoints.of(context).isMobile
+                        ? 25.r
+                        : 30.r,
+                  ),
+                ),
+              )
             ],
           ),
           body: Padding(
@@ -74,7 +90,7 @@ class DetailsView extends StatelessWidget {
                                 ? 15.r
                                 : 5.r),
                         child: Hero(
-                          tag: '${cubit.property[index].title}+vertical',
+                          tag: '${model.title}+vertical',
                           child: SvgPicture.asset(
                             Images.houseS,
                             fit: BoxFit.fill,
@@ -87,11 +103,11 @@ class DetailsView extends StatelessWidget {
                     height: 23.h,
                   ),
                   Text(
-                    model.title,
+                    model.title!,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    model.city,
+                    model.title!,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Row(
@@ -149,7 +165,7 @@ class DetailsView extends StatelessWidget {
                   ),
                   ReadMoreText(
                       // "فاخرة بتجهيزات فندقية في حي العقيق شمال الرياض تتميز بالهدوء والخصوصية، تبعد 5 دقائق عن منطقة البوليڤارد و الرياض بارك وقريبه جدا من جميع الخدمات الصحية والترفيهية",
-                      model.details,
+                      model.details!,
                       numLines: 2,
                       style: Theme.of(context).textTheme.bodySmall,
                       readMoreText: 'المزيد',
@@ -170,22 +186,22 @@ class DetailsView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         IconRow(
-                            count: model.space,
+                            count: model.space!,
                             icon: SvgPicture.asset(Images.size),
                             style: Theme.of(context).textTheme.bodyMedium,
                             fontsize: 10),
                         IconRow(
-                            count: model.bathrooms,
+                            count: model.bathrooms!,
                             icon: SvgPicture.asset(Images.shower),
                             style: Theme.of(context).textTheme.bodyMedium,
                             fontsize: 10),
                         IconRow(
-                            count: model.floor,
+                            count: model.floor!,
                             icon: SvgPicture.asset(Images.chair),
                             style: Theme.of(context).textTheme.bodyMedium,
                             fontsize: 10),
                         IconRow(
-                            count: model.rooms,
+                            count: model.rooms!,
                             icon: SvgPicture.asset(Images.bed),
                             style: Theme.of(context).textTheme.bodyMedium,
                             fontsize: 10),
@@ -253,7 +269,7 @@ class DetailsView extends StatelessWidget {
                       // cloudMapId: '961ba1ad7f1204e8',
                       initialCameraPosition: CameraPosition(
                         target: LatLng(
-                            double.parse(model.lat), double.parse(model.long)),
+                            double.parse(model.lat!), double.parse(model.long!)),
                         zoom: 18,
                       ),
                       myLocationButtonEnabled: false,
@@ -266,8 +282,8 @@ class DetailsView extends StatelessWidget {
                         Marker(
                             markerId: const MarkerId('homeLocation'),
                             infoWindow: InfoWindow(title: model.title),
-                            position: LatLng(double.parse(model.lat),
-                                double.parse(model.long)))
+                            position: LatLng(double.parse(model.lat!),
+                                double.parse(model.long!)))
                       },
                       // onMapCreated: (GoogleMapController controller) {
                       //   cubit.googleMapController = controller;

@@ -50,8 +50,8 @@ class DetailsView extends StatelessWidget {
                     cubit.addtoFavorites(id: model.id);
                   },
                   child: Icon(
-                    Icons.favorite,
-                    color: Colors.red,
+                    Icons.favorite_border_outlined,
+                    color: Colors.grey,
                     size: ResponsiveBreakpoints.of(context).isMobile
                         ? 25.r
                         : 30.r,
@@ -74,7 +74,7 @@ class DetailsView extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 5.w,
+                width: 15.w,
               ),
             ],
           ),

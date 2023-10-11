@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
-import 'package:maskany_app/data/models/propertiesModel/propertiesModel.dart';
 import 'package:maskany_app/presentation/views/detailsForhorizontal.dart';
 import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/home_loading_view.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
@@ -14,17 +13,29 @@ import 'package:page_animation_transition/animations/right_to_left_transition.da
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../generated/l10n.dart';
+import '../view_model/CUBIT/cubit/auth_cubit.dart';
 import 'details_view.dart';
 import 'widgets/HomeView_widgets/custom_horizontalContainer.dart';
 import 'widgets/HomeView_widgets/custom_textfield.dart';
 import 'widgets/HomeView_widgets/custom_vertical_container.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
     tokenHolder = CacheHelper.getData(key: tokenKey);
+    BlocProvider.of<AuthCubit>(context).getUserData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: BlocConsumer<AppCubit, AppState>(
@@ -120,10 +131,9 @@ class HomeView extends StatelessWidget {
                                                 RightToLeftTransition()));
                                   },
                                   child: CustomHorizontalCOntainer(
-                                    // favs: cubit.allfavorites[index],
-                                    model: cubit.property,
-                                    index:index
-                                  ));
+                                      // favs: cubit.allfavorites[index],
+                                      model: cubit.property,
+                                      index: index));
                             },
                             separatorBuilder: (context, index) => SizedBox(
                                   width: 20.w,

@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maskany_app/data/models/login_model/login_model.dart';
+import 'package:maskany_app/data/models/userdata_model/user_data_model.dart';
 import 'package:maskany_app/generated/l10n.dart';
 import 'package:maskany_app/presentation/views/Auth/location_view.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
@@ -9,9 +11,8 @@ import '../../../../core/common_widgets/custom_snackbar.dart';
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/local/shared_pref.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
-import '../../../../data/models/login_model/login_model.dart';
 import '../../../../data/models/login_model/login_model2/login_model2.dart';
-import '../../../../data/models/register_model/register_model.dart';
+
 import '../../../../data/models/register_model/register_model2/register_model2.dart';
 import '../../../views/AppLayout.dart';
 
@@ -140,5 +141,37 @@ class AuthCubit extends Cubit<AuthState> {
   toggleVisibility() {
     isvisible = !isvisible;
     emit(ToggleVisibilitystate());
+  }
+
+  UserDataModel? userdata;
+  getUserData() async {
+    emit(GetUserDataLoadingState());
+
+    try {
+      Response response = await DioHelper.getData(
+          url: EndPoints.userData, token: 'Token $tokenHolder');
+
+      userdata = UserDataModel.fromJson(response.data);
+      debugPrint(userdata!.username);
+      emit(GetUserDataSuccessState());
+    } catch (e) {
+      emit(GetUserDataFailureState(errMessage: e.toString()));
+    }
+  }
+
+  updateUserData(
+      {required String dataToChange, required dynamic updateData}) async {
+    emit(UpdateUserDataLoadingState());
+
+    try {
+      await DioHelper.putData(
+          url: EndPoints.updateUserData,
+          data: {dataToChange: updateData},
+          token: 'Token $tokenHolder');
+      await getUserData();
+      emit(UpdateUserDataSuccessState());
+    } catch (e) {
+      emit(UpdateUserDataFailureState(errMessage: e.toString()));
+    }
   }
 }

@@ -32,7 +32,7 @@ class SearchView extends StatelessWidget {
                           height: 100.h,
                         )
                       : const SizedBox(),
-                  cubit.emptyValue == ''
+                  cubit.emptyValue == '' || cubit.emptyValue.isEmpty
                       ? Column(
                           children: [
                             Center(

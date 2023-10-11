@@ -22,6 +22,11 @@ abstract class Images {
   static const String chair = 'assets/images/chair.svg';
   static const String size = 'assets/images/size.svg';
   static const String shower = 'assets/images/shower.svg';
+  static const String visa = 'assets/images/visa.svg';
+  static const String vodafone = 'assets/images/vodafone.svg';
+  static const String correct = 'assets/images/correct.svg';
+  static const String editimage = 'assets/images/edit_image.svg';
+  static const String editdata = 'assets/images/edit_data.svg';
 
   static const String emptySearch = 'assets/images/empty_search.json';
 }

@@ -68,5 +68,30 @@ final class ChangePasswordFailureState extends AuthState {
   ChangePasswordFailureState({required this.errMessage});
 }
 
+final class ToggleVisibilitystate extends AuthState {}
 
-final class ToggleVisibilitystate extends AuthState{}
+final class GetUserDataSuccessState extends AuthState {
+  
+}
+
+final class GetUserDataLoadingState extends AuthState {}
+
+final class GetUserDataFailureState extends AuthState {
+  final String errMessage;
+
+  GetUserDataFailureState({required this.errMessage});
+}
+
+
+
+final class UpdateUserDataSuccessState extends AuthState {
+  
+}
+
+final class UpdateUserDataLoadingState extends AuthState {}
+
+final class UpdateUserDataFailureState extends AuthState {
+  final String errMessage;
+
+  UpdateUserDataFailureState({required this.errMessage});
+}

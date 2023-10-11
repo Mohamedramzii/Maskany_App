@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'core/constants.dart';
 import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
@@ -67,8 +68,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
                 create: (context) => AppCubit()
-                  ..getPermission(context)
-                  ..getCurrentLatLong()
+                  ..checkLocationPermission(
+                      Permission.locationWhenInUse, context)
+                  // ..getCurrentLatLong()
                   ..getAllproperties()
                   ..getCategories()
                   ..getAllFavorites()
@@ -104,6 +106,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
+              scaffoldBackgroundColor: Colors.grey.shade100,
               fontFamily: ArabicThemeData.font(
                 arabicFont: ArabicFont.avenirArabic,
               ),

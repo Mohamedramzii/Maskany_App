@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_catch_error
+
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -8,8 +10,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
 import 'package:maskany_app/data/models/favorites_model/favorites_model.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/common_widgets/custom_dialog.dart';
+import '../../../../core/common_widgets/custom_snackbar.dart';
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
 import '../../../../data/models/propertiesModel/propertiesModel.dart';
@@ -66,8 +70,13 @@ class AppCubit extends Cubit<AppState> {
   //! Bottom Nav bar
   btmNavBar(index) {
     currentindex = index;
-    if (index == 0) {
-      // getAllFavorites();
+    if (index == 1) {
+      screen[1];
+      emit(NavBarIndexChangedSuccess());
+    }
+    if (index == 2) {
+      screen[2];
+      emit(NavBarIndexChangedSuccess());
     }
     emit(NavBarIndexChangedSuccess());
   }
@@ -84,70 +93,109 @@ class AppCubit extends Cubit<AppState> {
 //! ----------------------------------------------------------
 
 //! Getting User Permission
-  Future getPermission(context) async {
-    late bool locationService;
-    late LocationPermission permission;
-    //! check if location service is enabled or not
-    locationService = await Geolocator.isLocationServiceEnabled();
-    if (!locationService) {
-      return debugPrint('Location services are disabled.');
-    }
 
-    //! checks for permission
-    permission = await Geolocator.checkPermission();
-
-    //! permissions types (if permission is denied)
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // return debugPrint('Location permissions are denied');
-        return Dialogs.failureDialog(context);
+  //! In IOS we should add isRestricted and isLimited
+  Future<void> checkLocationPermission(
+      Permission permission, BuildContext context) async {
+    late PermissionStatus status;
+    try {
+      status = await permission.request();
+    } catch (e) {
+      if (status.isGranted) {
+        debugPrint('Location Is Granted');
+      } else if (status.isDenied) {
+        await permission.request();
+      } else if (status.isPermanentlyDenied) {
+        await openAppSettings();
+      } else {
+        debugPrint('Just Locaion Error');
       }
     }
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      // return debugPrint(
-      //     'Location permissions are permanently denied, we cannot request permissions.');
-      return Dialogs.failureDialog(context);
-    }
-
-    print('########## $permission');
-    if (permission == LocationPermission.whileInUse ||
-        permission == LocationPermission.always) {
-      // await getCurrentLatLong();
-    }
-
-    //! Getting Current location using lat long
-    Future<void> getCurrentLatLong() async {
-      //! getCurrentPosition() gets latlong
-      currentLocation = await Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.high)
-          .then((value) {
-        return value;
-      });
-      emit(GetCurrentLocationSuccess());
-
-      //! when open google maps, the first place to view (usually user current location)
-      firstVIew = CameraPosition(
-        target: LatLng(currentLocation!.latitude, currentLocation!.longitude),
-        zoom: 15,
-      );
-    }
+    getCurrentLatLong();
   }
+  // void checkLocationPermission(context) async {
+  //   LocationPermission permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     // Location permission is denied
+  //     LocationPermission newPermission = await Geolocator.requestPermission();
+  //     handlePermissionStatus(newPermission, context);
+  //   } else if (permission == LocationPermission.deniedForever) {
+  //     // Location permission is permanently denied
+  //     // Show a dialog or navigate to app settings
+  //     // to enable location permission manually
+  //     handleForeverDeniedPermission(context);
+  //   } else {
+  //     // Location permission is granted
+  //     // Proceed with location-related functionality
+  //     handleLocationPermissionGranted(context);
+  //   }
+  // }
+
+  // void handlePermissionStatus(LocationPermission permission, context) {
+  //   if (permission == LocationPermission.denied) {
+  //     // Location permission is still denied
+  //     // Show a dialog or provide an alternative functionality
+  //     // to proceed without location access
+  //     handleDeniedPermission(context);
+  //   } else if (permission == LocationPermission.deniedForever) {
+  //     // Location permission is permanently denied
+  //     // Show a dialog or navigate to app settings
+  //     // to enable location permission manually
+  //     handleForeverDeniedPermission(context);
+  //   } else {
+  //     // Location permission is granted
+  //     // Proceed with location-related functionality
+  //     handleLocationPermissionGranted(context);
+  //   }
+  // }
+
+  // void handleDeniedPermission(context) {
+  //   print('Location permission is denied');
+  //   // Implement your logic here when location permission is denied
+  //   openAppSettings().catchError((error) {
+  //   // Error handling if the app settings cannot be opened
+  //   print('Error opening app settings: $error');
+  // });
+  //   // Dialogs.successDialog(context);
+  //   // SnackBars.failureSnackBar(
+  //   //     context, "Location", 'Location permission is denied');
+  // }
+
+  // void handleForeverDeniedPermission(context) {
+  //   print('Location permission is permanently denied');
+  //   // Implement your logic here when location permission is permanently denied
+  //   // SnackBars.failureSnackBar(
+  //   //     context, "Location", 'Location permission is permanently denied');
+  //       openAppSettings().catchError((error) {
+  //   // Error handling if the app settings cannot be opened
+  //   print('Error opening app settings: $error');
+  // });
+  // }
+
+  // void handleLocationPermissionGranted(context) {
+  //   print('Location permission is granted');
+  //   // Implement your logic here when location permission is granted
+  //   // You can start using location-related functionality
+  //   // SnackBars.failureSnackBar(
+  //   //     context, "Location", 'Location permission is granted');
+  // }
 
   //! Getting Current location using lat long
   Future<void> getCurrentLatLong() async {
     //! getCurrentPosition() gets latlong
     currentLocation = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
-        .then((value) => value);
-
-    emit(GetCurrentLocationSuccess());
+        .then((value) {
+      emit(GetCurrentLocationSuccess());
+      return value;
+    }).catchError((e) async {
+      await openAppSettings();
+    });
 
     //! when open google maps, the first place to view (usually user current location)
     firstVIew = CameraPosition(
       target: LatLng(currentLocation!.latitude, currentLocation!.longitude),
-      zoom: 18,
+      zoom: 15,
     );
   }
 
@@ -169,6 +217,9 @@ class AppCubit extends Cubit<AppState> {
   List<PropertiesModel2> egaarProp = [];
   getAllproperties() async {
     CacheHelper.getData(key: tokenKey);
+    property = [];
+    bee3Prop=[];
+    egaarProp=[];
     emit(GetAllPropertiesLoadingState());
     //  isviewed = CacheHelper.getData(key: 'loc');
     try {
@@ -206,7 +257,7 @@ class AppCubit extends Cubit<AppState> {
         }
       } else {
         // Handle other exceptions
-        print('Exception occurred: $e');
+        getAllproperties();
         // Display an appropriate error message to the user
       }
       debugPrint('Get All properties Failed -- ${e.toString()}');
@@ -425,7 +476,10 @@ class AppCubit extends Cubit<AppState> {
   // }
 
   seenOrnot({required propertyID}) {
-    DioHelper.postData(url: EndPoints.seen, data: {'property_id': propertyID},token: 'Token $tokenHolder')
+    DioHelper.postData(
+            url: EndPoints.seen,
+            data: {'property_id': propertyID},
+            token: 'Token $tokenHolder')
         .then((value) {
       debugPrint('SEEN');
       getAllproperties();
@@ -435,8 +489,8 @@ class AppCubit extends Cubit<AppState> {
       emit(SeenOrNotFailureState());
     });
   }
-  
-   Future<void> navigateToGoogleMaps(String link) async {
+
+  Future<void> navigateToGoogleMaps(String link) async {
     final url = link;
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(

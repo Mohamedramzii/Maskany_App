@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:maskany_app/data/models/favorites_model/favorites_model.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 import '../../../../core/app_resources/colors.dart';
@@ -42,12 +44,16 @@ class CustomHorizontalFavItems extends StatelessWidget {
                           height: 140.h,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(6.r),
-                            child: Hero(
-                                tag: favs[index].property!.title,
-                                child: SvgPicture.asset(
-                                  Images.houseS,
-                                  fit: BoxFit.cover,
-                                )),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  'http://66.45.248.247:8000${favs[index].property!.images[0].image}',
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Center(
+                                child: LoadingAnimationWidget.staggeredDotsWave(
+                                    color: ColorsManager.kprimaryColor,
+                                    size: 40.r),
+                              ),
+                            ),
                           )),
                       // SizedBox(height: 20.h,),
                       Row(

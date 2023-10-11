@@ -60,8 +60,8 @@ class DetailsViewForHorizontal extends StatelessWidget {
                     cubit.addtoFavorites(id: model[index].id);
                   },
                   child: Icon(
-                    Icons.favorite,
-                    color: Colors.red,
+                    Icons.favorite_border_outlined,
+                    color: Colors.grey,
                     size: ResponsiveBreakpoints.of(context).isMobile
                         ? 25.r
                         : 30.r,
@@ -71,8 +71,18 @@ class DetailsViewForHorizontal extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
-                    cubit.deleteFromFav(
-                        favoriteItemID: cubit.allfavorites[index].id!);
+
+                    if (index >= cubit.allfavorites.length) {
+                      print('+++++++ LAST +++++++++');
+                      Navigator.of(context).pop();
+                      Future.delayed(
+                        const Duration(milliseconds: 500),
+                        () => cubit.btmNavBar(1),
+                      );
+                    } else {
+                      cubit.deleteFromFav(
+                          favoriteItemID: cubit.allfavorites[index].id!);
+                    }
                   },
                   child: Icon(
                     Icons.delete,
@@ -84,7 +94,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 5.w,
+                width: 15.w,
               ),
               //   // maintainAnimation: true,
               //   child: GestureDetector(
@@ -115,7 +125,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
                   ),
                   CarouselSlider(
                     options: CarouselOptions(
-                      height: 200.0.h ,
+                      height: 200.0.h,
                       autoPlay: true,
                       enlargeCenterPage: true,
                       enableInfiniteScroll: false,
@@ -134,7 +144,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
                                       : 5.r),
                               child: CachedNetworkImage(
                                 imageUrl: 'http://66.45.248.247:8000${i.image}',
-                                 fit: BoxFit.fill,
+                                fit: BoxFit.fill,
                                 placeholder: (context, url) => Center(
                                   child:
                                       LoadingAnimationWidget.staggeredDotsWave(
@@ -334,7 +344,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       compassEnabled: false,
                       // indoorViewEnabled: true,
                       mapToolbarEnabled: false,
-                  
+
                       mapType: MapType.hybrid,
                       // cloudMapId: '961ba1ad7f1204e8',
                       initialCameraPosition: CameraPosition(
@@ -346,7 +356,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       myLocationEnabled: false,
                       zoomControlsEnabled: false,
                       zoomGesturesEnabled: false,
-                  
+
                       padding: const EdgeInsets.only(top: 100),
                       markers: {
                         Marker(
@@ -359,9 +369,9 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       //   cubit.googleMapController = controller;
                       //   // cubit.googleMapController!.setMapStyle(AutofillHints.);
                       // },
-                  
+
                       onTap: (latlong) {
-                          cubit.navigateToGoogleMaps(model[index].locationLink!);
+                        cubit.navigateToGoogleMaps(model[index].locationLink!);
                       },
                     ),
                   ),

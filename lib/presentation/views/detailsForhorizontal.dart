@@ -74,11 +74,11 @@ class DetailsViewForHorizontal extends StatelessWidget {
 
                     if (index >= cubit.allfavorites.length) {
                       print('+++++++ LAST +++++++++');
-                      Navigator.of(context).pop();
                       Future.delayed(
-                        const Duration(milliseconds: 500),
+                        const Duration(milliseconds: 300),
                         () => cubit.btmNavBar(1),
                       );
+                      Navigator.of(context).pop();
                     } else {
                       cubit.deleteFromFav(
                           favoriteItemID: cubit.allfavorites[index].id!);

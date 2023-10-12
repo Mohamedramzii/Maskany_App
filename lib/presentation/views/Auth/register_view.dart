@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:page_animation_transition/animations/left_to_right_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -11,6 +13,7 @@ import '../../../core/common_widgets/custom_textformfield_widget.dart';
 import '../../../core/constants.dart';
 import '../../../generated/l10n.dart';
 import '../../view_model/CUBIT/cubit/auth_cubit.dart';
+import 'location_view.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -172,7 +175,7 @@ class _RegisterViewState extends State<RegisterView> {
                         isEmail: false,
                         isPassword: cubit.isvisible,
                         onsave: (newValue) {
-                        passwordcontroller.text = newValue!;
+                          passwordcontroller.text = newValue!;
                         },
                         onvalidate: (value) {
                           if (value!.length < 8) {
@@ -211,24 +214,25 @@ class _RegisterViewState extends State<RegisterView> {
                       SizedBox(
                         height: 40.h,
                       ),
-                      state is RegisterLoadingState
-                          ? Center(
-                              child: LoadingAnimationWidget.staggeredDotsWave(
-                                  color: ColorsManager.kprimaryColor,
-                                  size: 40.r),
-                            )
-                          : CustomButton(
+                      CustomButton(
                               text: 'ابدأ الأن',
                               onpressed: () async {
                                 if (formKey2.currentState!.validate()) {
                                   formKey2.currentState!.save();
 
-                                  cubit.register(
-                                      username: fullnamecontroller.text.trim(),
-                                      email: emailcontroller.text.trim(),
-                                      phone: phonecontroller.text.trim(),
-                                      password: passwordcontroller.text.trim(),
-                                      context: context);
+                                  Navigator.of(context).push(
+                                      PageAnimationTransition(
+                                          page: LocationView(
+                                              email:
+                                                  emailcontroller.text.trim(),
+                                              password: passwordcontroller.text
+                                                  .trim(),
+                                              username: fullnamecontroller.text
+                                                  .trim(),
+                                              phoneNumber:
+                                                  phonecontroller.text.trim()),
+                                          pageAnimationType:
+                                              LeftToRightTransition()));
                                 }
                               }),
 

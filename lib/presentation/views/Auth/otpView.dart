@@ -9,6 +9,7 @@ import '../../../core/app_resources/colors.dart';
 import '../../../core/app_resources/fonts.dart';
 import '../../../core/common_widgets/custom_OTP.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
+import '../../../core/common_widgets/custom_dialog.dart';
 import '../../../core/common_widgets/custom_snackbar.dart';
 import '../../../core/common_widgets/custom_textformfield_widget.dart';
 import '../../../generated/l10n.dart';
@@ -46,11 +47,13 @@ class _OTPViewState extends State<OTPView> {
             // Dialogs.successDialog(
             //     context,
             //   );
-            SnackBars.successSnackBar(
-                context, S.of(context).changePassword, state.successMessage);
-            Navigator.of(context).pushReplacement(PageAnimationTransition(
-                page: const LoginView(),
-                pageAnimationType: BottomToTopTransition()));
+            Dialogs.successDialog(
+                context,
+                'أبدأ الأن',
+                () => Navigator.of(context).pushReplacement(
+                    PageAnimationTransition(
+                        page: const LoginView(),
+                        pageAnimationType: BottomToTopTransition())));
           } else if (state is ChangePasswordFailureState) {
             SnackBars.failureSnackBar(
                 context, S.of(context).changePassword, state.errMessage);
@@ -158,7 +161,8 @@ class _OTPViewState extends State<OTPView> {
                         return null;
                       },
                       textInputType: TextInputType.text,
-                      textinputaction: TextInputAction.next, obsecure: true,
+                      textinputaction: TextInputAction.next,
+                      obsecure: true,
                     ),
                     SizedBox(
                       height: 20.h,
@@ -179,7 +183,8 @@ class _OTPViewState extends State<OTPView> {
                         return null;
                       },
                       textInputType: TextInputType.text,
-                      textinputaction: TextInputAction.done, obsecure: true,
+                      textinputaction: TextInputAction.done,
+                      obsecure: true,
                     ),
                     SizedBox(
                       height: 30.h,

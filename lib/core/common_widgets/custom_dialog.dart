@@ -8,6 +8,8 @@ import 'custom_buttom.dart';
 abstract class Dialogs {
   static successDialog(
     context,
+    String text,
+    Function() onpressed
   ) =>
       showDialog(
         context: context,
@@ -39,7 +41,9 @@ abstract class Dialogs {
                   height: 16.h,
                 ),
                 const Spacer(),
-                CustomButton(text: 'ابدأ الان', onpressed: () {})
+                CustomButton(text: text, onpressed: () {
+                  onpressed;
+                })
               ],
             ),
           ),

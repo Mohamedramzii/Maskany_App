@@ -31,7 +31,7 @@ class CustomHorizontalFavItems extends StatelessWidget {
                 child: Container(
                   width: 190.w,
                   decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(15.r)),
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),

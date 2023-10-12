@@ -414,7 +414,6 @@ class AppCubit extends Cubit<AppState> {
     required int favoriteItemID,
   }) async {
     emit(DeleteFavoritesLoadingState());
-
     try {
       Response response = await DioHelper.deleteData(
           url: 'http://66.45.248.247:8000/properties/fav/$favoriteItemID/',

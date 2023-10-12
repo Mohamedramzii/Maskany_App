@@ -103,7 +103,7 @@ class ProfileSettingsVIew extends StatelessWidget {
                             children: [
                               _buildRowdata(
                                 label: 'رقم الهاتف',
-                                hint: phoneNumber,
+                                hint: cubit.userdata!.phoneNumber!,
                                 needWidget: true,
                                 whatToUpdate: 'phoneNumber',
                               ),
@@ -128,9 +128,9 @@ class ProfileSettingsVIew extends StatelessWidget {
                               SizedBox(
                                 height: 10.h,
                               ),
-                              const _buildRowdata(
+                              _buildRowdata(
                                 label: 'منطقة الحساب',
-                                hint: 'الجيزة',
+                                hint: cubit.userdata!.location!,
                                 needWidget: false,
                                 whatToUpdate: '',
                               ),
@@ -144,6 +144,14 @@ class ProfileSettingsVIew extends StatelessWidget {
                             ],
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 40.w),
+                        child: CustomButton(
+                            text: 'حفظ المعلومات', onpressed: () {}),
                       )
                     ],
                   ),

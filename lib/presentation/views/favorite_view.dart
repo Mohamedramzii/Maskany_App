@@ -48,19 +48,19 @@ class FavoriteView extends StatelessWidget {
                     style: Theme.of(context).textTheme.displayLarge,
                     textAlign: TextAlign.center,
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.location_on_outlined,
-                          color: ColorsManager.kprimaryColor),
-                      SizedBox(
-                        width: 6.w,
-                      ),
-                      Text(
-                        'السعودية, البارحة',
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Icon(Icons.location_on_outlined,
+                  //         color: ColorsManager.kprimaryColor),
+                  //     SizedBox(
+                  //       width: 6.w,
+                  //     ),
+                  //     Text(
+                  //       'السعودية, البارحة',
+                  //       style: Theme.of(context).textTheme.bodySmall,
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 10.h,
                   ),

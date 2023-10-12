@@ -107,6 +107,7 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
               scaffoldBackgroundColor: Colors.grey.shade100,
+              appBarTheme: AppBarTheme(backgroundColor: Colors.grey.shade100),
               fontFamily: ArabicThemeData.font(
                 arabicFont: ArabicFont.avenirArabic,
               ),

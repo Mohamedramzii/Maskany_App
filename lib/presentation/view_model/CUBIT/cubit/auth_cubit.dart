@@ -64,6 +64,7 @@ class AuthCubit extends Cubit<AuthState> {
       required email,
       required phone,
       required password,
+      required location,
       context}) async {
     emit(RegisterLoadingState());
 
@@ -72,16 +73,14 @@ class AuthCubit extends Cubit<AuthState> {
         'username': username,
         'email': email,
         'password': password,
+        'phoneNumber': phone,
+        'location':location
       });
 
       registerModel = RegisterModel2.fromJson(response.data);
       debugPrint('Register Message: ${registerModel!.detail}');
       if (registerModel!.type == 'successful') {
         CacheHelper.saveData(key: tokenKey, value: registerModel!.token);
-        SnackBars.successSnackBar(
-            context, S.of(context).CreateAccount, registerModel!.detail);
-        Navigator.of(context).pushReplacement(PageAnimationTransition(
-            page: LocationView(), pageAnimationType: LeftToRightTransition()));
       } else {
         SnackBars.failureSnackBar(
             context, S.of(context).CreateAccount, registerModel!.detail);

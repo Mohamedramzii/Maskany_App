@@ -1,102 +1,135 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../core/app_resources/colors.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
+import '../../../core/common_widgets/custom_snackbar.dart';
 import '../../../core/constants.dart';
 import '../../../generated/l10n.dart';
 import '../AppLayout.dart';
 
 class LocationView extends StatelessWidget {
-  LocationView({super.key});
+  LocationView(
+      {super.key,
+      required this.username,
+      required this.email,
+      required this.password,
+      required this.phoneNumber});
+  final String username;
+  final String email;
+  final String password;
+  final String phoneNumber;
 
   String govern = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: Padding(
-          padding: EdgeInsets.only(
-            left: 16.w,
-            right: 16.h,
-          ),
-          child: Align(
-            alignment: Alignment.topRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(S.of(context).location,
-                    style: Theme.of(context).textTheme.bodyLarge),
-                Text(S.of(context).belowLocation,
-                    style: Theme.of(context).textTheme.bodySmall),
+        body: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is RegisterSuccessState) {
+              Navigator.pushReplacement(
+                      context,
+                      PageAnimationTransition(
+                          page: const AppLayout(),
+                          pageAnimationType: LeftToRightTransition()))
+                  .then((value) => SnackBars.successSnackBar(context,
+                      S.of(context).CreateAccount, 'تم انشاء الحساب بنجاح'));
+            }
+          },
+          builder: (BuildContext context, AuthState state) => Padding(
+            padding: EdgeInsets.only(
+              left: 16.w,
+              right: 16.h,
+            ),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(S.of(context).location,
+                      style: Theme.of(context).textTheme.bodyLarge),
+                  Text(S.of(context).belowLocation,
+                      style: Theme.of(context).textTheme.bodySmall),
 
-                SizedBox(
-                  height: 30.h,
-                ),
-                // Container(
-                //   width: double.infinity,
-                //   height: 45.h,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(15.r),
-                //     border: Border.all(
-                //       color: ColorsManager.borderColor,
-                //       width: 2.5
-                //     )
-                //   ),
-                //   child:
-                // )
-                DropdownButtonFormField<String>(
-                  hint: Text('المحافظة',
-                      style: Theme.of(context).textTheme.bodyMedium),
-                  decoration: InputDecoration(
-                    disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.r),
-                        borderSide: BorderSide(
-                            color: ColorsManager.borderColor, width: 2)),
-                    enabledBorder: OutlineInputBorder(
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   height: 45.h,
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(15.r),
+                  //     border: Border.all(
+                  //       color: ColorsManager.borderColor,
+                  //       width: 2.5
+                  //     )
+                  //   ),
+                  //   child:
+                  // )
+                  DropdownButtonFormField<String>(
+                    hint: Text('المحافظة',
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.r),
+                          borderSide: BorderSide(
+                              color: ColorsManager.borderColor, width: 2)),
+                      enabledBorder: OutlineInputBorder(
+                          // gapPadding: 0,
+                          borderRadius: BorderRadius.circular(15.r),
+                          borderSide: BorderSide(
+                            color: ColorsManager.borderColor,
+                            width: 2,
+                            strokeAlign: 1,
+                          )),
+                      focusedBorder: OutlineInputBorder(
                         // gapPadding: 0,
                         borderRadius: BorderRadius.circular(15.r),
                         borderSide: BorderSide(
                           color: ColorsManager.borderColor,
                           width: 2,
                           strokeAlign: 1,
-                        )),
-                    focusedBorder: OutlineInputBorder(
-                      // gapPadding: 0,
-                      borderRadius: BorderRadius.circular(15.r),
-                      borderSide: BorderSide(
-                        color: ColorsManager.borderColor,
-                        width: 2,
-                        strokeAlign: 1,
+                        ),
                       ),
                     ),
+                    items: gov
+                        .map((gov) => DropdownMenuItem<String>(
+                              value: gov["governorate_name_ar"],
+                              child: Text(gov["governorate_name_ar"]),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      govern = value!;
+                    },
                   ),
-                  items: gov
-                      .map((gov) => DropdownMenuItem<String>(
-                            value: gov["governorate_name_ar"],
-                            child: Text(gov["governorate_name_ar"]),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    govern = value!;
-                  },
-                ),
 
-                SizedBox(
-                  height: 40.h,
-                ),
-                CustomButton(
-                    text: 'ابدأ الأن',
-                    onpressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          PageAnimationTransition(
-                              page: const AppLayout(),
-                              pageAnimationType: LeftToRightTransition()));
-                    })
-              ],
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  state is RegisterLoadingState
+                      ? Center(
+                          child: LoadingAnimationWidget.staggeredDotsWave(
+                              color: ColorsManager.kprimaryColor, size: 40.r),
+                        )
+                      : CustomButton(
+                          text: 'ابدأ الأن',
+                          onpressed: () {
+                            BlocProvider.of<AuthCubit>(context).register(
+                                username: username,
+                                email: email,
+                                phone: phoneNumber,
+                                password: password,
+                                location: govern,
+                                context: context);
+                          })
+                ],
+              ),
             ),
           ),
         ));

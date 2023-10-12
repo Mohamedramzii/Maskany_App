@@ -6,6 +6,7 @@ import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:maskany_app/presentation/views/Auth/login_view.dart';
+import 'package:maskany_app/presentation/views/global_settings_view.dart';
 import 'package:maskany_app/presentation/views/packages_view.dart';
 import 'package:maskany_app/presentation/views/profile_settings_view.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
@@ -95,7 +96,11 @@ class ProfileView extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(PageAnimationTransition(
+                        page: const GlobalSettingsView(),
+                        pageAnimationType: RightToLeftTransition()));
+                  },
                   leading: const Icon(Icons.settings),
                   title: Text(
                     'الاعدادات',
@@ -110,7 +115,7 @@ class ProfileView extends StatelessWidget {
                   onTap: () {},
                   leading: const Icon(Icons.location_on),
                   title: Text(
-                    'القاهرة',
+                    cubit.userdata!.location!,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),

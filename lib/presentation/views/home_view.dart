@@ -42,7 +42,8 @@ class _HomeViewState extends State<HomeView> {
         listener: (context, state) {},
         builder: (context, state) {
           var cubit = BlocProvider.of<AppCubit>(context);
-          return cubit.property.isEmpty
+          return cubit.property.isEmpty ||
+                  BlocProvider.of<AuthCubit>(context).userdata == null
               ? const HomeLoadingView()
               : Padding(
                   padding: EdgeInsets.only(left: 16.w, right: 16.w),
@@ -67,15 +68,25 @@ class _HomeViewState extends State<HomeView> {
                                 SizedBox(
                                   width: 6.w,
                                 ),
-                                Text(
-                                  'السعودية, البارحة',
-                                  style: ResponsiveBreakpoints.of(context)
-                                          .isMobile
-                                      ? Theme.of(context).textTheme.bodySmall
-                                      : Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(fontSize: 8.sp),
+                                BlocBuilder<AuthCubit, AuthState>(
+                                  builder: (context, state) {
+                                    var cubit =
+                                        BlocProvider.of<AuthCubit>(context);
+                                    return Text(
+                                      state is GetUserDataLoadingState
+                                          ? "موقعك..."
+                                          : cubit.userdata!.location!,
+                                      style: ResponsiveBreakpoints.of(context)
+                                              .isMobile
+                                          ? Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                          : Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(fontSize: 8.sp),
+                                    );
+                                  },
                                 ),
                               ],
                             ),

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:maskany_app/presentation/views/AppLayout.dart';
 import 'package:maskany_app/presentation/views/home_view.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
@@ -14,7 +13,6 @@ import 'widgets/location_mapView_widgets/custom_category_container.dart';
 import '../../core/app_resources/colors.dart';
 import '../../core/app_resources/images.dart';
 import '../view_model/CUBIT/cubit/app_cubit.dart';
-
 import 'widgets/location_mapView_widgets/custom_btmsheet.dart';
 
 class LocationMapView extends StatefulWidget {
@@ -28,7 +26,8 @@ class _LocationMapViewState extends State<LocationMapView> {
   @override
   void initState() {
     // BlocProvider.of<AppCubit>(context).getAllproperties();
-    BlocProvider.of<AppCubit>(context).checkLocationPermission(Permission.locationWhenInUse,context);
+    BlocProvider.of<AppCubit>(context)
+        .checkLocationPermission(Permission.locationWhenInUse, context);
     super.initState();
   }
 
@@ -41,7 +40,7 @@ class _LocationMapViewState extends State<LocationMapView> {
         return Scaffold(
           body: state is GetAllPropertiesLoadingState
               ? Center(
-                  child: LoadingAnimationWidget.stretchedDots(
+                  child: LoadingAnimationWidget.staggeredDotsWave(
                       color: ColorsManager.kprimaryColor, size: 40.r),
                 )
               : Stack(
@@ -58,11 +57,16 @@ class _LocationMapViewState extends State<LocationMapView> {
                                 ),
                                 infoWindow: const InfoWindow(),
                                 onTap: () {
-                                  Future.delayed(
+                                  print('-*-*-*-*-/-/-/-/ ${e.id} *-*-*-*-*-*-*-');
+                                 try {
+                                    Future.delayed(
                                     const Duration(milliseconds: 500),
                                     () => LocationBottomSheet.locationBTMSheet(
                                         context, e),
                                   );
+                                 } catch (e) {
+                                   print(e.toString());
+                                 }
                                 }),
                             child: CustomMarker(
                                 price: e.price!, isviewed: e.isSeen!));
@@ -108,25 +112,23 @@ class _LocationMapViewState extends State<LocationMapView> {
                         );
                       },
                     ),
-                    Card(
-                      child: Container(
-                        // width: double.infinity,
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(vertical: 5.h),
-                        height: 60.h,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15.r)),
-                        child: SizedBox(
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) =>
-                                    CustomCategoryContainer(
-                                        index: index,
-                                        list: cubit.allcategories),
-                                itemCount: cubit.allcategories.length)),
-                      ),
+                    Container(
+                      // width: double.infinity,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(vertical: 5.h),
+                      height: 60.h,
+                      width: double.infinity.w,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0),
+                          borderRadius: BorderRadius.circular(15.r)),
+                      child: SizedBox(
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) =>
+                                  CustomCategoryContainer(
+                                      index: index, list: cubit.allcategories),
+                              itemCount: cubit.allcategories.length)),
                     ),
 
                     // Align(
@@ -154,10 +156,7 @@ class _LocationMapViewState extends State<LocationMapView> {
             children: [
               FloatingActionButton.extended(
                 backgroundColor: ColorsManager.kprimaryColor,
-                label: const Icon(
-                  Icons.layers_rounded,
-                  color: Colors.white,
-                ),
+                label: Image.asset(Images.satellite,width: 25.r, color: Colors.white, ),
                 onPressed: () {
                   cubit.toggleMapType();
                 },
@@ -210,57 +209,4 @@ class _LocationMapViewState extends State<LocationMapView> {
       });
     });
   }
-
-  // Future<void> _onBuildCompleted() async {
-  //   await Future.wait(data.map((value) async {
-  //     Marker marker = await _generatemarkersFromWidget(value);
-  //     _markers[marker.markerId.value] = marker;
-  //   }));
-
-  //   setState(() {
-  //     isloaded =true;
-  //   });
-  // }
-
-  // Future<Marker> _generatemarkersFromWidget(Map<String, dynamic> data) async {
-  //   RenderRepaintBoundary boundary =
-  //       data['key'].currentContext?.findRenderObject() ;
-  //   ui.Image image = await boundary.toImage(pixelRatio: 2);
-  //   ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-
-  //   return Marker(
-  //       markerId: MarkerId(
-  //         data['id'],
-  //       ),
-  //       position: data['position'],
-  //       icon: BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List()));
-  // }
-
-//   Set<Marker> _createMarkers(List<PropertiesModel> locations, context, cubit) {
-// // String title='';
-//     final Iterable<Marker> markers = locations.map(
-//       (location) {
-//         customMarker(Images.marker);
-//         return Marker(
-//           markerId: MarkerId(location.title),
-//           onTap: () {
-//             LocationBottomSheet.locationBTMSheet(context, location);
-//             // Navigator.push(
-//             //     context,
-//             //     PageAnimationTransition(
-//             //         page: Test(location: location),
-//             //         pageAnimationType: RightToLeftFadedTransition()));
-//           },
-//           // icon: markerIcon,
-//           position:
-//               LatLng(double.parse(location.lat), double.parse(location.long)),
-//           infoWindow: InfoWindow(
-//             title: location.title,
-//           ),
-//         );
-//       },
-//     );
-
-//     return markers.toSet();
-//   }
 }

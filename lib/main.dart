@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:arabic_font/arabic_font.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maskany_app/presentation/views/internetCheckVIew.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'core/constants.dart';
 import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
@@ -16,6 +20,7 @@ import 'core/app_resources/colors.dart';
 import 'data/data_sources/local/shared_pref.dart';
 import 'data/data_sources/network/dio_helper.dart';
 import 'generated/l10n.dart';
+import 'presentation/view_model/CUBIT/cubit/internet_connectivity_cubit.dart';
 import 'presentation/views/splash_screen_view.dart';
 
 void main() async {
@@ -50,10 +55,38 @@ void main() async {
   // }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  StreamController<ConnectivityResult> _connectivityStreamController =
+      StreamController<ConnectivityResult>();
+
+  Stream<ConnectivityResult> get _connectivityStream =>
+      _connectivityStreamController.stream;
+
+  @override
+  void initState() {
+    super.initState();
+    startConnectivityStream();
+  }
+
+  void startConnectivityStream() {
+    Connectivity().onConnectivityChanged.listen((result) {
+      _connectivityStreamController.add(result);
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivityStreamController.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     //  SystemUiOverlayStyle(statusBarColor: Colors.white);
@@ -64,6 +97,9 @@ class MyApp extends StatelessWidget {
         builder: (context, child) => MultiBlocProvider(
           providers: [
             BlocProvider(
+              create: (context) => InternetCubit(),
+            ),
+            BlocProvider(
               create: (context) => AuthCubit(),
             ),
             BlocProvider(
@@ -73,15 +109,7 @@ class MyApp extends StatelessWidget {
                   // ..getCurrentLatLong()
                   ..getAllproperties()
                   ..getCategories()
-                  ..getAllFavorites()
-
-                // ..fillcategriesLists(),
-                ),
-            // BlocProvider(
-            //   create: (context) => LocationCubit()
-            //     ..getPermission(context)
-            //     ..getCurrentLatLong(),
-            // )
+                  ..getAllFavorites()),
           ],
           child: MaterialApp(
             builder: (contexttt, child) => ResponsiveBreakpoints.builder(
@@ -131,7 +159,7 @@ class MyApp extends StatelessWidget {
                       color: Colors.black)),
             ),
             themeMode: ThemeMode.dark,
-            home: const SplashScreen(),
+            home: const InternetChecker(),
           ),
         ),
       ),

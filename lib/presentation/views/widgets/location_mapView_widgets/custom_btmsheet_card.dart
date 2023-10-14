@@ -17,7 +17,6 @@ class CustomBtmsheetCard extends StatelessWidget {
   }) : super(key: key);
   final PropertiesModel2 model;
 
-  static double rate = 2.5;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
@@ -25,18 +24,20 @@ class CustomBtmsheetCard extends StatelessWidget {
         var cubit = BlocProvider.of<AppCubit>(context);
         return GestureDetector(
           onTap: () {
+            // Navigator.of(context).pop();
             cubit.seenOrnot(propertyID: model.id);
             Navigator.push(
                 context,
                 PageAnimationTransition(
                     page: DetailsView(
-                      model: model,
+                      model: model ?? PropertiesModel2(),
                     ),
                     pageAnimationType: BottomToTopTransition()));
           },
           child: Card(
             shadowColor: Colors.black,
-            elevation: 1,
+            elevation: 5,
+            surfaceTintColor: Colors.white,
             child: Container(
               width: double.infinity,
               height: 200.h,

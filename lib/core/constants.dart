@@ -5,6 +5,8 @@ final emailValidation =
 
 const String baseUrl = 'http://66.45.248.247:8000';
 
+enum InternetState { initial, lost, gained }
+
 const String tokenKey = '';
 String tokenHolder = '';
 bool isviewed = false;

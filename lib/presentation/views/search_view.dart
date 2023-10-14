@@ -26,6 +26,9 @@ class SearchView extends StatelessWidget {
               padding: EdgeInsets.only(top: 20.h, left: 16.w, right: 16.w),
               child: Column(
                 children: [
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   CustomTextFieldForSearchView(cubit: cubit),
                   cubit.emptyValue.isEmpty
                       ? SizedBox(

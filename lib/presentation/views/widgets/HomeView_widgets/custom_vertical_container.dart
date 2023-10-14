@@ -61,12 +61,9 @@ class CustomVerticalContainer extends StatelessWidget {
                         //   width: 120.w,
                         // ),
                         IconRow(
-                            count: model.bathrooms!,
-                            fontsize: 10,
-                            icon: SvgPicture.asset(
-                              Images.size,
-                              width: 15.w,
-                            )),
+                    count: model.space!,
+                    fontsize: 10,
+                    icon:const Text('م²')),
                         IconRow(
                             count: model.bathrooms!,
                             fontsize: 10,
@@ -99,7 +96,9 @@ class CustomVerticalContainer extends StatelessWidget {
 
               //   ],
               // ),
-              SizedBox(width: 2.w,),
+              SizedBox(
+                width: 2.w,
+              ),
               FittedBox(
                 child: SizedBox(
                     width: 200.w,
@@ -112,6 +111,12 @@ class CustomVerticalContainer extends StatelessWidget {
                         fit: BoxFit.cover,
                         placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => const Center(
+                          child: Icon(Icons.image_not_supported_rounded),
+                        ),
+                        errorListener: (value) => const Center(
+                          child: Icon(Icons.image_not_supported_rounded),
                         ),
                       ),
                     )),

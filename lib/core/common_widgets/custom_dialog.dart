@@ -42,7 +42,7 @@ abstract class Dialogs {
                 ),
                 const Spacer(),
                 CustomButton(text: text, onpressed: () {
-                  onpressed;
+                  onpressed();
                 })
               ],
             ),

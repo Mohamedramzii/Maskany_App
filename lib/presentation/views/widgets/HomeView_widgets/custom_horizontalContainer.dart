@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +11,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
+import '../../../view_model/CUBIT/cubit/app_cubit.dart';
 import 'custom_rowIcons.dart';
 
 class CustomHorizontalCOntainer extends StatelessWidget {
@@ -46,6 +48,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                     child: LoadingAnimationWidget.staggeredDotsWave(
                         color: ColorsManager.kprimaryColor, size: 40.r),
                   ),
+                  errorWidget: (context, url, error) => const Center(child: Icon(Icons.image_not_supported_rounded),),
                 ),
               ),
             ),
@@ -55,97 +58,32 @@ class CustomHorizontalCOntainer extends StatelessWidget {
               children: [
                 SizedBox(
                   width: ResponsiveBreakpoints.of(context).isMobile
-                      ? 260.w
-                      : 270.w,
+                      ? 240.w
+                      : 250.w,
                   child: Text(
                     model[index].title!,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 15.sp),
                   ),
+                  
                 ),
-                // BlocBuilder<AppCubit, AppState>(
-                //   builder: (context, state) {
-
-                //     // ! WORKING
-                //     var cubit = BlocProvider.of<AppCubit>(context);
-                //     return GestureDetector(
-                //         onTap: () {
-                //           cubit.addtoFavorites(
-                //             id: model[index].id,
-                //           );
-                //         },
-                //         child: Icon(
-                //           Icons.favorite,color: Colors.red,
-                //           size: ResponsiveBreakpoints.of(context).isMobile
-                //               ? 25.r
-                //               : 30.r,
-                //         ),
-                //       );
-                //! till here
-                // Visibility(
-                //   visible: cubit.favoritesID2.contains(model.id),
-
-                //   replacement: GestureDetector(
-                //     onTap: () {
-                //       cubit.addtoFavorites(
-                //         id: model.id,
-                //       );
-                //     },
-                //     child: Icon(
-                //       Icons.favorite_border,
-                //       size: ResponsiveBreakpoints.of(context).isMobile
-                //           ? 25.r
-                //           : 30.r,
-                //     ),
-                //   ),
-                //   // maintainAnimation: true,
-                //   child: GestureDetector(
-                //     onTap: () {
-                //       // print(object)
-                //       // print(
-                //       //     '#*#*#*#*#*#*  ID: ${cubit.allfavorites.any((e) => e.id == model.id) } #*#*#*#*#*#');
-                //       // // var x = cubit.allfavorites.;
-                //       // cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id!);
-                //     },
-                //     child: Icon(
-                //       Icons.favorite_rounded,
-                //       color: Colors.red,
-                //       size: ResponsiveBreakpoints.of(context).isMobile
-                //           ? 25.r
-                //           : 30.r,
-                //     ),
-                //   ),
-                // );
-                //  (cubit.allfavorites
-                //         .map((e) => e!.id)
-                //         .contains(model[index].id) )
-                //     ? GestureDetector(
-                //       onTap: (){
-                //         print(cubit.allfavorites[index].id);
-                //         cubit.deleteFromFav(favoriteItemID: cubit.allfavorites[index].id);
-
-                //       },
-                //       child: Icon(
-                //           Icons.favorite_rounded,
-                //           color: Colors.red,
-                //           size: ResponsiveBreakpoints.of(context).isMobile
-                //               ? 25.r
-                //               : 30.r,
-                //         ),
-                //     )
-                //     : GestureDetector(
-                //       onTap: (){
-                //          cubit.addtoFavorites(id: model[index].id);
-                //       },
-                //       child: Icon(
-                //           Icons.favorite_border,
-                //           size: ResponsiveBreakpoints.of(context).isMobile
-                //               ? 25.r
-                //               : 30.r,
-                //         ),
-                //     );
-                //   },
-                // )
+                GestureDetector(
+                onTap: () {
+                  // print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                  BlocProvider.of<AppCubit>(context).favoritesID.contains(model[index].id)
+                      ? BlocProvider.of<AppCubit>(context).deleteFromFav(propertyID: model[index].id!)
+                      : BlocProvider.of<AppCubit>(context).addtoFavorites(id: model[index].id);
+                },
+                child: Icon(
+                  Icons.favorite,
+                  color: BlocProvider.of<AppCubit>(context).favoritesID.contains(model[index].id)
+                      ? Colors.red
+                      : Colors.grey,
+                  size:
+                      ResponsiveBreakpoints.of(context).isMobile ? 25.r : 30.r,
+                ),
+              ),
+               
               ],
             ),
             Text(
@@ -171,12 +109,9 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                   width: 155.w,
                 ),
                 IconRow(
-                    count: model[index].bathrooms!,
+                    count: model[index].space!,
                     fontsize: 10,
-                    icon: SvgPicture.asset(
-                      Images.size,
-                      width: 15.w,
-                    )),
+                    icon:const Text('م²')),
                 IconRow(
                     count: model[index].bathrooms!,
                     fontsize: 10,

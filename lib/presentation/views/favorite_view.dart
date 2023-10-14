@@ -5,14 +5,24 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
-import 'package:maskany_app/presentation/views/widgets/favoritesView_widgets/custom_horizontal_items.dart';
+import 'package:maskany_app/presentation/views/widgets/favoritesView_widgets/custom_horizontal_fav_items.dart';
 
 import '../../core/app_resources/colors.dart';
 import '../../core/app_resources/images.dart';
 
-class FavoriteView extends StatelessWidget {
+class FavoriteView extends StatefulWidget {
   const FavoriteView({super.key});
 
+  @override
+  State<FavoriteView> createState() => _FavoriteViewState();
+}
+
+class _FavoriteViewState extends State<FavoriteView> {
+  @override
+  void initState() {
+    BlocProvider.of<AppCubit>(context).getAllFavorites();  
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     // BlocProvider.of<AppCubit>(context).getAllFavorites();

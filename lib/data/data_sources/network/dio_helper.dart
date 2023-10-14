@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 
 import '../../../core/constants.dart';
@@ -6,17 +7,18 @@ class DioHelper {
   static Dio dio = Dio();
 
   static init() {
-    // dio.interceptors.add(InterceptorsWrapper(
-    //   onRequest: (options, handler) async {
-    //     if (await _isConnected()) {
-    //       handler.next(options);
-    //     } else {
-    //       handler.reject(DioError(
-    //           error: 'No internet connection available.',
-    //           requestOptions: options));
-    //     }
-    //   },
-    // ));
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        var connectivityResult = await (Connectivity().checkConnectivity());
+        if (connectivityResult == ConnectivityResult.none) {
+          return handler.reject(DioError(
+            error: 'connection error',
+            requestOptions: options,
+          ));
+        }
+        return handler.next(options);
+      },
+    ));
     dio = Dio(BaseOptions(
         baseUrl: baseUrl,
         followRedirects: false,
@@ -87,6 +89,7 @@ class DioHelper {
       data: data,
     );
   }
+
   static Future<Response> deleteData({
     required String url,
     Map<String, dynamic>? query,

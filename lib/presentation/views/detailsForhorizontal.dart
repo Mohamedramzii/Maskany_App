@@ -44,55 +44,71 @@ class DetailsViewForHorizontal extends StatelessWidget {
             ),
             centerTitle: true,
             actions: [
+              GestureDetector(
+                onTap: () {
+                  print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                  cubit.favoritesID.contains(model[index].id)
+                      ? cubit.deleteFromFav(propertyID: model[index].id!)
+                      : cubit.addtoFavorites(id: model[index].id);
+                },
+                child: Icon(
+                  Icons.favorite,
+                  color: cubit.favoritesID.contains(model[index].id)
+                      ? Colors.red
+                      : Colors.grey,
+                  size:
+                      ResponsiveBreakpoints.of(context).isMobile ? 25.r : 30.r,
+                ),
+              ),
               // Visibility(
               //   visible:
               //       cubit.allfavorites.any((e) => e.id == model[index].id),
 
               // replacement:
 
-              Visibility(
-                visible: cubit.allfavorites
-                    .any((element) => element.property!.id == model[index].id),
+              // Visibility(
+              //   visible: cubit.allfavorites
+              //       .any((element) => element.property!.id == model[index].id),
 
-                replacement: GestureDetector(
-                  onTap: () {
-                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
-                    cubit.addtoFavorites(id: model[index].id);
-                  },
-                  child: Icon(
-                    Icons.favorite_border_outlined,
-                    color: Colors.grey,
-                    size: ResponsiveBreakpoints.of(context).isMobile
-                        ? 25.r
-                        : 30.r,
-                  ),
-                ),
-                // maintainAnimation: true,
-                child: GestureDetector(
-                  onTap: () {
-                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+              //   replacement: GestureDetector(
+              //     onTap: () {
+              //       print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+              //       cubit.addtoFavorites(id: model[index].id);
+              //     },
+              //     child: Icon(
+              //       Icons.favorite_border_outlined,
+              //       color: Colors.grey,
+              //       size: ResponsiveBreakpoints.of(context).isMobile
+              //           ? 25.r
+              //           : 30.r,
+              //     ),
+              //   ),
+              //   // maintainAnimation: true,
+              //   child: GestureDetector(
+              //     onTap: () {
+              //       print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
 
-                    if (index >= cubit.allfavorites.length) {
-                      print('+++++++ LAST +++++++++');
-                      Future.delayed(
-                        const Duration(milliseconds: 300),
-                        () => cubit.btmNavBar(1),
-                      );
-                      Navigator.of(context).pop();
-                    } else {
-                      cubit.deleteFromFav(
-                          favoriteItemID: cubit.allfavorites[index].id!);
-                    }
-                  },
-                  child: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                    size: ResponsiveBreakpoints.of(context).isMobile
-                        ? 25.r
-                        : 30.r,
-                  ),
-                ),
-              ),
+              //       if (index >= cubit.allfavorites.length) {
+              //         print('+++++++ LAST +++++++++');
+              //         Future.delayed(
+              //           const Duration(milliseconds: 300),
+              //           () => cubit.btmNavBar(1),
+              //         );
+              //         Navigator.of(context).pop();
+              //       } else {
+              //         cubit.deleteFromFav(
+              //             propertyID: cubit.allfavorites[index].id!);
+              //       }
+              //     },
+              //     child: Icon(
+              //       Icons.delete,
+              //       color: Colors.red,
+              //       size: ResponsiveBreakpoints.of(context).isMobile
+              //           ? 25.r
+              //           : 30.r,
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 width: 15.w,
               ),
@@ -151,6 +167,15 @@ class DetailsViewForHorizontal extends StatelessWidget {
                                           color: ColorsManager.kprimaryColor,
                                           size: 40.r),
                                 ),
+                                errorWidget: (context, url, error) =>
+                                    const Center(
+                                  child:
+                                      Icon(Icons.image_not_supported_rounded),
+                                ),
+                                errorListener: (value) => const Center(
+                                  child:
+                                      Icon(Icons.image_not_supported_rounded),
+                                ),
                               ),
                             ),
                           );
@@ -158,27 +183,6 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       );
                     }).toList(),
                   ),
-                  // SizedBox(
-                  //   height: 200.h,
-                  //   width: double.infinity,
-                  //   child: FittedBox(
-                  //     fit: BoxFit.fill,
-                  //     child: ClipRRect(
-                  //       borderRadius: BorderRadius.circular(
-                  //           ResponsiveBreakpoints.of(context).isMobile
-                  //               ? 15.r
-                  //               : 5.r),
-                  //       //!Hero
-                  //       child: Hero(
-                  //         tag: '${model[index].title}+hor',
-                  //         child: SvgPicture.asset(
-                  //           Images.houseS,
-                  //           fit: BoxFit.fill,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     height: 23.h,
                   ),
@@ -267,9 +271,9 @@ class DetailsViewForHorizontal extends StatelessWidget {
                       children: [
                         IconRow(
                             count: model[index].space!,
-                            icon: SvgPicture.asset(Images.size),
+                            fontsize: 10,
                             style: Theme.of(context).textTheme.bodyMedium,
-                            fontsize: 10),
+                            icon: const Text('م²')),
                         IconRow(
                             count: model[index].bathrooms!,
                             icon: SvgPicture.asset(Images.shower),

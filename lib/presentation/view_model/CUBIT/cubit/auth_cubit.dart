@@ -69,7 +69,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(RegisterLoadingState());
 
     try {
-      var response = await DioHelper.postData(url: EndPoints.register, data: {
+      Response response = await DioHelper.postData(url: EndPoints.register, data: {
         'username': username,
         'email': email,
         'password': password,
@@ -79,7 +79,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       registerModel = RegisterModel2.fromJson(response.data);
       debugPrint('Register Message: ${registerModel!.detail}');
-      if (registerModel!.type == 'successful') {
+      if (response.statusCode == 200) {
         CacheHelper.saveData(key: tokenKey, value: registerModel!.token);
       } else {
         SnackBars.failureSnackBar(
@@ -100,7 +100,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       var response = await DioHelper.postData(
           url: EndPoints.sendOTP, data: {"email": email});
-      CacheHelper.saveData(key: tokenKey, value: response.data['token']);
+      // CacheHelper.saveData(key: tokenKey, value: response.data['token']);
       debugPrint("SendOTP token: ${response.data['token']}");
       emit(SendOTPSuccessState(successMessage: response.data['detail']));
       debugPrint("SendOTP Success: ${response.data['detail']}");

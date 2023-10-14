@@ -53,6 +53,13 @@ class CustomHorizontalFavItems extends StatelessWidget {
                                     color: ColorsManager.kprimaryColor,
                                     size: 40.r),
                               ),
+                              errorWidget: (context, url, error) =>
+                                  const Center(
+                                child: Icon(Icons.image_not_supported_rounded),
+                              ),
+                              errorListener: (value) => const Center(
+                                child: Icon(Icons.image_not_supported_rounded),
+                              ),
                             ),
                           )),
                       // SizedBox(height: 20.h,),
@@ -72,11 +79,11 @@ class CustomHorizontalFavItems extends StatelessWidget {
                               var cubit = BlocProvider.of<AppCubit>(context);
                               return GestureDetector(
                                 onTap: () {
-                                  cubit.deleteFromFav(
-                                      favoriteItemID: favs[index].id!);
+                                  cubit.deleteFromFavortiteView(
+                                      favID: favs[index].id!);
                                 },
                                 child: Icon(
-                                  Icons.delete_forever_sharp,
+                                  Icons.favorite,
                                   color: Colors.red,
                                   size:
                                       ResponsiveBreakpoints.of(context).isMobile

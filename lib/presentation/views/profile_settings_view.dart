@@ -103,7 +103,7 @@ class ProfileSettingsVIew extends StatelessWidget {
                             children: [
                               _buildRowdata(
                                 label: 'رقم الهاتف',
-                                hint: cubit.userdata!.phoneNumber!,
+                                hint: cubit.userdata!.phoneNumber ?? 'أضف رقم الهاتف',
                                 needWidget: true,
                                 whatToUpdate: 'phoneNumber',
                               ),
@@ -130,7 +130,7 @@ class ProfileSettingsVIew extends StatelessWidget {
                               ),
                               _buildRowdata(
                                 label: 'منطقة الحساب',
-                                hint: cubit.userdata!.location!,
+                                hint: cubit.userdata!.location ?? 'غير محدد',
                                 needWidget: false,
                                 whatToUpdate: '',
                               ),

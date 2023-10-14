@@ -40,37 +40,20 @@ class DetailsView extends StatelessWidget {
             ),
             centerTitle: true,
             actions: [
-              Visibility(
-                visible: cubit.allfavorites
-                    .any((element) => element.property!.id == model.id),
-
-                replacement: GestureDetector(
-                  onTap: () {
-                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
-                    cubit.addtoFavorites(id: model.id);
-                  },
-                  child: Icon(
-                    Icons.favorite_border_outlined,
-                    color: Colors.grey,
-                    size: ResponsiveBreakpoints.of(context).isMobile
-                        ? 25.r
-                        : 30.r,
-                  ),
-                ),
-                // maintainAnimation: true,
-                child: GestureDetector(
-                  onTap: () {
-                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
-                    cubit.deleteFromFav(
-                        favoriteItemID: cubit.allfavorites[index].id!);
-                  },
-                  child: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                    size: ResponsiveBreakpoints.of(context).isMobile
-                        ? 25.r
-                        : 30.r,
-                  ),
+              GestureDetector(
+                onTap: () {
+                  // print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                  cubit.favoritesID.contains(model.id)
+                      ? cubit.deleteFromFav(propertyID: model.id!)
+                      : cubit.addtoFavorites(id: model.id);
+                },
+                child: Icon(
+                  Icons.favorite,
+                  color: cubit.favoritesID.contains(model.id)
+                      ? Colors.red
+                      : Colors.grey,
+                  size:
+                      ResponsiveBreakpoints.of(context).isMobile ? 25.r : 30.r,
                 ),
               ),
               SizedBox(
@@ -109,12 +92,21 @@ class DetailsView extends StatelessWidget {
                                       : 5.r),
                               child: CachedNetworkImage(
                                 imageUrl: 'http://66.45.248.247:8000${i.image}',
-                                 fit: BoxFit.cover,
+                                fit: BoxFit.cover,
                                 placeholder: (context, url) => Center(
                                   child:
                                       LoadingAnimationWidget.staggeredDotsWave(
                                           color: ColorsManager.kprimaryColor,
                                           size: 40.r),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Center(
+                                  child:
+                                      Icon(Icons.image_not_supported_rounded),
+                                ),
+                                errorListener: (value) => const Center(
+                                  child:
+                                      Icon(Icons.image_not_supported_rounded),
                                 ),
                               ),
                             ),
@@ -209,11 +201,11 @@ class DetailsView extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        IconRow(
+                       IconRow(
                             count: model.space!,
-                            icon: SvgPicture.asset(Images.size),
+                            fontsize: 10,
                             style: Theme.of(context).textTheme.bodyMedium,
-                            fontsize: 10),
+                            icon: const Text('م²')),
                         IconRow(
                             count: model.bathrooms!,
                             icon: SvgPicture.asset(Images.shower),
@@ -304,7 +296,7 @@ class DetailsView extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 100),
                       markers: {
                         Marker(
-                            markerId: const MarkerId('homeLocation'),
+                            markerId:  MarkerId('${model.id}'),
                             infoWindow: InfoWindow(title: model.title),
                             position: LatLng(double.parse(model.lat!),
                                 double.parse(model.long!)))
@@ -315,7 +307,7 @@ class DetailsView extends StatelessWidget {
                       // },
 
                       onTap: (latlong) {
-                          cubit.navigateToGoogleMaps(model.locationLink!);
+                        cubit.navigateToGoogleMaps(model.locationLink!);
                       },
                     ),
                   ),

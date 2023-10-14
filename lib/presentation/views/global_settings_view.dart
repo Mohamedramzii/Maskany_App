@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 
@@ -85,7 +86,7 @@ class GlobalSettingsView extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          insertEmailDialog(context);
+                          insertEmailDialog(context, state);
                         },
                         child: SvgPicture.asset(
                           Images.editdata,
@@ -110,7 +111,8 @@ class GlobalSettingsView extends StatelessWidget {
     );
   }
 
-  Future<dynamic> insertEmailDialog(BuildContext context) async {
+  Future<dynamic> insertEmailDialog(
+      BuildContext context, AuthState state) async {
     return showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.6),
@@ -157,41 +159,45 @@ class GlobalSettingsView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 12.0.h),
-                SizedBox(
-                  height: 50.h,
-                  child: TextField(
-                    controller: emailController,
-                    // onChanged: (value) {},
-                    onSubmitted: (value) {
-                      emailController.text = value;
-                    },
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration(
-                      // suffixIcon: IconButton(
-                      //     onPressed: () {},
-                      //     icon: const Icon(
-                      //         Icons.search_rounded)),
-                      hintText: 'عنوان البريد الالكتروني',
-                      hintStyle:
-                          Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                color: Colors.grey,
-                              ),
-                      enabledBorder: OutlineInputBorder(
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: SizedBox(
+                    height: 50.h,
+                    child: TextField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      // onChanged: (value) {},
+                      onSubmitted: (value) {
+                        emailController.text = value;
+                      },
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        // suffixIcon: IconButton(
+                        //     onPressed: () {},
+                        //     icon: const Icon(
+                        //         Icons.search_rounded)),
+                        hintText: 'عنوان البريد الالكتروني',
+                        hintStyle:
+                            Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                  color: Colors.grey,
+                                ),
+                        enabledBorder: OutlineInputBorder(
+                            // gapPadding: 0,
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: ColorsManager.borderColor,
+                              width: 2,
+                              strokeAlign: 1,
+                            )),
+                        focusedBorder: OutlineInputBorder(
                           // gapPadding: 0,
                           borderRadius: BorderRadius.circular(10.r),
                           borderSide: BorderSide(
                             color: ColorsManager.borderColor,
                             width: 2,
                             strokeAlign: 1,
-                          )),
-                      focusedBorder: OutlineInputBorder(
-                        // gapPadding: 0,
-                        borderRadius: BorderRadius.circular(10.r),
-                        borderSide: BorderSide(
-                          color: ColorsManager.borderColor,
-                          width: 2,
-                          strokeAlign: 1,
+                          ),
                         ),
                       ),
                     ),
@@ -206,7 +212,7 @@ class GlobalSettingsView extends StatelessWidget {
                             .sendOTP(email: emailController.text.trim());
                         Navigator.of(context).pop();
                         emailController.clear();
-                        InsertOTPDialog(context);
+                        InsertOTPDialog(context, state);
                       }
                     }),
                 SizedBox(height: 18.0.h),
@@ -218,7 +224,7 @@ class GlobalSettingsView extends StatelessWidget {
     );
   }
 
-  Future<dynamic> InsertOTPDialog(BuildContext context) {
+  Future<dynamic> InsertOTPDialog(BuildContext context, AuthState state) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -372,26 +378,28 @@ class GlobalSettingsView extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 60.0.h),
-                CustomButton(
-                    text: 'تغيير كلمة المرور',
-                    onpressed: () {
-                      if (pin1.text.isNotEmpty &&
-                          pin2.text.isNotEmpty &&
-                          pin3.text.isNotEmpty &&
-                          pin4.text.isNotEmpty &&
-                          passwordcontroller.text.isNotEmpty) {
-                        BlocProvider.of<AuthCubit>(context).changePassword(
-                            otpCode:
-                                pin1.text + pin2.text + pin3.text + pin4.text,
-                            newPassword: passwordcontroller.text.trim());
-                      }
-                      Navigator.of(context).pop();
-                      pin1.clear();
-                      pin2.clear();
-                      pin3.clear();
-                      pin4.clear();
-                      passwordcontroller.clear();
-                    }),
+               CustomButton(
+                        text: 'تغيير كلمة المرور',
+                        onpressed: () {
+                          if (pin1.text.isNotEmpty &&
+                              pin2.text.isNotEmpty &&
+                              pin3.text.isNotEmpty &&
+                              pin4.text.isNotEmpty &&
+                              passwordcontroller.text.isNotEmpty) {
+                            BlocProvider.of<AuthCubit>(context).changePassword(
+                                otpCode: pin1.text +
+                                    pin2.text +
+                                    pin3.text +
+                                    pin4.text,
+                                newPassword: passwordcontroller.text.trim());
+                          }
+                       Navigator.of(context).pop();
+                          pin1.clear();
+                          pin2.clear();
+                          pin3.clear();
+                          pin4.clear();
+                          passwordcontroller.clear();
+                        }),
                 SizedBox(height: 18.0.h),
               ],
             ),

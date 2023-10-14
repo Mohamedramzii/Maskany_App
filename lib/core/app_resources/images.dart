@@ -16,8 +16,10 @@ abstract class Images {
   static const String icon8 = 'assets/images/icon8.png';
   static const String villa = 'assets/images/villa.png';
   static const String houseP = 'assets/images/house.png';
-  static const String houseS = 'assets/images/house.svg';
+  static const String satellite = 'assets/images/satellite.png';
 
+
+  static const String houseS = 'assets/images/house.svg';
   static const String bed = 'assets/images/bed.svg';
   static const String chair = 'assets/images/chair.svg';
   static const String size = 'assets/images/size.svg';

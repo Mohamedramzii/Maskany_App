@@ -29,7 +29,7 @@ class CustomCategoryContainer extends StatelessWidget {
               cubit.blabla(index);
             },
             child: Container(
-              width: 70.w,
+              width: index == 0 ? 70.w : 100.w,
               padding: EdgeInsets.all(3.r),
               alignment: Alignment.center,
               height: 40.h,

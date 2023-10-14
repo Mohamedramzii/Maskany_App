@@ -63,7 +63,7 @@ class ProfileView extends StatelessWidget {
                     Navigator.of(context).push(PageAnimationTransition(
                         page: ProfileSettingsVIew(
                           email: cubit.userdata!.email!,
-                          phoneNumber: cubit.userdata!.phoneNumber == ''
+                          phoneNumber: cubit.userdata!.phoneNumber == null
                               ? 'أضف رقم الهاتف'
                               : cubit.userdata!.phoneNumber!,
                         ),
@@ -115,7 +115,7 @@ class ProfileView extends StatelessWidget {
                   onTap: () {},
                   leading: const Icon(Icons.location_on),
                   title: Text(
-                    cubit.userdata!.location!,
+                    cubit.userdata!.location ?? 'غير محدد',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../app_resources/fonts.dart';
 
 abstract class SnackBars {
   static successSnackBar(context, proccessText, successtext) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       width: double.infinity,
+      duration: const Duration(milliseconds: 500),
       behavior: SnackBarBehavior.floating,
       elevation: 0,
       backgroundColor: Colors.white,

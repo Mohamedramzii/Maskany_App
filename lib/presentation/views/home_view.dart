@@ -58,13 +58,8 @@ class _HomeViewState extends State<HomeView> {
                           children: [
                             Row(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    CacheHelper.clearData(key: tokenKey);
-                                  },
-                                  child: Icon(Icons.location_on_outlined,
-                                      color: HexColor('#B6B6B6')),
-                                ),
+                                Icon(Icons.location_on_outlined,
+                                    color: HexColor('#B6B6B6')),
                                 SizedBox(
                                   width: 6.w,
                                 ),
@@ -75,7 +70,7 @@ class _HomeViewState extends State<HomeView> {
                                     return Text(
                                       state is GetUserDataLoadingState
                                           ? "موقعك..."
-                                          : cubit.userdata!.location!,
+                                          : cubit.userdata!.location ??"غير محدد" ,
                                       style: ResponsiveBreakpoints.of(context)
                                               .isMobile
                                           ? Theme.of(context)

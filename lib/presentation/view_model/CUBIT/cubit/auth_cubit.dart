@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -173,4 +175,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(UpdateUserDataFailureState(errMessage: e.toString()));
     }
   }
+
+
+File? image;
+final imagePicker= ImagePicker();
+  pickImage()async{}
 }

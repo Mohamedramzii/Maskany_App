@@ -95,3 +95,6 @@ final class UpdateUserDataFailureState extends AuthState {
 
   UpdateUserDataFailureState({required this.errMessage});
 }
+
+
+final class ImagePickerSuccessState extends AuthState{}

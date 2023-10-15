@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 
 import '../../../core/constants.dart';
@@ -9,14 +8,14 @@ class DioHelper {
   static init() {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        var connectivityResult = await (Connectivity().checkConnectivity());
-        if (connectivityResult == ConnectivityResult.none) {
-          return handler.reject(DioError(
-            error: 'connection error',
-            requestOptions: options,
-          ));
-        }
-        return handler.next(options);
+        // // var connectivityResult = await (Connectivity().checkConnectivity());
+        // // if (connectivityResult == ConnectivityResult.none) {
+        // //   return handler.reject(DioError(
+        // //     error: 'connection error',
+        // //     requestOptions: options,
+        // //   ));
+        // // }
+        // return handler.next(options);
       },
     ));
     dio = Dio(BaseOptions(

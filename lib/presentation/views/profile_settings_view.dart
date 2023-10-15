@@ -49,7 +49,7 @@ class ProfileSettingsVIew extends StatelessWidget {
                           Center(
                             child: CircleAvatar(
                               radius: 55.r,
-                              backgroundImage: const AssetImage(Images.profile),
+                              backgroundImage:  AssetImage(cubit.userdata!.image?? Images.profile),
                             ),
                           ),
                           Positioned(

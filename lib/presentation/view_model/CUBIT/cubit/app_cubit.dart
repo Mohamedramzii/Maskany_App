@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:maskany_app/core/serverFailure.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
@@ -15,8 +16,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
-import '../../../../data/models/propertiesModel/propertiesModel.dart';
-
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../../../views/favorite_view.dart';
 import '../../../views/home_view.dart';
@@ -214,6 +213,7 @@ class AppCubit extends Cubit<AppState> {
   List<PropertiesModel2> bee3Prop = [];
   List<PropertiesModel2> egaarProp = [];
   getAllproperties() async {
+    // isInternetConnectFunc();
     CacheHelper.getData(key: tokenKey);
     property = [];
     bee3Prop = [];
@@ -226,17 +226,17 @@ class AppCubit extends Cubit<AppState> {
           token: 'Token ${CacheHelper.getData(key: tokenKey)}');
       for (var item in response.data) {
         property.add(PropertiesModel2.fromJson(item));
-        egaarProp = property
-            .where((e) => e.category!.name == allcategories[1].name)
-            .toList();
-        bee3Prop = property
-            .where((e) => e.category!.name == allcategories[2].name)
-            .toList();
+        // egaarProp = property
+        //     .where((e) => e.category!.name == allcategories[1].name)
+        //     .toList();
+        // bee3Prop = property
+        //     .where((e) => e.category!.name == allcategories[2].name)
+        //     .toList();
       }
 
       debugPrint('######### ${property.length} ###############');
-      debugPrint('######### ${egaarProp.length} ###############');
-      debugPrint('######### ${bee3Prop.length} ###############');
+      // debugPrint('######### ${egaarProp.length} ###############');
+      // debugPrint('######### ${bee3Prop.length} ###############');
 
       // property.add(properties!);
       debugPrint('Get All properties Success');
@@ -263,17 +263,10 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<PropertiesModel2> filterCategories(int index) {
-    switch (index) {
-      case 0:
-        return property;
-      case 1:
-        return egaarProp;
-      case 2:
-        return bee3Prop;
-
-      default:
-        return property;
-    }
+    if (index == 0) return property;
+    return property
+        .where((e) => e.category!.name == allcategories[index].name)
+        .toList();
   }
 
   List<PropertiesModel2> search = [];
@@ -439,4 +432,10 @@ class AppCubit extends Cubit<AppState> {
       throw 'Could not launch $url';
     }
   }
+
+  // bool isInternetConnected = true;
+
+  // Future<bool> isInternetConnectFunc() async {
+  //   return await InternetConnectionChecker().hasConnection;
+  // }
 }

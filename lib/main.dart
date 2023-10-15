@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
                 ..checkLocationPermission(Permission.locationWhenInUse, context)
                 // ..getCurrentLatLong()
                 // ..getAllproperties()
-                // ..getCategories()
+                ..getCategories()
                 // ..getAllFavorites(), 
             ),
           ],

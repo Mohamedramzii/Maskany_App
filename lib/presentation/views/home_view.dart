@@ -39,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
     BlocProvider.of<AppCubit>(context).getAllproperties();
 
     BlocProvider.of<AppCubit>(context).getAllFavorites();
-    BlocProvider.of<AppCubit>(context).getCategories();
+    // BlocProvider.of<AppCubit>(context).getCategories();
 
     super.initState();
   }

@@ -4,10 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:maskany_app/data/models/login_model/login_model.dart';
 import 'package:maskany_app/data/models/userdata_model/user_data_model.dart';
 import 'package:maskany_app/generated/l10n.dart';
-import 'package:maskany_app/presentation/views/Auth/location_view.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import '../../../../core/common_widgets/custom_snackbar.dart';
@@ -37,7 +35,9 @@ class AuthCubit extends Cubit<AuthState> {
       loginModel = LoginModel2.fromJson(response.data);
       debugPrint('Login Message: ${loginModel!.detail}');
       if (loginModel!.type == 'successful') {
-        CacheHelper.saveData(key: tokenKey, value: loginModel!.token);
+        tokenHolder = loginModel!.token!;
+        CacheHelper.saveData(key: tokenKey, value: tokenHolder);
+        // CacheHelper.saveData(key: tokenKey, value: loginModel!.token);
         SnackBars.successSnackBar(
             context, S.of(context).login, loginModel!.detail);
         Navigator.of(context).pushReplacement(PageAnimationTransition(
@@ -84,7 +84,8 @@ class AuthCubit extends Cubit<AuthState> {
       registerModel = RegisterModel2.fromJson(response.data);
       debugPrint('Register Message: ${registerModel!.detail}');
       if (response.statusCode == 200) {
-        CacheHelper.saveData(key: tokenKey, value: registerModel!.token);
+        tokenHolder = registerModel!.token!;
+        CacheHelper.saveData(key: tokenKey, value: tokenHolder);
       } else {
         SnackBars.failureSnackBar(
             context, S.of(context).CreateAccount, registerModel!.detail);
@@ -116,6 +117,8 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  String wrongOTP = '';
+  bool isOTPwrong = false;
   changePassword({
     required otpCode,
     required newPassword,
@@ -126,7 +129,13 @@ class AuthCubit extends Cubit<AuthState> {
       Response response = await DioHelper.postData(
           url: EndPoints.changePassword,
           data: {'otp': otpCode, 'new_password': newPassword},
-          token: 'Token ${CacheHelper.getData(key: tokenKey)}');
+          token: 'Token $tokenHolder');
+
+      if (response.statusCode == 400) {
+        wrongOTP = response.data['detail'];
+        isOTPwrong = true;
+        emit(ChangePasswordFailureState(errMessage: response.data['detail']));
+      }
 
       debugPrint('ChangePassword Success: ${response.data['detail']} ');
       emit(ChangePasswordSuccessState(successMessage: response.data['detail']));
@@ -163,7 +172,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   String emailIsExistMsg = '';
-  bool isEmailExist=false;
+  bool isEmailExist = false;
   updateUserData(
       {required String dataToChange, required dynamic updateData}) async {
     emit(UpdateUserDataLoadingState());
@@ -175,9 +184,8 @@ class AuthCubit extends Cubit<AuthState> {
           token: 'Token $tokenHolder');
       if (response.statusCode == 400) {
         // emailIsExistMsg = response.data['email'];
-        isEmailExist=true;
+        isEmailExist = true;
         print(isEmailExist);
-        
       } else {
         await getUserData();
       }
@@ -212,5 +220,10 @@ class AuthCubit extends Cubit<AuthState> {
       getUserData();
       emit(ImagePickerSuccessState());
     } else {}
+  }
+
+  Future<void> logout() async {
+    await CacheHelper.clearData(key: tokenKey);
+    emit(UserLoggedOutSuccessState());
   }
 }

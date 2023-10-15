@@ -36,10 +36,10 @@ class AppCubit extends Cubit<AppState> {
     emit(ToggleMapTypeSuccessState());
   }
 
-  viewed() {
-    isviewedfromC = true;
-    emit(IsViewedSuccessState());
-  }
+  // viewed() {
+  //   isviewedfromC = true;
+  //   emit(IsViewedSuccessState());
+  // }
   // viewed(PropertiesModel location) async {
   //   location.isviewed = true;
   //   // isviewedfromC = location.isviewed;
@@ -72,8 +72,9 @@ class AppCubit extends Cubit<AppState> {
       emit(NavBarIndexChangedSuccess());
     }
     if (index == 2) {
-      screen[2];
-      emit(NavBarIndexChangedSuccess());
+      // getAllproperties();
+      // screen[2];
+      // emit(NavBarIndexChangedSuccess());
     }
     emit(NavBarIndexChangedSuccess());
   }
@@ -222,7 +223,7 @@ class AppCubit extends Cubit<AppState> {
     try {
       Response response = await DioHelper.getData(
           url: EndPoints.properties,
-          token: 'Token ${CacheHelper.getData(key: tokenKey)}');
+          token: 'Token $tokenHolder');
       for (var item in response.data) {
         property.add(PropertiesModel2.fromJson(item));
         // egaarProp = property
@@ -290,7 +291,7 @@ class AppCubit extends Cubit<AppState> {
     emit(GetFavoritesLoadingState());
     Response response = await DioHelper.getData(
         url: EndPoints.favorites,
-        token: 'Token ${CacheHelper.getData(key: tokenKey)}');
+        token: 'Token $tokenHolder');
 
     for (var item in response.data) {
       allfavorites.add(FavoritesModel.fromJson(item));
@@ -342,7 +343,7 @@ class AppCubit extends Cubit<AppState> {
     try {
       Response response = await DioHelper.deleteData(
           url: 'http://66.45.248.247:8000/properties/fav/prop/$propertyID/',
-          token: 'Token ${CacheHelper.getData(key: tokenKey)}');
+          token: 'Token $tokenHolder');
       if (response.statusCode == 204) {
         print('DELEAAAAATED');
       }else{
@@ -382,7 +383,7 @@ class AppCubit extends Cubit<AppState> {
     try {
       Response response = await DioHelper.deleteData(
           url: 'http://66.45.248.247:8000/properties/fav/$favID/',
-          token: 'Token ${CacheHelper.getData(key: tokenKey)}');
+          token: 'Token $tokenHolder');
       // if (response.statusCode == 204) {
       //   print('DELEAAAAATED');
       // }
@@ -417,7 +418,7 @@ class AppCubit extends Cubit<AppState> {
 
     debugPrint('SEEN');
     if (response.statusCode == 200) {
-      getAllproperties();
+     await getAllproperties();
     }
 
     emit(SeenOrNotSuccessState());

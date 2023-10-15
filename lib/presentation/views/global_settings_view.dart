@@ -11,6 +11,7 @@ import '../../core/app_resources/colors.dart';
 import '../../core/app_resources/images.dart';
 import '../../core/common_widgets/custom_OTP.dart';
 import '../../core/common_widgets/custom_dialog.dart';
+import '../../core/common_widgets/custom_snackbar.dart';
 
 class GlobalSettingsView extends StatelessWidget {
   const GlobalSettingsView({super.key});
@@ -378,28 +379,40 @@ class GlobalSettingsView extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 60.0.h),
-               CustomButton(
-                        text: 'تغيير كلمة المرور',
-                        onpressed: () {
-                          if (pin1.text.isNotEmpty &&
-                              pin2.text.isNotEmpty &&
-                              pin3.text.isNotEmpty &&
-                              pin4.text.isNotEmpty &&
-                              passwordcontroller.text.isNotEmpty) {
-                            BlocProvider.of<AuthCubit>(context).changePassword(
-                                otpCode: pin1.text +
-                                    pin2.text +
-                                    pin3.text +
-                                    pin4.text,
-                                newPassword: passwordcontroller.text.trim());
-                          }
-                       Navigator.of(context).pop();
+                CustomButton(
+                    text: 'تغيير كلمة المرور',
+                    onpressed: () {
+                      if (pin1.text.isNotEmpty &&
+                          pin2.text.isNotEmpty &&
+                          pin3.text.isNotEmpty &&
+                          pin4.text.isNotEmpty &&
+                          passwordcontroller.text.isNotEmpty) {
+                        if (!BlocProvider.of<AuthCubit>(context).isOTPwrong) {
+                          BlocProvider.of<AuthCubit>(context).changePassword(
+                              otpCode:
+                                  pin1.text + pin2.text + pin3.text + pin4.text,
+                              newPassword: passwordcontroller.text.trim());
+                        } else {
+                          // Navigator.of(context).pop();
+                          SnackBars.failureSnackBar(
+                              context,
+                              'تغيير الرقم السري',
+                              'لقد قمت بأدخال كود تفعيل خاطئ');
                           pin1.clear();
                           pin2.clear();
                           pin3.clear();
                           pin4.clear();
                           passwordcontroller.clear();
-                        }),
+                        }
+                      }
+
+                      Navigator.of(context).pop();
+                      pin1.clear();
+                      pin2.clear();
+                      pin3.clear();
+                      pin4.clear();
+                      passwordcontroller.clear();
+                    }),
                 SizedBox(height: 18.0.h),
               ],
             ),

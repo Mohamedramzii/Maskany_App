@@ -165,13 +165,13 @@ class ProfileView extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushReplacement(
-                        PageAnimationTransition(
+                    Navigator.of(context)
+                        .pushReplacement(PageAnimationTransition(
                             page: const LoginView(),
-                            pageAnimationType: BottomToTopTransition()));
+                            pageAnimationType: BottomToTopTransition()))
+                        .then((value) => cubit.logout());
+                    print(tokenHolder);
                     BlocProvider.of<AppCubit>(context).btmNavBar(0);
-
-                    CacheHelper.clearData(key: tokenHolder);
                   },
                   leading: const Icon(
                     Icons.logout,

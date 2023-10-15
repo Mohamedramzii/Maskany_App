@@ -41,7 +41,7 @@ void main() async {
     enabled: !kReleaseMode,
   ));
   // Widget widget;
-  CacheHelper.getData(key: tokenKey);
+  tokenHolder = CacheHelper.getData(key: tokenKey) ?? '';
   debugPrint('USER TOKEN : ${CacheHelper.getData(key: tokenKey)}');
 
   // if(tokenHolder != null){
@@ -100,14 +100,14 @@ class _MyAppState extends State<MyApp> {
               create: (context) => AuthCubit(),
             ),
             BlocProvider(
-                create: (context) => AppCubit()
-                  // ..isInternetConnectFunc()
-                  ..checkLocationPermission(
-                      Permission.locationWhenInUse, context)
-                  // ..getCurrentLatLong()
-                  ..getAllproperties()
-                  ..getCategories()
-                  ..getAllFavorites()),
+              create: (context) => AppCubit()
+                // ..isInternetConnectFunc()
+                ..checkLocationPermission(Permission.locationWhenInUse, context)
+                // ..getCurrentLatLong()
+                // ..getAllproperties()
+                // ..getCategories()
+                // ..getAllFavorites(), 
+            ),
           ],
           child: MaterialApp(
             builder: (contexttt, child) => ResponsiveBreakpoints.builder(

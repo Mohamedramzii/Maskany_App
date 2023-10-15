@@ -57,13 +57,27 @@ class ProfileSettingsVIew extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.circular(50.r)),
-                                  child: cubit.image != null
-                                      ? Image.file(
-                                          cubit.image!,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image.asset(Images.profile,
-                                          fit: BoxFit.cover),
+                                  child: state is GetUserDataLoadingState
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : cubit.userdata?.image != null
+                              ? Image.network(cubit.userdata!.image!,
+                                  fit: BoxFit.cover,)
+                              : cubit.image != null
+                                  ? Image.file(
+                                      cubit.image!,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(Images.profile,
+                                      fit: BoxFit.cover),
+                                  // cubit.image != null
+                                  //     ? Image.file(
+                                  //         cubit.image!,
+                                  //         fit: BoxFit.cover,
+                                  //       )
+                                  //     : Image.asset(Images.profile,
+                                  //         fit: BoxFit.cover),
                                 ),
                               ),
                             ),
@@ -324,7 +338,7 @@ class _buildRowdata extends StatelessWidget {
                                           } else {
                                             return SnackBars.failureSnackBar(
                                                 context,
-                                                'تغيير الرقم السري',
+                                              'تغيير البريد الالكتروني',
                                                 'هذا الايميل مستخدم من قبل');
                                           }
                                         }

@@ -29,8 +29,18 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
-    tokenHolder = CacheHelper.getData(key: tokenKey);
+    // tokenHolder = BlocProvider.of<AuthCubit>(context).loginModel!.token!;
+    debugPrint('Token Holder: $tokenHolder');
+    // CacheHelper.getData(key: tokenKey);
+    // debugPrint(CacheHelper.getData(key: tokenKey));
+
     BlocProvider.of<AuthCubit>(context).getUserData();
+
+    BlocProvider.of<AppCubit>(context).getAllproperties();
+
+    BlocProvider.of<AppCubit>(context).getAllFavorites();
+    BlocProvider.of<AppCubit>(context).getCategories();
+
     super.initState();
   }
 
@@ -70,7 +80,8 @@ class _HomeViewState extends State<HomeView> {
                                     return Text(
                                       state is GetUserDataLoadingState
                                           ? "موقعك..."
-                                          : cubit.userdata!.location ??"غير محدد" ,
+                                          : cubit.userdata!.location ??
+                                              "غير محدد",
                                       style: ResponsiveBreakpoints.of(context)
                                               .isMobile
                                           ? Theme.of(context)

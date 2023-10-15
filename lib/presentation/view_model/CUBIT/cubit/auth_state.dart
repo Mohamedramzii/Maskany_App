@@ -70,9 +70,7 @@ final class ChangePasswordFailureState extends AuthState {
 
 final class ToggleVisibilitystate extends AuthState {}
 
-final class GetUserDataSuccessState extends AuthState {
-  
-}
+final class GetUserDataSuccessState extends AuthState {}
 
 final class GetUserDataLoadingState extends AuthState {}
 
@@ -82,11 +80,7 @@ final class GetUserDataFailureState extends AuthState {
   GetUserDataFailureState({required this.errMessage});
 }
 
-
-
-final class UpdateUserDataSuccessState extends AuthState {
-  
-}
+final class UpdateUserDataSuccessState extends AuthState {}
 
 final class UpdateUserDataLoadingState extends AuthState {}
 
@@ -96,5 +90,6 @@ final class UpdateUserDataFailureState extends AuthState {
   UpdateUserDataFailureState({required this.errMessage});
 }
 
+final class ImagePickerSuccessState extends AuthState {}
 
-final class ImagePickerSuccessState extends AuthState{}
+final class UserLoggedOutSuccessState extends AuthState {}

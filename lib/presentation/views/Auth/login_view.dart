@@ -45,10 +45,10 @@ class _LoginViewState extends State<LoginView> {
       // ),
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is LoginSuccessState) {
-          } else if (state is LoginFailureState) {
+          // if (state is LoginSuccessState) {
+          // } else if (state is LoginFailureState) {
            
-          }
+          // }
         },
         builder: (context, state) {
           var cubit = BlocProvider.of<AuthCubit>(context);

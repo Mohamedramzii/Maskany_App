@@ -162,7 +162,7 @@ class GlobalSettingsView extends StatelessWidget {
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: SizedBox(
-                    height: 50.h,
+                    height: 60.h,
                     child: TextField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
@@ -337,7 +337,7 @@ class GlobalSettingsView extends StatelessWidget {
                 ),
                 SizedBox(height: 12.0.h),
                 SizedBox(
-                  height: 50.h,
+                  height: 60.h,
                   child: TextField(
                     controller: passwordcontroller,
                     obscureText: true,

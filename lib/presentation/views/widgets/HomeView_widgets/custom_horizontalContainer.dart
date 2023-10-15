@@ -69,7 +69,8 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                 ),
                 GestureDetector(
                 onTap: () {
-                  // print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                  print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                  print('#*#*#*#*#*#* ${model[index].id} #*#*#*#*#*#');
                   BlocProvider.of<AppCubit>(context).favoritesID.contains(model[index].id)
                       ? BlocProvider.of<AppCubit>(context).deleteFromFav(propertyID: model[index].id!)
                       : BlocProvider.of<AppCubit>(context).addtoFavorites(id: model[index].id);

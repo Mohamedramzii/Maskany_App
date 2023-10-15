@@ -9,6 +9,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../core/app_resources/colors.dart';
 import '../../core/app_resources/images.dart';
+import '../../core/common_widgets/custom_snackbar.dart';
 
 class ProfileSettingsVIew extends StatelessWidget {
   const ProfileSettingsVIew(
@@ -39,137 +40,141 @@ class ProfileSettingsVIew extends StatelessWidget {
                 )
               : Padding(
                   padding: EdgeInsets.only(top: 25.h, left: 16.w, right: 16.h),
-                  child: Flex(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    direction: Axis.vertical,
-                    children: [
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50.r),
-                              child: Container(
-                                width: 100.w,
-                                height: 100.h,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50.r)),
-                                child: cubit.image != null
-                                    ? Image.file(
-                                        cubit.image!,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Image.asset(Images.profile,
-                                        fit: BoxFit.cover),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            right: ResponsiveBreakpoints.of(context).isTablet
-                                ? 460
-                                : 120.w,
-                            top: 85.h,
-                            child: Center(
+                  child: SingleChildScrollView(
+                    child: Flex(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      direction: Axis.vertical,
+                      children: [
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Center(
                               child: ClipRRect(
-                                  clipBehavior: Clip.none,
-                                  child: GestureDetector(
-                                    onTap: () => cubit.pickImage(),
-                                    child: SvgPicture.asset(
-                                      Images.editimage,
-                                      width: ResponsiveBreakpoints.of(context)
-                                              .isTablet
-                                          ? 50.w
-                                          : null,
-                                      height: ResponsiveBreakpoints.of(context)
-                                              .isTablet
-                                          ? 50.h
-                                          : null,
-                                    ),
-                                  )),
+                                borderRadius: BorderRadius.circular(50.r),
+                                child: Container(
+                                  width: 100.w,
+                                  height: 100.h,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(50.r)),
+                                  child: cubit.image != null
+                                      ? Image.file(
+                                          cubit.image!,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(Images.profile,
+                                          fit: BoxFit.cover),
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Text('معلومات الحساب',
-                          textAlign: TextAlign.end,
-                          style: Theme.of(context).textTheme.bodyMedium!
-                          // .copyWith(color: Colors.grey),
-                          ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Card(
-                        // color: Colors.white,
-                        elevation: 5,
-                        surfaceTintColor: Colors.white,
-                        child: Container(
-                          width: double.infinity,
-                          height: 230.h,
-                          padding: EdgeInsets.all(15.r),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            // border: Border.all(color: Colors.grey)
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildRowdata(
-                                label: 'رقم الهاتف',
-                                hint: cubit.userdata!.phoneNumber ??
-                                    'أضف رقم الهاتف',
-                                needWidget: true,
-                                whatToUpdate: 'phoneNumber',
+                            Positioned(
+                              right: ResponsiveBreakpoints.of(context).isTablet
+                                  ? 460
+                                  : 120.w,
+                              top: 85.h,
+                              child: Center(
+                                child: ClipRRect(
+                                    clipBehavior: Clip.none,
+                                    child: GestureDetector(
+                                      onTap: () => cubit.pickImage(),
+                                      child: SvgPicture.asset(
+                                        Images.editimage,
+                                        width: ResponsiveBreakpoints.of(context)
+                                                .isTablet
+                                            ? 50.w
+                                            : null,
+                                        height:
+                                            ResponsiveBreakpoints.of(context)
+                                                    .isTablet
+                                                ? 50.h
+                                                : null,
+                                      ),
+                                    )),
                               ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              _buildRowdata(
-                                label: 'البريد الألكتروني',
-                                hint: cubit.userdata!.email!,
-                                needWidget: true,
-                                whatToUpdate: 'email',
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              const _buildRowdata(
-                                label: 'تاريخ الميلاد',
-                                hint: '2000/01/25',
-                                needWidget: true,
-                                whatToUpdate: '',
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              _buildRowdata(
-                                label: 'منطقة الحساب',
-                                hint: cubit.userdata!.location ?? 'غير محدد',
-                                needWidget: false,
-                                whatToUpdate: '',
-                              ),
-                              Text(
-                                '.يتم تحديد منطقة حسابك في البداية بناء علي وقت التسجيل ومكانه',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(fontSize: 5.sp),
-                              )
-                            ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Text('معلومات الحساب',
+                            textAlign: TextAlign.end,
+                            style: Theme.of(context).textTheme.bodyMedium!
+                            // .copyWith(color: Colors.grey),
+                            ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Card(
+                          // color: Colors.white,
+                          elevation: 5,
+                          surfaceTintColor: Colors.white,
+                          child: Container(
+                            width: double.infinity,
+                            height: 230.h,
+                            padding: EdgeInsets.all(15.r),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              // border: Border.all(color: Colors.grey)
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildRowdata(
+                                  label: 'رقم الهاتف',
+                                  hint: cubit.userdata!.phoneNumber ??
+                                      'أضف رقم الهاتف',
+                                  needWidget: true,
+                                  whatToUpdate: 'phoneNumber',
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                _buildRowdata(
+                                  label: 'البريد الألكتروني',
+                                  hint: cubit.userdata!.email!,
+                                  needWidget: true,
+                                  whatToUpdate: 'email',
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                const _buildRowdata(
+                                  label: 'تاريخ الميلاد',
+                                  hint: '2000/01/25',
+                                  needWidget: true,
+                                  whatToUpdate: '',
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                _buildRowdata(
+                                  label: 'منطقة الحساب',
+                                  hint: cubit.userdata!.location ?? 'غير محدد',
+                                  needWidget: false,
+                                  whatToUpdate: '',
+                                ),
+                                Text(
+                                  '.يتم تحديد منطقة حسابك في البداية بناء علي وقت التسجيل ومكانه',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(fontSize: 5.sp),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 40.w),
-                        child: CustomButton(
-                            text: 'حفظ المعلومات', onpressed: () {}),
-                      )
-                    ],
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 40.w),
+                          child: CustomButton(
+                              text: 'حفظ المعلومات', onpressed: () {}),
+                        )
+                      ],
+                    ),
                   ),
                 );
         },
@@ -254,7 +259,7 @@ class _buildRowdata extends StatelessWidget {
                                   ),
                                   SizedBox(height: 8.0.h),
                                   SizedBox(
-                                    height: 50.h,
+                                    height: 60.h,
                                     child: TextField(
                                       controller: controller,
                                       // onChanged: (value) {},
@@ -306,13 +311,22 @@ class _buildRowdata extends StatelessWidget {
                                       onpressed: () {
                                         Navigator.of(context).pop();
                                         if (controller.text.isNotEmpty) {
-                                          BlocProvider.of<AuthCubit>(context)
-                                              .updateUserData(
-                                                  dataToChange: whatToUpdate,
-                                                  updateData:
-                                                      controller.text.isEmpty
-                                                          ? "أضف $label"
-                                                          : controller.text);
+                                          if (!BlocProvider.of<AuthCubit>(
+                                                  context)
+                                              .isEmailExist) {
+                                            BlocProvider.of<AuthCubit>(context)
+                                                .updateUserData(
+                                                    dataToChange: whatToUpdate,
+                                                    updateData:
+                                                        controller.text.isEmpty
+                                                            ? "أضف $label"
+                                                            : controller.text);
+                                          } else {
+                                            return SnackBars.failureSnackBar(
+                                                context,
+                                                'تغيير الرقم السري',
+                                                'هذا الايميل مستخدم من قبل');
+                                          }
                                         }
                                         controller.clear();
                                       })

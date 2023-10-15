@@ -343,9 +343,12 @@ class AppCubit extends Cubit<AppState> {
       Response response = await DioHelper.deleteData(
           url: 'http://66.45.248.247:8000/properties/fav/prop/$propertyID/',
           token: 'Token ${CacheHelper.getData(key: tokenKey)}');
-      // if (response.statusCode == 204) {
-      //   print('DELEAAAAATED');
-      // }
+      if (response.statusCode == 204) {
+        print('DELEAAAAATED');
+      }else{
+        print(response.statusCode);
+        print(response.data['error']);
+      }
       emit(DeleteFavoritesSuccessState());
     } catch (e) {
       if (e is DioError) {

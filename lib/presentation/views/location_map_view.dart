@@ -57,16 +57,18 @@ class _LocationMapViewState extends State<LocationMapView> {
                                 ),
                                 infoWindow: const InfoWindow(),
                                 onTap: () {
-                                  print('-*-*-*-*-/-/-/-/ ${e.id} *-*-*-*-*-*-*-');
-                                 try {
+                                  print(
+                                      '-*-*-*-*-/-/-/-/ ${e.id} *-*-*-*-*-*-*-');
+                                  try {
                                     Future.delayed(
-                                    const Duration(milliseconds: 500),
-                                    () => LocationBottomSheet.locationBTMSheet(
-                                        context, e),
-                                  );
-                                 } catch (e) {
-                                   print(e.toString());
-                                 }
+                                      const Duration(milliseconds: 500),
+                                      () =>
+                                          LocationBottomSheet.locationBTMSheet(
+                                              context, e),
+                                    );
+                                  } catch (e) {
+                                    print(e.toString());
+                                  }
                                 }),
                             child: CustomMarker(
                                 price: e.price!, isviewed: e.isSeen!));
@@ -76,7 +78,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                           compassEnabled: true,
                           // indoorViewEnabled: true,
                           mapToolbarEnabled: true,
-        
+
                           mapType: cubit.isSatalite
                               ? MapType.hybrid
                               : MapType.normal,
@@ -93,7 +95,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                           myLocationButtonEnabled: true,
                           myLocationEnabled: true,
                           zoomControlsEnabled: false,
-        
+
                           padding: const EdgeInsets.only(top: 100),
                           markers: markers ?? {},
                           // markers:
@@ -130,10 +132,10 @@ class _LocationMapViewState extends State<LocationMapView> {
                                       index: index, list: cubit.allcategories),
                               itemCount: cubit.allcategories.length)),
                     ),
-        
+
                     // Align(
                     //   alignment: Alignment.bottomRight,
-        
+
                     //   child: Container(
                     //     width: 100.w,
                     //     height: 40.h,
@@ -156,7 +158,11 @@ class _LocationMapViewState extends State<LocationMapView> {
             children: [
               FloatingActionButton.extended(
                 backgroundColor: ColorsManager.kprimaryColor,
-                label: Image.asset(Images.satellite,width: 25.r, color: Colors.white, ),
+                label: Image.asset(
+                  Images.satellite,
+                  width: 25.r,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   cubit.toggleMapType();
                 },

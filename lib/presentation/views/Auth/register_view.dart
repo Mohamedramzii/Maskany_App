@@ -201,7 +201,7 @@ class _RegisterViewState extends State<RegisterView> {
                           repasswordcontroller.text = newValue!;
                         },
                         onvalidate: (value) {
-                          if (value!.length < 8 &&
+                          if (value!.length < 8 ||
                               value != passwordcontroller.text) {
                             return S.of(context).errorRePassword;
                           }

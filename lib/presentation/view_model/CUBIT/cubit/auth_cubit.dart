@@ -162,18 +162,29 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  String emailIsExistMsg = '';
+  bool isEmailExist=false;
   updateUserData(
       {required String dataToChange, required dynamic updateData}) async {
     emit(UpdateUserDataLoadingState());
 
     try {
-      await DioHelper.putData(
+      Response response = await DioHelper.putData(
           url: EndPoints.updateUserData,
           data: {dataToChange: updateData},
           token: 'Token $tokenHolder');
-      await getUserData();
+      if (response.statusCode == 400) {
+        // emailIsExistMsg = response.data['email'];
+        isEmailExist=true;
+        print(isEmailExist);
+        
+      } else {
+        await getUserData();
+      }
+
       emit(UpdateUserDataSuccessState());
     } catch (e) {
+      print(e.toString());
       emit(UpdateUserDataFailureState(errMessage: e.toString()));
     }
   }

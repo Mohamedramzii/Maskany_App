@@ -33,11 +33,10 @@ class LocationView extends StatelessWidget {
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is RegisterSuccessState) {
-              Navigator.pushReplacement(
-                      context,
-                      PageAnimationTransition(
-                          page: const AppLayout(),
-                          pageAnimationType: LeftToRightTransition()))
+              Navigator.of(context)
+                  .pushReplacement(PageAnimationTransition(
+                      page: const AppLayout(),
+                      pageAnimationType: LeftToRightTransition()))
                   .then((value) => SnackBars.successSnackBar(context,
                       S.of(context).CreateAccount, 'تم انشاء الحساب بنجاح'));
             }
@@ -247,3 +246,6 @@ class LocationView extends StatelessWidget {
         ),
       ),
 */
+
+
+

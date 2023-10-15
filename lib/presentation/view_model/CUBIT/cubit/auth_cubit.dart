@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:maskany_app/data/models/login_model/login_model.dart';
 import 'package:maskany_app/data/models/userdata_model/user_data_model.dart';
 import 'package:maskany_app/generated/l10n.dart';
@@ -71,12 +72,13 @@ class AuthCubit extends Cubit<AuthState> {
     emit(RegisterLoadingState());
 
     try {
-      Response response = await DioHelper.postData(url: EndPoints.register, data: {
+      Response response =
+          await DioHelper.postData(url: EndPoints.register, data: {
         'username': username,
         'email': email,
         'password': password,
         'phoneNumber': phone,
-        'location':location
+        'location': location
       });
 
       registerModel = RegisterModel2.fromJson(response.data);
@@ -176,8 +178,28 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-
-File? image;
-final imagePicker= ImagePicker();
-  pickImage()async{}
+  File? image;
+  final imagePicker = ImagePicker();
+  pickImage() async {
+    var pickedImage = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      image = File(pickedImage.path);
+      FormData formdata = FormData.fromMap({
+        'image': await MultipartFile.fromFile(pickedImage.path),
+      });
+      Dio dio = Dio();
+      dio.options.headers['Authorization'] = 'Token $tokenHolder';
+      Response response = await dio
+          .put('http://66.45.248.247:8000/auth/user/update/', data: formdata);
+      if (response.statusCode == 200) {
+        debugPrint('Success While Posting Profile Image');
+        debugPrint(pickedImage.path);
+      } else {
+        debugPrint('Error While Posting Profile Image');
+        debugPrint(pickedImage.path);
+      }
+      getUserData();
+      emit(ImagePickerSuccessState());
+    } else {}
+  }
 }

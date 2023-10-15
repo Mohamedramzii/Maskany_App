@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,9 +41,23 @@ class ProfileView extends StatelessWidget {
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: CircleAvatar(
-                    radius: 55.r,
-                    backgroundImage: const AssetImage(Images.profile),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50.r),
+                    child: Container(
+                      width: 100.w,
+                      height: 100.h,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50.r)),
+                      child: cubit.userdata?.image != null
+                          ? Image.network(cubit.userdata!.image!,
+                              fit: BoxFit.cover)
+                          : cubit.image != null
+                              ? Image.file(
+                                  cubit.image!,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(Images.profile, fit: BoxFit.cover),
+                    ),
                   ),
                 ),
                 SizedBox(

@@ -76,7 +76,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                           compassEnabled: true,
                           // indoorViewEnabled: true,
                           mapToolbarEnabled: true,
-
+        
                           mapType: cubit.isSatalite
                               ? MapType.hybrid
                               : MapType.normal,
@@ -93,7 +93,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                           myLocationButtonEnabled: true,
                           myLocationEnabled: true,
                           zoomControlsEnabled: false,
-
+        
                           padding: const EdgeInsets.only(top: 100),
                           markers: markers ?? {},
                           // markers:
@@ -130,10 +130,10 @@ class _LocationMapViewState extends State<LocationMapView> {
                                       index: index, list: cubit.allcategories),
                               itemCount: cubit.allcategories.length)),
                     ),
-
+        
                     // Align(
                     //   alignment: Alignment.bottomRight,
-
+        
                     //   child: Container(
                     //     width: 100.w,
                     //     height: 40.h,

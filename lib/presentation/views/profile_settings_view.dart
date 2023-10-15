@@ -47,9 +47,21 @@ class ProfileSettingsVIew extends StatelessWidget {
                         clipBehavior: Clip.none,
                         children: [
                           Center(
-                            child: CircleAvatar(
-                              radius: 55.r,
-                              backgroundImage:  AssetImage(cubit.userdata!.image?? Images.profile),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50.r),
+                              child: Container(
+                                width: 100.w,
+                                height: 100.h,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50.r)),
+                                child: cubit.image != null
+                                    ? Image.file(
+                                        cubit.image!,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.asset(Images.profile,
+                                        fit: BoxFit.cover),
+                              ),
                             ),
                           ),
                           Positioned(
@@ -60,16 +72,19 @@ class ProfileSettingsVIew extends StatelessWidget {
                             child: Center(
                               child: ClipRRect(
                                   clipBehavior: Clip.none,
-                                  child: SvgPicture.asset(
-                                    Images.editimage,
-                                    width: ResponsiveBreakpoints.of(context)
-                                            .isTablet
-                                        ? 50.w
-                                        : null,
-                                    height: ResponsiveBreakpoints.of(context)
-                                            .isTablet
-                                        ? 50.h
-                                        : null,
+                                  child: GestureDetector(
+                                    onTap: () => cubit.pickImage(),
+                                    child: SvgPicture.asset(
+                                      Images.editimage,
+                                      width: ResponsiveBreakpoints.of(context)
+                                              .isTablet
+                                          ? 50.w
+                                          : null,
+                                      height: ResponsiveBreakpoints.of(context)
+                                              .isTablet
+                                          ? 50.h
+                                          : null,
+                                    ),
                                   )),
                             ),
                           ),
@@ -103,7 +118,8 @@ class ProfileSettingsVIew extends StatelessWidget {
                             children: [
                               _buildRowdata(
                                 label: 'رقم الهاتف',
-                                hint: cubit.userdata!.phoneNumber ?? 'أضف رقم الهاتف',
+                                hint: cubit.userdata!.phoneNumber ??
+                                    'أضف رقم الهاتف',
                                 needWidget: true,
                                 whatToUpdate: 'phoneNumber',
                               ),

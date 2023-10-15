@@ -61,6 +61,7 @@ dependencies:
   url_launcher: ^6.0.0
   permission_handler: ^11.0.1
   connectivity_plus: ^5.0.0
+  image_picker: ^1.0.4
  
   
 

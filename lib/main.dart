@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
             debugShowCheckedModeBanner: false,
-            title: 'Maskany',
+            title: 'مسكني',
             locale: const Locale('ar'),
             localizationsDelegates: const [
               S.delegate,

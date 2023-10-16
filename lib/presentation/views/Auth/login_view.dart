@@ -164,7 +164,7 @@ class _LoginViewState extends State<LoginView> {
                         ),
                         GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushReplacement(
+                              Navigator.of(context).push(
                                   PageAnimationTransition(
                                       page: const RegisterView(),
                                       pageAnimationType:

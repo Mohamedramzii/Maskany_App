@@ -5,6 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:maskany_app/data/models/favorites_model/favorites_model.dart';
+import 'package:maskany_app/data/models/propertiesModel/properties_model2/properties_model2.dart';
+import 'package:maskany_app/presentation/views/detailsForhorizontal.dart';
+import 'package:maskany_app/presentation/views/details_view.dart';
+import 'package:page_animation_transition/animations/right_to_left_faded_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
@@ -17,7 +22,7 @@ class CustomHorizontalFavItems extends StatelessWidget {
     required this.favs,
     required this.index,
   }) : super(key: key);
-  final List<FavoritesModel> favs;
+  final List<PropertiesModel2> favs;
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -38,30 +43,44 @@ class CustomHorizontalFavItems extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                          width: 170.w,
-                          // width: double.infinity,
-                          height: 140.h,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(6.r),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  'http://66.45.248.247:8000${favs[index].property!.images[0].image}',
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Center(
-                                child: LoadingAnimationWidget.staggeredDotsWave(
-                                    color: ColorsManager.kprimaryColor,
-                                    size: 40.r),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(PageAnimationTransition(
+                              page: DetailsViewForHorizontal(
+                                model:
+                                    BlocProvider.of<AppCubit>(context).allfavorites,
+                                index: index,
                               ),
-                              errorWidget: (context, url, error) =>
-                                  const Center(
-                                child: Icon(Icons.image_not_supported_rounded),
+                              pageAnimationType: RightToLeftFadedTransition()));
+                        },
+                        child: SizedBox(
+                            width: 170.w,
+                            // width: double.infinity,
+                            height: 140.h,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(6.r),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    'http://66.45.248.247:8000${favs[index].images![0].image}',
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Center(
+                                  child:
+                                      LoadingAnimationWidget.staggeredDotsWave(
+                                          color: ColorsManager.kprimaryColor,
+                                          size: 40.r),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Center(
+                                  child:
+                                      Icon(Icons.image_not_supported_rounded),
+                                ),
+                                errorListener: (value) => const Center(
+                                  child:
+                                      Icon(Icons.image_not_supported_rounded),
+                                ),
                               ),
-                              errorListener: (value) => const Center(
-                                child: Icon(Icons.image_not_supported_rounded),
-                              ),
-                            ),
-                          )),
+                            )),
+                      ),
                       // SizedBox(height: 20.h,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +88,7 @@ class CustomHorizontalFavItems extends StatelessWidget {
                           SizedBox(
                             width: 140.w,
                             child: Text(
-                              favs[index].property!.title,
+                              favs[index].title!,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 10.sp),
                             ),
@@ -96,14 +115,14 @@ class CustomHorizontalFavItems extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        favs[index].property!.city,
+                        favs[index].city!,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .copyWith(fontSize: 6.sp),
                       ),
                       Text(
-                        'شهريأ / ${favs[index].property!.price.toString()}',
+                        'شهريأ / ${favs[index].price.toString()}',
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -118,7 +137,7 @@ class CustomHorizontalFavItems extends StatelessWidget {
                           //   width: 105.w,
                           // ),
                           IconRow(
-                              count: favs[index].property!.bathrooms,
+                              count: favs[index].bathrooms!,
                               fontsize: 8,
                               icon: SvgPicture.asset(
                                 Images.size,

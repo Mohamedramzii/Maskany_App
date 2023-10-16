@@ -45,6 +45,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                 )
               : Stack(
                   children: [
+                 
                     CustomGoogleMapMarkerBuilder(
                       customMarkers:
                           cubit.filterCategories(cubit.categoryIndex).map((e) {

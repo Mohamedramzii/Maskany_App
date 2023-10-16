@@ -36,7 +36,7 @@ class HomeLoadingView extends StatelessWidget {
                             width: 6.w,
                           ),
                           Text(
-                            'السعودية, البارحة',
+                            'يحدد الان',
                             style: ResponsiveBreakpoints.of(context).isMobile
                                 ? Theme.of(context).textTheme.bodySmall
                                 : Theme.of(context)

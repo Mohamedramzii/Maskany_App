@@ -58,19 +58,21 @@ class ProfileSettingsVIew extends StatelessWidget {
                                       borderRadius:
                                           BorderRadius.circular(50.r)),
                                   child: state is GetUserDataLoadingState
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : cubit.userdata?.image != null
-                              ? Image.network(cubit.userdata!.image!,
-                                  fit: BoxFit.cover,)
-                              : cubit.image != null
-                                  ? Image.file(
-                                      cubit.image!,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.asset(Images.profile,
-                                      fit: BoxFit.cover),
+                                      ? const Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : cubit.userdata?.image != null
+                                          ? Image.network(
+                                              cubit.userdata!.image!,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : cubit.image != null
+                                              ? Image.file(
+                                                  cubit.image!,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : Image.asset(Images.profile,
+                                                  fit: BoxFit.cover),
                                   // cubit.image != null
                                   //     ? Image.file(
                                   //         cubit.image!,
@@ -224,147 +226,146 @@ class _buildRowdata extends StatelessWidget {
               .bodySmall!
               .copyWith(color: Colors.black),
         ),
-        Row(
-          children: [
-            needWidget
-                ? GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(1)),
-                            child: Container(
-                              padding: EdgeInsets.all(16.0.r),
-                              width: double.infinity,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+        !needWidget
+            ? Container()
+            : GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(1)),
+                        child: Container(
+                          padding: EdgeInsets.all(16.0.r),
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        Images.editdata,
-                                        width: 17.w,
-                                      ),
-                                      Text('تــغـير $label',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall!
-                                              .copyWith(color: Colors.black)),
-                                    ],
+                                  SvgPicture.asset(
+                                    Images.editdata,
+                                    width: 17.w,
                                   ),
-                                  SizedBox(height: 16.0.h),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 20.w,
-                                      ),
-                                      Text(
-                                        'التعديل علي $label',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(color: Colors.black),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 8.0.h),
-                                  SizedBox(
-                                    height: 60.h,
-                                    child: TextField(
-                                      controller: controller,
-                                      // onChanged: (value) {},
-                                      onSubmitted: (value) {
-                                        controller.text = value;
-                                      },
+                                  Text('تــغـير $label',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyMedium,
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      decoration: InputDecoration(
-                                        // suffixIcon: IconButton(
-                                        //     onPressed: () {},
-                                        //     icon: const Icon(
-                                        //         Icons.search_rounded)),
-                                        hintText: hint,
-                                        hintStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              color: Colors.grey,
-                                            ),
-                                        enabledBorder: OutlineInputBorder(
-                                            // gapPadding: 0,
-                                            borderRadius:
-                                                BorderRadius.circular(15.r),
-                                            borderSide: BorderSide(
-                                              color: ColorsManager.borderColor,
-                                              width: 2,
-                                              strokeAlign: 1,
-                                            )),
-                                        focusedBorder: OutlineInputBorder(
-                                          // gapPadding: 0,
-                                          borderRadius:
-                                              BorderRadius.circular(15.r),
-                                          borderSide: BorderSide(
-                                            color: ColorsManager.borderColor,
-                                            width: 2,
-                                            strokeAlign: 1,
-                                          ),
+                                          .bodySmall!
+                                          .copyWith(color: Colors.black)),
+                                ],
+                              ),
+                              SizedBox(height: 16.0.h),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 20.w,
+                                  ),
+                                  Text(
+                                    'التعديل علي $label',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 8.0.h),
+                              SizedBox(
+                                height: 60.h,
+                                child: TextField(
+                                  controller: controller,
+                                  // onChanged: (value) {},
+                                  onSubmitted: (value) {
+                                    controller.text = value;
+                                  },
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  decoration: InputDecoration(
+                                    // suffixIcon: IconButton(
+                                    //     onPressed: () {},
+                                    //     icon: const Icon(
+                                    //         Icons.search_rounded)),
+                                    hintText: hint,
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: Colors.grey,
                                         ),
+                                    enabledBorder: OutlineInputBorder(
+                                        // gapPadding: 0,
+                                        borderRadius:
+                                            BorderRadius.circular(15.r),
+                                        borderSide: BorderSide(
+                                          color: ColorsManager.borderColor,
+                                          width: 2,
+                                          strokeAlign: 1,
+                                        )),
+                                    focusedBorder: OutlineInputBorder(
+                                      // gapPadding: 0,
+                                      borderRadius: BorderRadius.circular(15.r),
+                                      borderSide: BorderSide(
+                                        color: ColorsManager.borderColor,
+                                        width: 2,
+                                        strokeAlign: 1,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 50.0.h),
-                                  CustomButton(
-                                      text: 'حفـظ التــغيـرات',
-                                      onpressed: () {
-                                        Navigator.of(context).pop();
-                                        if (controller.text.isNotEmpty) {
-                                          if (!BlocProvider.of<AuthCubit>(
-                                                  context)
-                                              .isEmailExist) {
-                                            BlocProvider.of<AuthCubit>(context)
-                                                .updateUserData(
-                                                    dataToChange: whatToUpdate,
-                                                    updateData:
-                                                        controller.text.isEmpty
-                                                            ? "أضف $label"
-                                                            : controller.text);
-                                          } else {
-                                            return SnackBars.failureSnackBar(
-                                                context,
-                                              'تغيير البريد الالكتروني',
-                                                'هذا الايميل مستخدم من قبل');
-                                          }
-                                        }
-                                        controller.clear();
-                                      })
-                                ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                              SizedBox(height: 50.0.h),
+                              CustomButton(
+                                  text: 'حفـظ التــغيـرات',
+                                  onpressed: () {
+                                    Navigator.of(context).pop();
+                                    if (controller.text.isNotEmpty) {
+                                      if (!BlocProvider.of<AuthCubit>(context)
+                                          .isEmailExist) {
+                                        BlocProvider.of<AuthCubit>(context)
+                                            .updateUserData(
+                                                dataToChange: whatToUpdate,
+                                                updateData:
+                                                    controller.text.isEmpty
+                                                        ? "أضف $label"
+                                                        : controller.text);
+                                      } else {
+                                        return SnackBars.failureSnackBar(
+                                            context,
+                                            'تغيير البريد الالكتروني',
+                                            'هذا الايميل مستخدم من قبل');
+                                      }
+                                    }
+                                    controller.clear();
+                                  })
+                            ],
+                          ),
+                        ),
                       );
                     },
-                    child: SvgPicture.asset(Images.editdata))
-                : Container(),
-            SizedBox(
-              width: 5.w,
-            ),
-            Text(
-              hint,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: Colors.black),
-            )
-          ],
-        )
+                  );
+                },
+                child: Row(
+                  children: [
+                    SvgPicture.asset(Images.editdata),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    SizedBox(
+                      child: Text(
+                        hint,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: Colors.black),
+                      ),
+                    )
+                  ],
+                ),
+              )
       ],
     );
   }

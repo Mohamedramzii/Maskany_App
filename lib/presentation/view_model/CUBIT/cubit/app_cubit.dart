@@ -280,7 +280,7 @@ class AppCubit extends Cubit<AppState> {
     emit(GetSearchSuccessState());
   }
 
-  List<FavoritesModel> allfavorites = [];
+  List<PropertiesModel2> allfavorites = [];
   Set<int> favoritesID = {};
   // Set<int> favoritesID2 = {};
   getAllFavorites() async {
@@ -294,7 +294,7 @@ class AppCubit extends Cubit<AppState> {
         token: 'Token $tokenHolder');
 
     for (var item in response.data) {
-      allfavorites.add(FavoritesModel.fromJson(item));
+      allfavorites.add(PropertiesModel2.fromJson(item['property']));
       favoritesID.add(item['property']['id']);
     }
 
@@ -382,7 +382,7 @@ class AppCubit extends Cubit<AppState> {
     // }
     try {
       Response response = await DioHelper.deleteData(
-          url: 'http://66.45.248.247:8000/properties/fav/$favID/',
+          url: 'http://66.45.248.247:8000/properties/fav/prop/$favID/',
           token: 'Token $tokenHolder');
       // if (response.statusCode == 204) {
       //   print('DELEAAAAATED');

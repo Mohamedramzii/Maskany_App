@@ -74,7 +74,7 @@ class DetailsView extends StatelessWidget {
                   CarouselSlider(
                     options: CarouselOptions(
                       height: 200.0.h,
-                      autoPlay: true,
+                      autoPlay: false,
                       enlargeCenterPage: true,
                       enableInfiniteScroll: false,
                       autoPlayInterval: const Duration(seconds: 1),
@@ -131,31 +131,31 @@ class DetailsView extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          RatingBar(
-                            allowHalfRating: true,
-                            initialRating: cubit.rate,
-                            // tapOnlyMode: true,
-                            // glow: true,
-                            // glowColor: Colors.yellow, unratedColor: Colors.grey,
-                            ignoreGestures: true,
-                            itemSize: 20.r,
-                            maxRating: 5,
-                            minRating: 0,
-                            ratingWidget: RatingWidget(
-                                full: const Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                ),
-                                half: const Icon(Icons.star_half,
-                                    color: Colors.yellow),
-                                empty:
-                                    const Icon(Icons.star, color: Colors.grey)),
-                            onRatingUpdate: (value) => cubit.rate = value,
-                          ),
-                          Text(
-                            '12 مشاهد',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
+                          // RatingBar(
+                          //   allowHalfRating: true,
+                          //   initialRating: cubit.rate,
+                          //   // tapOnlyMode: true,
+                          //   // glow: true,
+                          //   // glowColor: Colors.yellow, unratedColor: Colors.grey,
+                          //   ignoreGestures: true,
+                          //   itemSize: 20.r,
+                          //   maxRating: 5,
+                          //   minRating: 0,
+                          //   ratingWidget: RatingWidget(
+                          //       full: const Icon(
+                          //         Icons.star,
+                          //         color: Colors.yellow,
+                          //       ),
+                          //       half: const Icon(Icons.star_half,
+                          //           color: Colors.yellow),
+                          //       empty:
+                          //           const Icon(Icons.star, color: Colors.grey)),
+                          //   onRatingUpdate: (value) => cubit.rate = value,
+                          // ),
+                          // Text(
+                          //   '12 مشاهد',
+                          //   style: Theme.of(context).textTheme.bodySmall,
+                          // ),
                         ],
                       ),
                       RichText(

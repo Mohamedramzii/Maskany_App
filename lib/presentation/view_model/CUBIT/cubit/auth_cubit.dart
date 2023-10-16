@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maskany_app/data/models/userdata_model/user_data_model.dart';
 import 'package:maskany_app/generated/l10n.dart';
+import 'package:maskany_app/presentation/views/services_announce.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import '../../../../core/common_widgets/custom_snackbar.dart';
@@ -86,6 +87,11 @@ class AuthCubit extends Cubit<AuthState> {
       if (response.statusCode == 200) {
         tokenHolder = registerModel!.token!;
         CacheHelper.saveData(key: tokenKey, value: tokenHolder);
+        SnackBars.successSnackBar(
+            context, S.of(context).CreateAccount, 'تم انشاء الحساب بنجاح');
+        Navigator.of(context).pushReplacement(PageAnimationTransition(
+            page: const ServicesAnnouncementView(),
+            pageAnimationType: LeftToRightTransition()));
       } else {
         SnackBars.failureSnackBar(
             context, S.of(context).CreateAccount, registerModel!.detail);

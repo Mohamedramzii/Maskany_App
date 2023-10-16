@@ -8,7 +8,6 @@ import 'widgets/servicesView_widgets/custom_container.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
-import '../../core/app_resources/fonts.dart';
 import '../../data/models/services_model/services_model.dart';
 
 class ServicesAnnouncementView extends StatelessWidget {
@@ -28,10 +27,15 @@ class ServicesAnnouncementView extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: IconButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.of(context).pushAndRemoveUntil(
                         PageAnimationTransition(
                             page: const AppLayout(),
-                            pageAnimationType: BottomToTopTransition()));
+                            pageAnimationType: BottomToTopTransition()),
+                        (route) => false);
+                    // Navigator.of(context).pushReplacement(
+                    //     PageAnimationTransition(
+                    //         page: const AppLayout(),
+                    //         pageAnimationType: BottomToTopTransition()));
                   },
                   icon: const Icon(
                     Icons.close_rounded,

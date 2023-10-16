@@ -14,6 +14,7 @@ class AppLayout extends StatelessWidget {
       builder: (context, state) {
         var cubit = BlocProvider.of<AppCubit>(context);
         return Scaffold(
+          appBar: AppBar(),
           body:  SafeArea(child: cubit.screen[cubit.currentindex]),
           bottomNavigationBar: Directionality(
             textDirection: TextDirection.ltr,

@@ -33,12 +33,7 @@ class LocationView extends StatelessWidget {
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is RegisterSuccessState) {
-              Navigator.of(context)
-                  .pushReplacement(PageAnimationTransition(
-                      page: const AppLayout(),
-                      pageAnimationType: LeftToRightTransition()))
-                  .then((value) => SnackBars.successSnackBar(context,
-                      S.of(context).CreateAccount, 'تم انشاء الحساب بنجاح'));
+              
             }
           },
           builder: (BuildContext context, AuthState state) => Padding(
@@ -119,13 +114,15 @@ class LocationView extends StatelessWidget {
                       : CustomButton(
                           text: 'ابدأ الأن',
                           onpressed: () {
-                            BlocProvider.of<AuthCubit>(context).register(
+                            if(govern.isNotEmpty){
+                              BlocProvider.of<AuthCubit>(context).register(
                                 username: username,
                                 email: email,
                                 phone: phoneNumber,
                                 password: password,
                                 location: govern,
                                 context: context);
+                            }
                           })
                 ],
               ),

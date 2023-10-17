@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
 import 'package:maskany_app/presentation/views/detailsForhorizontal.dart';
 import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/home_loading_view.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 import '../../core/constants.dart';
-import '../../data/data_sources/local/shared_pref.dart';
 import '../view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
@@ -35,13 +33,13 @@ class _HomeViewState extends State<HomeView> {
     // debugPrint(CacheHelper.getData(key: tokenKey));
 
     BlocProvider.of<AuthCubit>(context).getUserData();
+    if (!isAllRequestsDone) {
+      BlocProvider.of<AppCubit>(context).getAllproperties();
 
-    BlocProvider.of<AppCubit>(context).getAllproperties();
-
-    // if (BlocProvider.of<AppCubit>(context).allfavorites.isEmpty) {
-    BlocProvider.of<AppCubit>(context).getAllFavorites();
-    // }
-    // BlocProvider.of<AppCubit>(context).getCategories();
+      BlocProvider.of<AppCubit>(context).getAllFavorites();
+      debugPrint('In Home, All requests Status is: $isAllRequestsDone');
+      isAllRequestsDone = true;
+    }
 
     super.initState();
   }
@@ -178,7 +176,6 @@ class _HomeViewState extends State<HomeView> {
                               SizedBox(
                                 height: 40.h,
                               ),
-                              
                             ],
                           ),
                         ),
@@ -189,37 +186,40 @@ class _HomeViewState extends State<HomeView> {
                           child: Column(
                             children: [
                               Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(S.of(context).suggestedPlaces,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium),
-                                    Text(
-                                      S.of(context).SeeMore,
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(S.of(context).suggestedPlaces,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium),
+                                  Text(
+                                    S.of(context).SeeMore,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
                               Flexible(
                                 child: ListView.separated(
-                                    itemBuilder: (context, index) => GestureDetector(
-                                        onTap: () => Navigator.of(context).push(
-                                            PageAnimationTransition(
-                                                page: DetailsView(
-                                                    model: cubit.property[index]),
-                                                pageAnimationType:
-                                                    RightToLeftTransition())),
-                                        child: CustomVerticalContainer(
-                                          model: cubit.property[index],
-                                          index: index,
-                                        )),
-                                    separatorBuilder: (context, index) => SizedBox(
+                                    itemBuilder: (context, index) =>
+                                        GestureDetector(
+                                            onTap: () => Navigator.of(context)
+                                                .push(PageAnimationTransition(
+                                                    page: DetailsView(
+                                                        model: cubit
+                                                            .property[index]),
+                                                    pageAnimationType:
+                                                        RightToLeftTransition())),
+                                            child: CustomVerticalContainer(
+                                              model: cubit.property[index],
+                                              index: index,
+                                            )),
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(
                                           height: 10.h,
                                         ),
                                     itemCount: cubit.property.length),

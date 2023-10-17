@@ -71,7 +71,7 @@ class ProfileSettingsVIew extends StatelessWidget {
                                                   cubit.image!,
                                                   fit: BoxFit.cover,
                                                 )
-                                              : Image.asset(Images.profile,
+                                              : SvgPicture.asset(Images.user,
                                                   fit: BoxFit.cover),
                                   // cubit.image != null
                                   //     ? Image.file(

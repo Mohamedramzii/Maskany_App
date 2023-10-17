@@ -25,7 +25,7 @@ class IconRow extends StatelessWidget {
               Theme.of(context)
                   .textTheme
                   .bodySmall!
-                  .copyWith(fontSize: fontsize.sp, fontWeight: FontWeight.bold),
+                  .copyWith(fontSize: fontsize.sp, fontWeight: FontWeight.bold,color: Colors.black),
         ),
         icon,
         SizedBox(

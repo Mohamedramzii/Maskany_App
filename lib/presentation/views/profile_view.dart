@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:maskany_app/presentation/views/Auth/login_view.dart';
@@ -60,7 +57,7 @@ class ProfileView extends StatelessWidget {
                                       cubit.image!,
                                       fit: BoxFit.cover,
                                     )
-                                  : Image.asset(Images.profile,
+                                  : SvgPicture.asset(Images.user,
                                       fit: BoxFit.cover),
                     ),
                   ),

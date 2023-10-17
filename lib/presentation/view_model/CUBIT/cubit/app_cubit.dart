@@ -10,7 +10,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/core/serverFailure.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
-import 'package:maskany_app/data/models/favorites_model/favorites_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants.dart';
@@ -31,6 +30,7 @@ class AppCubit extends Cubit<AppState> {
   bool isviewedfromC = false;
   bool isSatalite = false;
 
+  
   toggleMapType() {
     isSatalite = !isSatalite;
     emit(ToggleMapTypeSuccessState());
@@ -222,8 +222,7 @@ class AppCubit extends Cubit<AppState> {
 
     try {
       Response response = await DioHelper.getData(
-          url: EndPoints.properties,
-          token: 'Token $tokenHolder');
+          url: EndPoints.properties, token: 'Token $tokenHolder');
       for (var item in response.data) {
         property.add(PropertiesModel2.fromJson(item));
         // egaarProp = property
@@ -290,8 +289,7 @@ class AppCubit extends Cubit<AppState> {
     favoritesID.clear();
     emit(GetFavoritesLoadingState());
     Response response = await DioHelper.getData(
-        url: EndPoints.favorites,
-        token: 'Token $tokenHolder');
+        url: EndPoints.favorites, token: 'Token $tokenHolder');
 
     for (var item in response.data) {
       allfavorites.add(PropertiesModel2.fromJson(item['property']));
@@ -346,7 +344,7 @@ class AppCubit extends Cubit<AppState> {
           token: 'Token $tokenHolder');
       if (response.statusCode == 204) {
         print('DELEAAAAATED');
-      }else{
+      } else {
         print(response.statusCode);
         print(response.data['error']);
       }
@@ -418,7 +416,7 @@ class AppCubit extends Cubit<AppState> {
 
     debugPrint('SEEN');
     if (response.statusCode == 200) {
-     await getAllproperties();
+      await getAllproperties();
     }
 
     emit(SeenOrNotSuccessState());

@@ -29,6 +29,7 @@ abstract class Images {
   static const String correct = 'assets/images/correct.svg';
   static const String editimage = 'assets/images/edit_image.svg';
   static const String editdata = 'assets/images/edit_data.svg';
+  static const String user = 'assets/images/user.svg';
 
   static const String emptySearch = 'assets/images/empty_search.json';
 }

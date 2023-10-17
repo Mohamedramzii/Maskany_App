@@ -230,6 +230,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logout() async {
     await CacheHelper.clearData(key: tokenKey);
+    isAllRequestsDone=false;
     emit(UserLoggedOutSuccessState());
   }
 }

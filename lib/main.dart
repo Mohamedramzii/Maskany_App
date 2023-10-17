@@ -33,7 +33,8 @@ void main() async {
   ]);
 
   // isviewed = CacheHelper.getData(key: 'loc');
-
+   isAllRequestsDone = true;
+   debugPrint('Request Status is: $isAllRequestsDone');
   // isviewed = await SessionManager().get('view') ?? false;
   // debugPrint(isviewed.toString());
   runApp(DevicePreview(
@@ -104,9 +105,9 @@ class _MyAppState extends State<MyApp> {
                 // ..isInternetConnectFunc()
                 ..checkLocationPermission(Permission.locationWhenInUse, context)
                 // ..getCurrentLatLong()
-                // ..getAllproperties()
+                ..getAllproperties()
                 ..getCategories()
-                // ..getAllFavorites(), 
+                ..getAllFavorites(), 
             ),
           ],
           child: MaterialApp(

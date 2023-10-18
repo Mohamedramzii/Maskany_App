@@ -30,6 +30,9 @@ abstract class Images {
   static const String editimage = 'assets/images/edit_image.svg';
   static const String editdata = 'assets/images/edit_data.svg';
   static const String user = 'assets/images/user.svg';
+  static const String searchline = 'assets/images/search-line.svg';
+  static const String locationicon = 'assets/images/location_icon.svg';
+  static const String divider = 'assets/images/divider.svg';
 
   static const String emptySearch = 'assets/images/empty_search.json';
 }

@@ -97,3 +97,4 @@ final class AddOrRemoveFailureState extends AppState{}
 
 final class SeenOrNotSuccessState extends AppState{}
 final class SeenOrNotFailureState extends AppState{}
+final class AdvSearchIndexChangeSuccessState extends AppState{}

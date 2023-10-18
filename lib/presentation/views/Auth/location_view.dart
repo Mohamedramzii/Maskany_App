@@ -3,15 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
-import 'package:page_animation_transition/animations/left_to_right_transition.dart';
-import 'package:page_animation_transition/page_animation_transition.dart';
-
 import '../../../core/app_resources/colors.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
-import '../../../core/common_widgets/custom_snackbar.dart';
+
 import '../../../core/constants.dart';
 import '../../../generated/l10n.dart';
-import '../AppLayout.dart';
+
 
 class LocationView extends StatelessWidget {
   LocationView(
@@ -54,18 +51,7 @@ class LocationView extends StatelessWidget {
                   SizedBox(
                     height: 30.h,
                   ),
-                  // Container(
-                  //   width: double.infinity,
-                  //   height: 45.h,
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.circular(15.r),
-                  //     border: Border.all(
-                  //       color: ColorsManager.borderColor,
-                  //       width: 2.5
-                  //     )
-                  //   ),
-                  //   child:
-                  // )
+              
                   DropdownButtonFormField<String>(
                     hint: Text('المحافظة',
                         style: Theme.of(context).textTheme.bodyMedium),

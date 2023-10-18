@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/app_resources/colors.dart';
 import '../../../view_model/CUBIT/cubit/app_cubit.dart';
 
@@ -14,7 +13,7 @@ class CustomTextFieldForSearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 45.h,
+      height: 50.h,
       child: TextField(
         onChanged: (value) {
           cubit.getSearchedFor(value);
@@ -24,10 +23,8 @@ class CustomTextFieldForSearchView extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
-          suffixIcon: IconButton(
-              onPressed: () {}, icon: const Icon(Icons.search_rounded)),
+          prefixIcon: const Icon(Icons.search),
           hintText: 'أبحث',
-          
           hintStyle: Theme.of(context).textTheme.bodyMedium,
           enabledBorder: OutlineInputBorder(
               // gapPadding: 0,

@@ -34,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
 
     BlocProvider.of<AuthCubit>(context).getUserData();
     if (!isAllRequestsDone) {
-      BlocProvider.of<AppCubit>(context).getAllproperties();
+      BlocProvider.of<AppCubit>(context).getAllproperties(context);
 
       BlocProvider.of<AppCubit>(context).getAllFavorites();
       debugPrint('In Home, All requests Status is: $isAllRequestsDone');
@@ -132,10 +132,10 @@ class _HomeViewState extends State<HomeView> {
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium),
-                                  Text(S.of(context).SeeMore,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
+                                  // Text(S.of(context).SeeMore,
+                                  //     style: Theme.of(context)
+                                  //         .textTheme
+                                  //         .bodySmall),
                                 ],
                               ),
                               SizedBox(
@@ -164,14 +164,14 @@ class _HomeViewState extends State<HomeView> {
                                           },
                                           child: CustomHorizontalCOntainer(
                                               // favs: cubit.allfavorites[index],
-                                              model: cubit.property,
+                                              model: cubit.nearestPlaces,
                                               index: index));
                                     },
                                     separatorBuilder: (context, index) =>
                                         SizedBox(
                                           width: 20.w,
                                         ),
-                                    itemCount: cubit.property.length),
+                                    itemCount: cubit.nearestPlaces.length),
                               ),
                               SizedBox(
                                 height: 40.h,
@@ -193,11 +193,11 @@ class _HomeViewState extends State<HomeView> {
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium),
-                                  Text(
-                                    S.of(context).SeeMore,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
-                                  ),
+                                  // Text(
+                                  //   S.of(context).SeeMore,
+                                  //   style:
+                                  //       Theme.of(context).textTheme.bodySmall,
+                                  // ),
                                 ],
                               ),
                               SizedBox(

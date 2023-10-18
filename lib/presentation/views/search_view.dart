@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
+import 'package:maskany_app/presentation/views/advanced_search_view.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import '../../core/app_resources/images.dart';
@@ -30,6 +31,19 @@ class SearchView extends StatelessWidget {
                     height: 10.h,
                   ),
                   CustomTextFieldForSearchView(cubit: cubit),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(PageAnimationTransition(
+                              page:  AdnvancedSearchView(),
+                              pageAnimationType: RightToLeftTransition()));
+                        },
+                        child: Text(
+                          'بحث متقدم',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        )),
+                  ),
                   cubit.emptyValue.isEmpty
                       ? SizedBox(
                           height: 100.h,

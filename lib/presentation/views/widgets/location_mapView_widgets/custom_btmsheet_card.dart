@@ -27,7 +27,7 @@ class CustomBtmsheetCard extends StatelessWidget {
             // Navigator.of(context).pop();
             cubit.seenOrnot(propertyID: model.id);
             Navigator.push(
-                context,
+                context, 
                 PageAnimationTransition(
                     page: DetailsView(
                       model: model ?? PropertiesModel2(),

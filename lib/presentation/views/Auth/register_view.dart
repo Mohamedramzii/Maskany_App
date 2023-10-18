@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../../core/app_resources/colors.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
 import '../../../core/common_widgets/custom_textformfield_widget.dart';
 import '../../../core/constants.dart';

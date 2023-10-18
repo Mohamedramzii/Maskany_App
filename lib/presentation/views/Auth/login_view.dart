@@ -8,12 +8,10 @@ import 'package:page_animation_transition/page_animation_transition.dart';
 import '../../../core/app_resources/colors.dart';
 import '../../../core/app_resources/strings.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
-import '../../../core/common_widgets/custom_snackbar.dart';
 import '../../../core/common_widgets/custom_textformfield_widget.dart';
 import '../../../core/constants.dart';
 import '../../../generated/l10n.dart';
 import '../../view_model/CUBIT/cubit/auth_cubit.dart';
-import '../AppLayout.dart';
 import 'forgot_view_step1.dart';
 import 'register_view.dart';
 

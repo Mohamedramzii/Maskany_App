@@ -1,15 +1,18 @@
-// ignore_for_file: body_might_complete_normally_catch_error
+// ignore_for_file: body_might_complete_normally_catch_error, unused_local_variable
 
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/core/serverFailure.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
+import 'package:maskany_app/data/models/userdata_model/user_data_model.dart';
+import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants.dart';
@@ -30,7 +33,6 @@ class AppCubit extends Cubit<AppState> {
   bool isviewedfromC = false;
   bool isSatalite = false;
 
-  
   toggleMapType() {
     isSatalite = !isSatalite;
     emit(ToggleMapTypeSuccessState());
@@ -210,14 +212,15 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<PropertiesModel2> property = [];
-  List<PropertiesModel2> bee3Prop = [];
-  List<PropertiesModel2> egaarProp = [];
-  getAllproperties() async {
+  // List<PropertiesModel2> bee3Prop = [];
+  // List<PropertiesModel2> egaarProp = [];
+  List<PropertiesModel2> nearestPlaces = [];
+  getAllproperties([context]) async {
     // isInternetConnectFunc();
     CacheHelper.getData(key: tokenKey);
     property = [];
-    bee3Prop = [];
-    egaarProp = [];
+    // bee3Prop = [];
+    // egaarProp = [];
     emit(GetAllPropertiesLoadingState());
 
     try {
@@ -225,6 +228,11 @@ class AppCubit extends Cubit<AppState> {
           url: EndPoints.properties, token: 'Token $tokenHolder');
       for (var item in response.data) {
         property.add(PropertiesModel2.fromJson(item));
+        nearestPlaces = property
+            .where((e) =>
+                e.city ==
+                'حدائق الاهرام') //BlocProvider.of<AuthCubit>(context).userdata!.location
+            .toList();
         // egaarProp = property
         //     .where((e) => e.category!.name == allcategories[1].name)
         //     .toList();
@@ -234,6 +242,8 @@ class AppCubit extends Cubit<AppState> {
       }
 
       debugPrint('######### ${property.length} ###############');
+      debugPrint('######### ${nearestPlaces.length} ###############');
+      // debugPrint('######### ${BlocProvider.of<AuthCubit>(context).userdata!.location} ###############');
       // debugPrint('######### ${egaarProp.length} ###############');
       // debugPrint('######### ${bee3Prop.length} ###############');
 
@@ -245,7 +255,7 @@ class AppCubit extends Cubit<AppState> {
         return ServerFailure.fromDioError(e);
       } else {
         // Handle other exceptions
-        getAllproperties();
+        getAllproperties(context);
         // Display an appropriate error message to the user
       }
       debugPrint('Get All properties Failed -- ${e.toString()}');
@@ -275,6 +285,55 @@ class AppCubit extends Cubit<AppState> {
         .where(
             (item) => item.title!.toLowerCase().contains(query.toLowerCase()))
         .toList();
+    // search=[];
+    emit(GetSearchSuccessState());
+  }
+
+  int advSearchIndexForrooms = 1;
+  changeNumbersIndexSelectionInAdvSearchForRooms(index) {
+    advSearchIndexForrooms = index;
+    emit(AdvSearchIndexChangeSuccessState());
+  }
+
+  int advSearchIndexForFloor = 1;
+  changeNumbersIndexSelectionInAdvSearchForFloor(index) {
+    advSearchIndexForFloor = index;
+    emit(AdvSearchIndexChangeSuccessState());
+  }
+
+  List<PropertiesModel2> advancedSearch = [];
+  // String emptyValue = '';
+  getAdvancedSearchedFor(
+    // {
+    // required String propType,
+    // required String propLocation,
+    // required double priceStart,
+    // required double priceEnd,
+    // required double spaceStart,
+    // required double spaceEnd,
+    //  int? numberofRooms,
+    //  int? numberofFloor,
+  // }
+  ) {
+    //! Gonna make try catch
+    advancedSearch = property
+        .where((item) =>
+            // item.category!.name == propType &&
+            // item.city == propLocation &&
+            // (item.price! >= priceStart && item.price! <= priceEnd) &&
+            // (item.space! >= spaceStart && item.price! <= spaceEnd)&&
+            // item.rooms == numberofRooms &&
+            // item.floor == numberofFloor)
+
+        item.category!.name == 'شقق للبيع' &&
+        item.city == 'مصر الجديدة' &&
+        (item.price! >= 0 && item.price! <= 350000) &&
+        (item.space! >= 250 && item.space! <= 350) ||
+        item.rooms == 2 &&
+        item.floor == 2)
+        .toList();
+    debugPrint('Advanced Search Length : ${advancedSearch.length}');
+    debugPrint('Advanced Search Item is : ${advancedSearch[0].title}');
     // search=[];
     emit(GetSearchSuccessState());
   }

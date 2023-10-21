@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,8 +51,21 @@ class ProfileView extends StatelessWidget {
                               child: CircularProgressIndicator(),
                             )
                           : cubit.userdata?.image != null
-                              ? Image.network(cubit.userdata!.image!,
-                                  fit: BoxFit.cover)
+                              ? CachedNetworkImage(
+                                  imageUrl: cubit.userdata!.image!,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => Container(
+                                    width: 100.w,
+                                    height: 100.h,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(50.r),
+                                        color: Colors.grey.shade200),
+                                    child: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                )
                               : cubit.image != null
                                   ? Image.file(
                                       cubit.image!,

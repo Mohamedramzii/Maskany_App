@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/app_resources/colors.dart';
+import '../../../view_model/CUBIT/cubit/app_cubit.dart';
 
-// ignore: must_be_immutable
 class CustomPropertyCategoryTypeWidget extends StatelessWidget {
-  CustomPropertyCategoryTypeWidget({
+  const CustomPropertyCategoryTypeWidget({
     super.key,
-    required this.returnedtext,
-    required this.list,
+    required this.cubit,
+    required this.propTypecontroller,
   });
-  String returnedtext;
-  final List list;
+
+  final AppCubit cubit;
+  final TextEditingController propTypecontroller;
+
   @override
   Widget build(BuildContext context) {
+    // cubit.allcategories.removeAt(0);
     return DropdownButtonFormField<String>(
       hint: Text('نوع العقار',
           style: Theme.of(context)
@@ -43,7 +46,7 @@ class CustomPropertyCategoryTypeWidget extends StatelessWidget {
           ),
         ),
       ),
-      items: list
+      items: cubit.allcategoriesForAdvSearch
           .map((category) => DropdownMenuItem<String>(
                 value: category.name,
                 child: Text(
@@ -53,11 +56,17 @@ class CustomPropertyCategoryTypeWidget extends StatelessWidget {
                       .bodyMedium!
                       .copyWith(color: ColorsManager.kprimaryColor),
                 ),
+                // onTap: () {
+                //   setState(() {
+                //     widget.returnedtext = value!;
+                //   });
+                //   print(widget.returnedtext);
+                // },
               ))
           .toList(),
       onChanged: (value) {
-        returnedtext = value!;
-       
+        propTypecontroller.text = value!;
+        print(propTypecontroller.text);
       },
     );
   }

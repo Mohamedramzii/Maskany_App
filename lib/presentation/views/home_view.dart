@@ -147,9 +147,7 @@ class _HomeViewState extends State<HomeView> {
                                     physics: const BouncingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                      // final indexx = index + 1;
-                                      //  final model = cubit.property.firstWhere(
-                                      //       (element) => element.id == index + 1);
+                                 
                                       return GestureDetector(
                                           onTap: () {
                                             Navigator.of(context).push(

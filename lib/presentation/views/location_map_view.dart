@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:maskany_app/presentation/views/home_view.dart';
+import 'package:maskany_app/presentation/views/nearest_props_view.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -158,6 +158,7 @@ class _LocationMapViewState extends State<LocationMapView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FloatingActionButton.extended(
+                heroTag: 'Mapstyles',
                 backgroundColor: ColorsManager.kprimaryColor,
                 label: Image.asset(
                   Images.satellite,
@@ -172,6 +173,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                 height: 5.h,
               ),
               FloatingActionButton.extended(
+                heroTag: 'Nearest_Places',
                 backgroundColor: ColorsManager.kprimaryColor,
                 label: Row(
                   children: [
@@ -189,11 +191,11 @@ class _LocationMapViewState extends State<LocationMapView> {
                   ],
                 ),
                 onPressed: () {
-                  cubit.isNotNavBar = true;
+                  // cubit.isNotNavBar = true;
                   Navigator.push(
                       context,
                       PageAnimationTransition(
-                          page: const HomeView(),
+                          page: const NearestPropsView(),
                           pageAnimationType: BottomToTopTransition()));
                 },
               ),

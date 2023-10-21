@@ -1,18 +1,21 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/app_resources/colors.dart';
+import '../../../../core/constants.dart';
 
-class CustomLocationDropDownWidget extends StatelessWidget {
-  CustomLocationDropDownWidget(
-      {super.key, required this.list, required this.returnedtext});
-  String returnedtext;
-  final List list;
+class customLocationDropDownWidget extends StatelessWidget {
+  const customLocationDropDownWidget({
+    super.key,
+    required this.locationcontroller,
+  });
+
+  final TextEditingController locationcontroller;
+
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      borderRadius: BorderRadius.circular(20.r),
       hint: Text('الموقع لاختيار العقار',
           style: Theme.of(context)
               .textTheme
@@ -41,11 +44,11 @@ class CustomLocationDropDownWidget extends StatelessWidget {
           ),
         ),
       ),
-      items: list
+      items: gov
           .map((gov) => DropdownMenuItem<String>(
-                value:  gov["governorate_name_ar"],
+                value: gov["governorate_name_ar"],
                 child: Text(
-                 gov["governorate_name_ar"],
+                  gov["governorate_name_ar"],
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
@@ -54,7 +57,7 @@ class CustomLocationDropDownWidget extends StatelessWidget {
               ))
           .toList(),
       onChanged: (value) {
-        returnedtext = value!;
+        locationcontroller.text = value!;
       },
     );
   }

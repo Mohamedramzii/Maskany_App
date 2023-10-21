@@ -11,8 +11,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/core/serverFailure.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
-import 'package:maskany_app/data/models/userdata_model/user_data_model.dart';
-import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants.dart';
@@ -201,10 +199,12 @@ class AppCubit extends Cubit<AppState> {
 
   List<String> category = ['الكل', 'شقق للأيجار', 'شقق للبيع'];
   List<CategoriesModel> allcategories = [];
+  List<CategoriesModel> allcategoriesForAdvSearch = [];
   getCategories() {
     DioHelper.getData(url: EndPoints.categories).then((value) {
       for (var category in value.data) {
         allcategories.add(CategoriesModel.fromJson(category));
+        allcategoriesForAdvSearch.add(CategoriesModel.fromJson(category));
       }
       allcategories.insert(0, CategoriesModel(id: 1, name: 'الكل'));
       emit(GetCategoriesState());
@@ -301,39 +301,53 @@ class AppCubit extends Cubit<AppState> {
     emit(AdvSearchIndexChangeSuccessState());
   }
 
+  String? propType;
+  String? location;
+  bool isAllRooms = false;
+  bool isAnotherFloor = false;
   List<PropertiesModel2> advancedSearch = [];
   // String emptyValue = '';
-  getAdvancedSearchedFor(
-    // {
-    // required String propType,
-    // required String propLocation,
-    // required double priceStart,
-    // required double priceEnd,
-    // required double spaceStart,
-    // required double spaceEnd,
-    //  int? numberofRooms,
-    //  int? numberofFloor,
-  // }
-  ) {
+  getAdvancedSearchedFor({
+    required String propType,
+    required String propLocation,
+    required double priceStart,
+    required double priceEnd,
+    required double spaceStart,
+    required double spaceEnd,
+    int? numberofRooms,
+    int? numberofFloor,
+  }) {
     //! Gonna make try catch
-    advancedSearch = property
-        .where((item) =>
-            // item.category!.name == propType &&
-            // item.city == propLocation &&
-            // (item.price! >= priceStart && item.price! <= priceEnd) &&
-            // (item.space! >= spaceStart && item.price! <= spaceEnd)&&
-            // item.rooms == numberofRooms &&
-            // item.floor == numberofFloor)
 
-        item.category!.name == 'شقق للبيع' &&
-        item.city == 'مصر الجديدة' &&
-        (item.price! >= 0 && item.price! <= 350000) &&
-        (item.space! >= 250 && item.space! <= 350) ||
-        item.rooms == 2 &&
-        item.floor == 2)
-        .toList();
+    try {
+      advancedSearch = property
+          .where((item) =>
+              item.category!.name == propType.toString() &&
+              ((item.price! >= priceStart && item.price! <= priceEnd) &&
+                          (item.space! >= spaceStart &&
+                              item.price! <= spaceEnd) ||
+                      isAllRooms == true
+                  ? item.rooms! > 0
+                  : item.rooms == numberofRooms && isAnotherFloor == true
+                      ? item.floor! > 4
+                      : item.floor == numberofFloor))
+
+          //     item.category!.name == 'شقق للأيجار'
+          // &&
+          // item.city == 'مصر الجديدة' &&
+          // (    (item.price! >= 0 && item.price! <= 350000) &&
+          //     (item.space! >= 300 && item.space! <= 301) ||
+          //     isAllRooms ? item.rooms! >0 : item.rooms == 2 &&
+          //     item.floor == 3))
+
+          .toList();
+    } catch (e) {
+      print(e.toString());
+    }
     debugPrint('Advanced Search Length : ${advancedSearch.length}');
-    debugPrint('Advanced Search Item is : ${advancedSearch[0].title}');
+    if (advancedSearch.isNotEmpty) {
+      debugPrint('Advanced Search Item is : ${advancedSearch[0].title}');
+    }
     // search=[];
     emit(GetSearchSuccessState());
   }
@@ -402,10 +416,10 @@ class AppCubit extends Cubit<AppState> {
           url: 'http://66.45.248.247:8000/properties/fav/prop/$propertyID/',
           token: 'Token $tokenHolder');
       if (response.statusCode == 204) {
-        print('DELEAAAAATED');
+        debugPrint('DELEAAAAATED');
       } else {
-        print(response.statusCode);
-        print(response.data['error']);
+        debugPrint(response.statusCode.toString());
+        debugPrint(response.data['error']);
       }
       emit(DeleteFavoritesSuccessState());
     } catch (e) {

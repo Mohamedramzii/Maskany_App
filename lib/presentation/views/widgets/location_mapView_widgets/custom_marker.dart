@@ -32,7 +32,12 @@ class CustomMarker extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.r)),
               child:
                   // Center(child: Text(price),)
-                  Center(child: Text('${(price / 10000).toStringAsFixed(0)}K')),
+                  Center(
+                      child: Text('${(price / 10000).toStringAsFixed(0)}ألف',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: Colors.black))),
             ),
           ),
           Positioned(

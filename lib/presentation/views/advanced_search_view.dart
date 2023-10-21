@@ -6,16 +6,22 @@ import 'package:maskany_app/core/app_resources/colors.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
 import 'package:maskany_app/core/constants.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
-import 'package:maskany_app/presentation/views/widgets/advanced_search_view_widgets/customLocationDropDownWidget.dart';
+import 'package:maskany_app/presentation/views/advanced_search_result_view.dart';
 import 'package:maskany_app/presentation/views/widgets/advanced_search_view_widgets/price_widget.dart';
+import 'package:page_animation_transition/animations/right_to_left_faded_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 import '../../core/app_resources/images.dart';
+import '../../core/common_widgets/custom_snackbar.dart';
 import 'widgets/advanced_search_view_widgets/CustomPropertyCategoryTypeWidget.dart';
+import 'widgets/advanced_search_view_widgets/customLocationDropDownWidget.dart';
 
 class AdnvancedSearchView extends StatelessWidget {
   AdnvancedSearchView({super.key});
 
-  String propType = '';
-  String location = '';
+  // String propType = '';
+  // String location = '';
+  TextEditingController propTypecontroller = TextEditingController();
+  TextEditingController locationcontroller = TextEditingController();
   TextEditingController priceStart = TextEditingController();
   TextEditingController priceEnd = TextEditingController();
   TextEditingController spaceStart = TextEditingController();
@@ -35,9 +41,7 @@ class AdnvancedSearchView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomPropertyCategoryTypeWidget(
-                  returnedtext: propType,
-                  list: cubit.allcategories,
-                ),
+                    cubit: cubit, propTypecontroller: propTypecontroller),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -49,8 +53,8 @@ class AdnvancedSearchView extends StatelessWidget {
                       width: 20.w,
                     ),
                     Expanded(
-                        child: CustomLocationDropDownWidget(
-                            list: gov, returnedtext: location))
+                        child: customLocationDropDownWidget(
+                            locationcontroller: locationcontroller))
                   ],
                 ),
                 SizedBox(
@@ -89,8 +93,29 @@ class AdnvancedSearchView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text('عدد الغرف'),
-                    SizedBox(
-                      width: 30.w,
+                    // SizedBox(
+                    //   width: 15.w,
+                    // ),
+                    GestureDetector(
+                      onTap: () {
+                        print('Pressed');
+                        cubit.isAllRooms = true;
+                        cubit.changeNumbersIndexSelectionInAdvSearchForRooms(0);
+                      },
+                      child: Container(
+                        width: 50.w,
+                        height: 25.h,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.kprimaryColor,
+                          borderRadius: BorderRadius.circular(5.r),
+                        ),
+                        child: Text('الكل',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white)),
+                      ),
                     ),
                     Container(
                       height: 30.h,
@@ -102,21 +127,25 @@ class AdnvancedSearchView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(7.r)),
                       child: Wrap(
                         direction: Axis.vertical,
+                        alignment: WrapAlignment.center,
                         children: numbers.map((e) {
                           return Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            // crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SizedBox(
                                 width: 15.w,
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  cubit.isAllRooms = false;
                                   cubit
                                       .changeNumbersIndexSelectionInAdvSearchForRooms(
                                           e);
                                 },
                                 child: Text(
-                                  e.toString(),
+                                  e == 4 ? '$e' : e.toString(),
+                                  textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -160,6 +189,30 @@ class AdnvancedSearchView extends StatelessWidget {
                   children: [
                     const Text('رقم الدور'),
                     SizedBox(
+                      width: 35.w,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        print('Pressed');
+                        cubit.isAnotherFloor = true;
+                        cubit.changeNumbersIndexSelectionInAdvSearchForFloor(0);
+                      },
+                      child: Container(
+                        width: 50.w,
+                        height: 25.h,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.kprimaryColor,
+                          borderRadius: BorderRadius.circular(5.r),
+                        ),
+                        child: Text('الكل',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Colors.white)),
+                      ),
+                    ),
+                    SizedBox(
                       width: 30.w,
                     ),
                     Container(
@@ -181,6 +234,7 @@ class AdnvancedSearchView extends StatelessWidget {
                               ),
                               GestureDetector(
                                 onTap: () {
+                                  cubit.isAnotherFloor = false;
                                   cubit
                                       .changeNumbersIndexSelectionInAdvSearchForFloor(
                                           e);
@@ -228,30 +282,38 @@ class AdnvancedSearchView extends StatelessWidget {
                 CustomButton(
                     text: 'بحث الأن',
                     onpressed: () {
-                      // if (
-                      //     // propType.isNotEmpty
-                      //     // &&
-                      //     // location.isNotEmpty
-                      //     // &&
-                      //     priceStart.text.isNotEmpty &&
-                      //         priceEnd.text.isNotEmpty &&
-                      //         spaceStart.text.isNotEmpty &&
-                      //         spaceEnd.text.isNotEmpty) {
-                        cubit.getAdvancedSearchedFor();
-                        // cubit.getAdvancedSearchedFor(
-                        //   propType: propType.trim(),
-                        //   propLocation: 'حدائق الاهرام',
-                        //   priceStart: double.parse(priceStart.text.trim()),
-                        //   priceEnd: double.parse(priceEnd.text.trim()),
-                        //   spaceStart: double.parse(spaceStart.text.trim()),
-                        //   spaceEnd: double.parse(spaceEnd.text.trim()),
-                        //   numberofFloor: cubit.advSearchIndexForFloor,
-                        //   numberofRooms: cubit.advSearchIndexForrooms
-                        // );
-                      // }
+                      print('***** ${propTypecontroller.text} ****');
+                      if (propTypecontroller.text.isNotEmpty &&
+                          // location.isNotEmpty
+                          // &&
+                          priceStart.text.isNotEmpty &&
+                          priceEnd.text.isNotEmpty &&
+                          spaceStart.text.isNotEmpty &&
+                          spaceEnd.text.isNotEmpty) {
+                        // cubit.getAdvancedSearchedFor();
+                        cubit.getAdvancedSearchedFor(
+                            propType: propTypecontroller.text,
+                            propLocation: 'حدائق الاهرام',
+                            priceStart: double.parse(priceStart.text.trim()),
+                            priceEnd: double.parse(priceEnd.text.trim()),
+                            spaceStart: double.parse(spaceStart.text.trim()),
+                            spaceEnd: double.parse(spaceEnd.text.trim()),
+                            numberofFloor: cubit.advSearchIndexForFloor,
+                            numberofRooms: cubit.advSearchIndexForrooms);
+
+                        if (cubit.advancedSearch.isNotEmpty) {
+                          Navigator.of(context).push(PageAnimationTransition(
+                              page: AdvancedSearchResultView(
+                                  resultSearch: cubit.advancedSearch),
+                              pageAnimationType: RightToLeftFadedTransition()));
+                        }
+                        if (cubit.advancedSearch.isEmpty) {
+                          SnackBars.failureSnackBar(
+                              context, 'بحث متقدم', 'لا توجد نتائج لبحثك');
+                        }
+                      }
                     }),
-                    if(cubit.advancedSearch.isEmpty)
-                    Text('ZEROOO')
+                // if (cubit.advancedSearch.isEmpty) Text('ZEROOO')
               ],
             ),
           ),

@@ -7,6 +7,12 @@ The app was developed using BLoC pattern state management, Google Maps, Payment 
 The App is implemented with the collaboration of a team of Flutter developer, a
 backend developer, and a graphic designer.
 
+## Our Team
+
+- [Muhammed Ramzy (me) - Flutter Developer](https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile)
+
+- [Abdelrahman Muhammed - Backend Developer]()
+- [Muhammed Ahmed - Graphic Designer]()
 
 
 
@@ -21,16 +27,23 @@ backend developer, and a graphic designer.
 7. Users can change his personal photo and information.
 9. Users can purchase our app packages using paymob payment gateway.
 
+## What used in implementation
 
-## Our Team
+1. Bloc (Cubit) state management
+2. MVVM Design pattern
+3. Dio
+4. Google Maps
+5. GeoLocator
+6. GeoCoding
+7. Restful Api
+8. Shared Preferences
+9. Shimmer Loading Animation
+10. Permission Handler
+11. Device Preview
+12. Url launcher
 
-- [Muhammed Ramzy (me) - Flutter Developer](https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile)
 
-- [Abdelrahman Muhammed - Backend Developer]()
-- [Muhammed Ahmed - Graphic Designer]()
 
-![Code Club](https://drive.google.com/file/d/1iSXiXHtR7soSkh7hVSuolU3VNpZvgSXo/view?usp=share_link)
 
-ME.md…]()
 
 

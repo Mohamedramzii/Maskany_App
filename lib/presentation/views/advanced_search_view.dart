@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maskany_app/core/app_resources/colors.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
-import 'package:maskany_app/core/constants.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/views/advanced_search_result_view.dart';
 import 'package:maskany_app/presentation/views/widgets/advanced_search_view_widgets/price_widget.dart';

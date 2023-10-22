@@ -307,16 +307,18 @@ class AppCubit extends Cubit<AppState> {
   bool isAnotherFloor = false;
   List<PropertiesModel2> advancedSearch = [];
   // String emptyValue = '';
-  getAdvancedSearchedFor({
-    required String propType,
-    required String propLocation,
-    required double priceStart,
-    required double priceEnd,
-    required double spaceStart,
-    required double spaceEnd,
-    int? numberofRooms,
-    int? numberofFloor,
-  }) {
+  getAdvancedSearchedFor(
+        {
+        required String propType,
+        required String propLocation,
+        required double priceStart,
+        required double priceEnd,
+        required double spaceStart,
+        required double spaceEnd,
+        int? numberofRooms,
+        int? numberofFloor,
+      }
+      ) {
     //! Gonna make try catch
 
     try {
@@ -332,14 +334,15 @@ class AppCubit extends Cubit<AppState> {
                       ? item.floor! > 4
                       : item.floor == numberofFloor))
 
-          //     item.category!.name == 'شقق للأيجار'
-          // &&
-          // item.city == 'مصر الجديدة' &&
-          // (    (item.price! >= 0 && item.price! <= 350000) &&
-          //     (item.space! >= 300 && item.space! <= 301) ||
-          //     isAllRooms ? item.rooms! >0 : item.rooms == 2 &&
-          //     item.floor == 3))
-
+              // (item.category!.name == 'شقق للبيع' &&
+              //     item.city == 'دمياط الجديدة') &&
+              // ((item.price! >= 0 && item.price! <= 350000) &&
+              //             (item.space! >= 100 && item.space! <= 350) ||
+              //         isAllRooms
+              //     ? item.rooms! > 0
+              //     : item.rooms == 6 && isAnotherFloor == true
+              //         ? item.floor! > 4
+              //         : item.floor == 1))
           .toList();
     } catch (e) {
       print(e.toString());

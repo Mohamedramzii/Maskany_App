@@ -122,7 +122,7 @@ class DetailsView extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    model.title!,
+                    model.city!,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   Row(
@@ -226,41 +226,41 @@ class DetailsView extends StatelessWidget {
                   SizedBox(
                     height: 20.h,
                   ),
-                  Container(
-                    width: double.infinity,
-                    height: ResponsiveBreakpoints.of(context).isMobile
-                        ? 60.h
-                        : 80.h,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 15.w, vertical: 7.h),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.r),
-                        color: ColorsManager.containerColor),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 25.r,
-                          backgroundImage: const AssetImage(Images.profile),
-                        ),
-                        SizedBox(
-                          width: 8.w,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'احمد محمد',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            Text(
-                              'السعودية , الخرج',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   height: ResponsiveBreakpoints.of(context).isMobile
+                  //       ? 60.h
+                  //       : 80.h,
+                  //   padding:
+                  //       EdgeInsets.symmetric(horizontal: 15.w, vertical: 7.h),
+                  //   decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10.r),
+                  //       color: ColorsManager.containerColor),
+                  //   child: Row(
+                  //     children: [
+                  //       CircleAvatar(
+                  //         radius: 25.r,
+                  //         backgroundImage: const AssetImage(Images.profile),
+                  //       ),
+                  //       SizedBox(
+                  //         width: 8.w,
+                  //       ),
+                  //       Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           Text(
+                  //             'احمد محمد',
+                  //             style: Theme.of(context).textTheme.bodyMedium,
+                  //           ),
+                  //           Text(
+                  //             'السعودية , الخرج',
+                  //             style: Theme.of(context).textTheme.bodySmall,
+                  //           ),
+                  //         ],
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 15.h,
                   ),

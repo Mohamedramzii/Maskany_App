@@ -15,7 +15,7 @@ class CustomTextFieldForAdvSearch extends StatelessWidget {
       height: 33.h,
       child: TextField(
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Colors.black,
+              color: Colors.black,fontSize: 20.sp,fontWeight: FontWeight.normal
             ),
         // textAlign: TextAlign.start,
         // textAlignVertical: TextAlignVertical.center,
@@ -25,7 +25,7 @@ class CustomTextFieldForAdvSearch extends StatelessWidget {
           controller.text = value;
         },
 
-        showCursor: false,
+        showCursor: true,
 
         decoration: InputDecoration(
           // alignLabelWithHint: true,

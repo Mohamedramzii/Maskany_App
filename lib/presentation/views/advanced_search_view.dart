@@ -99,6 +99,7 @@ class AdnvancedSearchView extends StatelessWidget {
                       onTap: () {
                         print('Pressed');
                         cubit.isAllRooms = true;
+                        print(cubit.isAllRooms);
                         cubit.changeNumbersIndexSelectionInAdvSearchForRooms(0);
                       },
                       child: Container(
@@ -194,6 +195,7 @@ class AdnvancedSearchView extends StatelessWidget {
                       onTap: () {
                         print('Pressed');
                         cubit.isAnotherFloor = true;
+                        
                         cubit.changeNumbersIndexSelectionInAdvSearchForFloor(0);
                       },
                       child: Container(
@@ -204,7 +206,7 @@ class AdnvancedSearchView extends StatelessWidget {
                           color: ColorsManager.kprimaryColor,
                           borderRadius: BorderRadius.circular(5.r),
                         ),
-                        child: Text('الكل',
+                        child: Text('أخري',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -292,11 +294,11 @@ class AdnvancedSearchView extends StatelessWidget {
                         // cubit.getAdvancedSearchedFor();
                         cubit.getAdvancedSearchedFor(
                             propType: propTypecontroller.text,
-                            propLocation: 'حدائق الاهرام',
-                            priceStart: double.parse(priceStart.text.trim()),
-                            priceEnd: double.parse(priceEnd.text.trim()),
-                            spaceStart: double.parse(spaceStart.text.trim()),
-                            spaceEnd: double.parse(spaceEnd.text.trim()),
+                            // propLocation: 'حدائق الاهرام',
+                            priceStart: int.parse(priceStart.text.trim()),
+                            priceEnd: int.parse(priceEnd.text.trim()),
+                            spaceStart: int.parse(spaceStart.text.trim()),
+                            spaceEnd: int.parse(spaceEnd.text.trim()),
                             numberofFloor: cubit.advSearchIndexForFloor,
                             numberofRooms: cubit.advSearchIndexForrooms);
 

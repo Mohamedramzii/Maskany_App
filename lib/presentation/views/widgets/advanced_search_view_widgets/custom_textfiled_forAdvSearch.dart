@@ -5,10 +5,11 @@ import '../../../../core/app_resources/colors.dart';
 
 class CustomTextFieldForAdvSearch extends StatelessWidget {
   const CustomTextFieldForAdvSearch(
-      {super.key, required this.controller, required this.hinttext});
+      {super.key, required this.controller, required this.hinttext,  this.textalign = TextAlign.start});
 
   final TextEditingController controller;
   final String hinttext;
+  final TextAlign? textalign;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -17,7 +18,7 @@ class CustomTextFieldForAdvSearch extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Colors.black,fontSize: 20.sp,fontWeight: FontWeight.normal
             ),
-        // textAlign: TextAlign.start,
+        textAlign: textalign!,
         // textAlignVertical: TextAlignVertical.center,
         keyboardType: TextInputType.number,
         controller: controller,

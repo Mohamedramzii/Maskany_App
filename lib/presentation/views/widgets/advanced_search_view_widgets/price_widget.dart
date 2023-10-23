@@ -9,7 +9,7 @@ class PriceWidget extends StatelessWidget {
   const PriceWidget(
       {super.key, required this.startController, required this.endController});
 
-  final TextEditingController startController;
+  final TextEditingController startController ;
   final TextEditingController endController;
   @override
   Widget build(BuildContext context) {

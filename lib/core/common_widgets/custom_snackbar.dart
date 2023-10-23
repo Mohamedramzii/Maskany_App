@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 abstract class SnackBars {
   static successSnackBar(context, proccessText, successtext) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -66,8 +65,12 @@ abstract class SnackBars {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       width: double.infinity,
       behavior: SnackBarBehavior.floating,
-      elevation: 0,
+      elevation: 2,
       backgroundColor: Colors.white,
+      showCloseIcon: true,
+      closeIconColor: Colors.red,
+
+      // margin: EdgeInsets.all(10.r),
       content: Container(
         // alignment: Alignment.topLeft,
         height: 80.h,

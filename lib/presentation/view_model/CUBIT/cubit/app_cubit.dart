@@ -231,7 +231,7 @@ class AppCubit extends Cubit<AppState> {
         nearestPlaces = property
             .where((e) =>
                 e.city ==
-                'حدائق الاهرام') //BlocProvider.of<AuthCubit>(context).userdata!.location
+                'الجيزة') //BlocProvider.of<AuthCubit>(context).userdata!.location
             .toList();
         // egaarProp = property
         //     .where((e) => e.category!.name == allcategories[1].name)
@@ -301,13 +301,87 @@ class AppCubit extends Cubit<AppState> {
     emit(AdvSearchIndexChangeSuccessState());
   }
 
+  bool isCheckBoxTapped = false;
+  checkBoxTapped() {
+    isCheckBoxTapped = !isCheckBoxTapped;
+    emit(CheckBoxTappedSuccessState());
+  }
+
   String? propType;
   String? location;
   bool isAllRooms = false;
   bool isAnotherFloor = false;
+
   List<PropertiesModel2> advancedSearch = [];
   // String emptyValue = '';
-  getAdvancedSearchedFor({
+  getAdvancedSearchedFor1({
+    required String propType,
+    // required String propLocation,
+    // required int priceStart,
+    // required int priceEnd,
+    // required int spaceStart,
+    // required int spaceEnd,
+    // int? numberofRooms,
+    // int? numberofFloor,
+  }) {
+    //! Gonna make try catch
+    // print(propType);
+    // print(priceStart);
+    // print(priceEnd);
+    // print(spaceStart);
+    // print(spaceEnd);
+    // print(numberofRooms);
+    // print(numberofFloor);
+    try {
+      advancedSearch = property
+          .where((item) =>
+                  // (item.category!.name == propType.toString()) &&
+                  // ((item.price! >= priceStart && item.price! <= priceEnd) &&
+                  //     (item.space! >= spaceStart && item.price! <= spaceEnd) ||
+                  //     (isAllRooms == true
+                  //         ? item.rooms! > 0
+                  //         : item.rooms == numberofRooms && isAnotherFloor == true
+                  //             ? item.floor! > 4
+                  //             : item.floor == numberofFloor)))
+
+                  (item.category!.name == propType
+                  // &&
+                  //     item.city == 'دمياط الجديدة'
+                  )
+              // &&
+              // ((item.price! >= priceStart && item.price! <= priceEnd) &&
+              //     (item.space! >= spaceStart && item.space! <= spaceEnd) &&
+              //     ((isAllRooms == true)
+              //         ? item.rooms! > 0
+              //         : item.rooms == numberofRooms && isAnotherFloor == true
+              //             ? item.floor! > 4
+              //             : item.floor == numberofFloor))
+              )
+
+          // (item.category!.name == 'شقق للبيع'
+          // // &&
+          // //     item.city == 'دمياط الجديدة'
+          // ) &&
+          // ((item.price! >= 0 && item.price! <= 250000) &&
+          //     (item.space! >= 100 && item.space! <= 250) &&
+          //     (isAllRooms
+          //         ? item.rooms! > 0
+          //         : item.rooms == 2 && isAnotherFloor == true
+          //             ? item.floor! > 4
+          //             : item.floor == 2)))
+          .toList();
+    } catch (e) {
+      print(e.toString());
+    }
+    debugPrint('Advanced Search Length : ${advancedSearch.length}');
+    if (advancedSearch.isNotEmpty) {
+      debugPrint('Advanced Search Item is : ${advancedSearch[0].title}');
+    }
+    // search=[];
+    emit(GetSearchSuccessState());
+  }
+
+  getAdvancedSearchedFor2({
     required String propType,
     // required String propLocation,
     required int priceStart,
@@ -343,11 +417,12 @@ class AppCubit extends Cubit<AppState> {
               ) &&
               ((item.price! >= priceStart && item.price! <= priceEnd) &&
                   (item.space! >= spaceStart && item.space! <= spaceEnd) &&
-                  ((isAllRooms == true) 
-                      ? item.rooms! > 0
-                      : item.rooms == numberofRooms && isAnotherFloor == true
+                  (((isAllRooms == true)
+                          ? item.rooms! > 0
+                          : item.rooms == numberofRooms) &&
+                      (isAnotherFloor == true
                           ? item.floor! > 4
-                          : item.floor == numberofFloor)))
+                          : item.floor == numberofFloor))))
 
           // (item.category!.name == 'شقق للبيع'
           // // &&

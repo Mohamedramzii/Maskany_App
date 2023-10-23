@@ -25,7 +25,6 @@ class LocationMapView extends StatefulWidget {
 class _LocationMapViewState extends State<LocationMapView> {
   @override
   void initState() {
-    // BlocProvider.of<AppCubit>(context).getAllproperties();
     BlocProvider.of<AppCubit>(context)
         .checkLocationPermission(Permission.locationWhenInUse, context);
     super.initState();
@@ -37,6 +36,7 @@ class _LocationMapViewState extends State<LocationMapView> {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = BlocProvider.of<AppCubit>(context);
+        cubit.filterCategories(0);
         return Scaffold(
           body: state is GetAllPropertiesLoadingState
               ? Center(
@@ -45,7 +45,6 @@ class _LocationMapViewState extends State<LocationMapView> {
                 )
               : Stack(
                   children: [
-                 
                     CustomGoogleMapMarkerBuilder(
                       customMarkers:
                           cubit.filterCategories(cubit.categoryIndex).map((e) {

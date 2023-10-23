@@ -26,6 +26,7 @@ class CustomBtmsheetCard extends StatelessWidget {
           onTap: () {
             // Navigator.of(context).pop();
             cubit.seenOrnot(propertyID: model.id);
+            Navigator.of(context).pop();
             Navigator.push(
                 context, 
                 PageAnimationTransition(

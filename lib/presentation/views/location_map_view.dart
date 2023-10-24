@@ -27,6 +27,8 @@ class _LocationMapViewState extends State<LocationMapView> {
   void initState() {
     BlocProvider.of<AppCubit>(context)
         .checkLocationPermission(Permission.locationWhenInUse, context);
+    BlocProvider.of<AppCubit>(context).filterCategories(0);
+    print('################ User navigated back from Screen 2 ##############');
     super.initState();
   }
 
@@ -36,7 +38,6 @@ class _LocationMapViewState extends State<LocationMapView> {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = BlocProvider.of<AppCubit>(context);
-        cubit.filterCategories(0);
         return Scaffold(
           body: state is GetAllPropertiesLoadingState
               ? Center(

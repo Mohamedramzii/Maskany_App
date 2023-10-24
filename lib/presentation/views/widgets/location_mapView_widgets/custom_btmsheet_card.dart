@@ -23,12 +23,13 @@ class CustomBtmsheetCard extends StatelessWidget {
       builder: (context, state) {
         var cubit = BlocProvider.of<AppCubit>(context);
         return GestureDetector(
-          onTap: () {
+          onTap: () async {
             // Navigator.of(context).pop();
             cubit.seenOrnot(propertyID: model.id);
             Navigator.of(context).pop();
+
             Navigator.push(
-                context, 
+                context,
                 PageAnimationTransition(
                     page: DetailsView(
                       model: model ?? PropertiesModel2(),

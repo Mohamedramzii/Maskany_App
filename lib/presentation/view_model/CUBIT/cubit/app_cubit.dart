@@ -585,6 +585,7 @@ class AppCubit extends Cubit<AppState> {
     debugPrint('SEEN');
     if (response.statusCode == 200) {
       await getAllproperties();
+      // filterCategories(0);
     }
 
     emit(SeenOrNotSuccessState());

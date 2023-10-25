@@ -105,8 +105,8 @@ class CustomHorizontalCOntainer extends StatelessWidget {
             ),
             Text(
               model[index].rent! == true
-                  ? '${model[index].price.toString()} - شهريأ'
-                  : '${model[index].price.toString()}',
+                  ? '${model[index].price.toString()}  جنيه شهريأ'
+                  : '${model[index].price.toString()} جنيه',
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!

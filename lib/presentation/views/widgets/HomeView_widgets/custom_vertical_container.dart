@@ -48,9 +48,9 @@ class CustomVerticalContainer extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Text(
-                     model.rent! == true
-                  ? '${model.price.toString()} - شهريأ'
-                  : '${model.price.toString()}',
+                   model.rent! == true
+                  ? '${model.price.toString()}  جنيه شهريأ'
+                  : '${model.price.toString()} جنيه',
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!

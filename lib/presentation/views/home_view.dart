@@ -28,8 +28,14 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
+    // if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
+    //   BlocProvider.of<AuthCubit>(context).getUserData();
+    // }
     if (isAllRequestsDone == false) {
       debugPrint('Token Holder: $tokenHolder');
+      // if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
+      //   BlocProvider.of<AuthCubit>(context).getUserData();
+      // }
       BlocProvider.of<AppCubit>(context).getAllproperties(context: context);
       BlocProvider.of<AppCubit>(context).getAllFavorites();
       debugPrint('In Home, All requests Status is: $isAllRequestsDone');
@@ -41,10 +47,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
-      BlocProvider.of<AuthCubit>(context).getUserData();
-    }
-
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: BlocConsumer<AppCubit, AppState>(
@@ -52,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
         builder: (context, state) {
           var cubit = BlocProvider.of<AppCubit>(context);
           return cubit.property.isEmpty ||
-                  BlocProvider.of<AuthCubit>(context).userdata == null
+                  BlocProvider.of<AuthCubit>(context).userdata?.location == null
               ? const HomeLoadingView()
               : CustomScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -147,25 +149,27 @@ class _HomeViewState extends State<HomeView> {
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
                                       return GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                PageAnimationTransition(
-                                                    page:
-                                                        DetailsViewForHorizontal(
-                                                      model: cubit.property,
-                                                      index: index,
-                                                    ),
-                                                    pageAnimationType:
-                                                        RightToLeftTransition()));
-                                          },
-                                          child: CustomHorizontalCOntainer(
-                                              // favs: cubit.allfavorites[index],
-                                              model: cubit.nearestPlaces,
-                                              index: index)).animate()
-                                            .slide(
-                                                begin: Offset(2, 0),
-                                                duration: Duration(
-                                                    milliseconds: 500));
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                    PageAnimationTransition(
+                                                        page:
+                                                            DetailsViewForHorizontal(
+                                                          model: cubit
+                                                              .nearestPlaces,
+                                                          index: index,
+                                                        ),
+                                                        pageAnimationType:
+                                                            RightToLeftTransition()));
+                                              },
+                                              child: CustomHorizontalCOntainer(
+                                                  // favs: cubit.allfavorites[index],
+                                                  model: cubit.nearestPlaces,
+                                                  index: index))
+                                          .animate()
+                                          .slide(
+                                              begin: Offset(2, 0),
+                                              duration:
+                                                  Duration(milliseconds: 500));
                                     },
                                     separatorBuilder: (context, index) =>
                                         SizedBox(

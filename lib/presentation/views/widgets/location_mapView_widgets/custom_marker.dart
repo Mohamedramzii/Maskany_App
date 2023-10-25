@@ -21,25 +21,48 @@ class CustomMarker extends StatelessWidget {
         clipBehavior: Clip.none,
         // alignment: Alignment.center,
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              clipBehavior: Clip.none,
-              width: 50.w,
-              height: 30.h,
-              decoration: BoxDecoration(
-                  color: isviewed ? Colors.green : ColorsManager.kprimaryColor,
-                  borderRadius: BorderRadius.circular(10.r)),
-              child:
-                  // Center(child: Text(price),)
-                  Center(
-                      child: Text('${(price / 10000).toStringAsFixed(0)}ألف',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: Colors.black))),
+          if (price >= 1000000)
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                clipBehavior: Clip.none,
+                width: 50.w,
+                height: 30.h,
+                decoration: BoxDecoration(
+                    color:
+                        isviewed ? Colors.green : ColorsManager.kprimaryColor,
+                    borderRadius: BorderRadius.circular(10.r)),
+                child:
+                    // Center(child: Text(price),)
+                    Center(
+                        child: Text('${(price / 1000000).toStringAsFixed(0)}مليون',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: Colors.black))),
+              ),
             ),
-          ),
+          if (price >= 1000 && price <= 1000000)
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                clipBehavior: Clip.none,
+                width: 50.w,
+                height: 30.h,
+                decoration: BoxDecoration(
+                    color:
+                        isviewed ? Colors.green : ColorsManager.kprimaryColor,
+                    borderRadius: BorderRadius.circular(10.r)),
+                child:
+                    // Center(child: Text(price),)
+                    Center(
+                        child: Text('${(price / 1000).toStringAsFixed(0)}ألف',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: Colors.black))),
+              ),
+            ),
           Positioned(
             top: 32.h,
             right: 11.w,

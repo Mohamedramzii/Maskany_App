@@ -16,11 +16,16 @@ import 'widgets/HomeView_widgets/custom_rowIcons.dart';
 import '../../core/app_resources/images.dart';
 import '../../generated/l10n.dart';
 
-class DetailsView extends StatelessWidget {
+class DetailsView extends StatefulWidget {
   const DetailsView({super.key, required this.model, this.index = 0});
   final PropertiesModel2 model;
   final int index;
 
+  @override
+  State<DetailsView> createState() => _DetailsViewState();
+}
+
+class _DetailsViewState extends State<DetailsView> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppState>(
@@ -31,7 +36,9 @@ class DetailsView extends StatelessWidget {
           onWillPop: () async {
             //  await BlocProvider.of<AppCubit>(context).filterCategories(0);
             if (cubit.isNavigatetoDetailsFromMap) {
-              await BlocProvider.of<AppCubit>(context).filterCategories(0);
+              await BlocProvider.of<AppCubit>(context)
+                  .getAllproperties(context: context);
+              // setState(() {});
               debugPrint(
                   '################ User navigated back to Screen map ##############');
               cubit.isNavigatetoDetailsFromMap = false;
@@ -55,13 +62,13 @@ class DetailsView extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     // print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
-                    cubit.favoritesID.contains(model.id)
-                        ? cubit.deleteFromFav(propertyID: model.id!)
-                        : cubit.addtoFavorites(id: model.id);
+                    cubit.favoritesID.contains(widget.model.id)
+                        ? cubit.deleteFromFav(propertyID: widget.model.id!)
+                        : cubit.addtoFavorites(id: widget.model.id);
                   },
                   child: Icon(
                     Icons.favorite,
-                    color: cubit.favoritesID.contains(model.id)
+                    color: cubit.favoritesID.contains(widget.model.id)
                         ? Colors.red
                         : Colors.grey,
                     size: ResponsiveBreakpoints.of(context).isMobile
@@ -93,7 +100,7 @@ class DetailsView extends StatelessWidget {
                         enableInfiniteScroll: false,
                         autoPlayInterval: const Duration(seconds: 1),
                       ),
-                      items: model.images!.map((i) {
+                      items: widget.model.images!.map((i) {
                         return Builder(
                           builder: (BuildContext context) {
                             return Container(
@@ -134,11 +141,11 @@ class DetailsView extends StatelessWidget {
                       height: 23.h,
                     ),
                     Text(
-                      model.title!,
+                      widget.model.title!,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
-                      model.city!,
+                      widget.model.city!,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Row(
@@ -175,7 +182,7 @@ class DetailsView extends StatelessWidget {
                         ),
                         RichText(
                             text: TextSpan(
-                                text: '${model.price}',
+                                text: '${widget.model.price}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge!
@@ -197,7 +204,7 @@ class DetailsView extends StatelessWidget {
                     ),
                     ReadMoreText(
                         // "فاخرة بتجهيزات فندقية في حي العقيق شمال الرياض تتميز بالهدوء والخصوصية، تبعد 5 دقائق عن منطقة البوليڤارد و الرياض بارك وقريبه جدا من جميع الخدمات الصحية والترفيهية",
-                        model.details!,
+                        widget.model.details!,
                         numLines: 2,
                         style: Theme.of(context).textTheme.bodySmall,
                         readMoreText: 'المزيد',
@@ -218,22 +225,22 @@ class DetailsView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           IconRow(
-                              count: model.space!,
+                              count: widget.model.space!,
                               fontsize: 10,
                               style: Theme.of(context).textTheme.bodyMedium,
                               icon: const Text('م²')),
                           IconRow(
-                              count: model.bathrooms!,
+                              count: widget.model.bathrooms!,
                               icon: SvgPicture.asset(Images.shower),
                               style: Theme.of(context).textTheme.bodyMedium,
                               fontsize: 10),
                           IconRow(
-                              count: model.floor!,
+                              count: widget.model.floor!,
                               icon: SvgPicture.asset(Images.chair),
                               style: Theme.of(context).textTheme.bodyMedium,
                               fontsize: 10),
                           IconRow(
-                              count: model.rooms!,
+                              count: widget.model.rooms!,
                               icon: SvgPicture.asset(Images.bed),
                               style: Theme.of(context).textTheme.bodyMedium,
                               fontsize: 10),
@@ -300,8 +307,8 @@ class DetailsView extends StatelessWidget {
                         mapType: MapType.hybrid,
                         // cloudMapId: '961ba1ad7f1204e8',
                         initialCameraPosition: CameraPosition(
-                          target: LatLng(double.parse(model.lat!),
-                              double.parse(model.long!)),
+                          target: LatLng(double.parse(widget.model.lat!),
+                              double.parse(widget.model.long!)),
                           zoom: 18,
                         ),
                         myLocationButtonEnabled: false,
@@ -312,10 +319,10 @@ class DetailsView extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 100),
                         markers: {
                           Marker(
-                              markerId: MarkerId('${model.id}'),
-                              infoWindow: InfoWindow(title: model.title),
-                              position: LatLng(double.parse(model.lat!),
-                                  double.parse(model.long!)))
+                              markerId: MarkerId('${widget.model.id}'),
+                              infoWindow: InfoWindow(title: widget.model.title),
+                              position: LatLng(double.parse(widget.model.lat!),
+                                  double.parse(widget.model.long!)))
                         },
                         // onMapCreated: (GoogleMapController controller) {
                         //   cubit.googleMapController = controller;
@@ -323,7 +330,8 @@ class DetailsView extends StatelessWidget {
                         // },
 
                         onTap: (latlong) {
-                          cubit.navigateToGoogleMaps(model.locationLink!);
+                          cubit
+                              .navigateToGoogleMaps(widget.model.locationLink!);
                         },
                       ),
                     ),

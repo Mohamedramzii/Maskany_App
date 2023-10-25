@@ -216,14 +216,19 @@ class AppCubit extends Cubit<AppState> {
   // List<PropertiesModel2> bee3Prop = [];
   // List<PropertiesModel2> egaarProp = [];
   List<PropertiesModel2> nearestPlaces = [];
-  getAllproperties({required context} ) async {
+  getAllproperties({required context}) async {
     // isInternetConnectFunc();
     CacheHelper.getData(key: tokenKey);
     property = [];
     // bee3Prop = [];
     // egaarProp = [];
     emit(GetAllPropertiesLoadingState());
-
+    if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
+      await BlocProvider.of<AuthCubit>(context).getUserData();
+      print('From getAllProps | getUserData');
+    }
+    var location = BlocProvider.of<AuthCubit>(context).userdata!.location;
+    print('User Location From GetAllProps Method is: $location');
     try {
       Response response = await DioHelper.getData(
           url: EndPoints.properties, token: 'Token $tokenHolder');
@@ -232,9 +237,7 @@ class AppCubit extends Cubit<AppState> {
         nearestPlaces = property
             .where((e) =>
                 e.city ==
-                BlocProvider.of<AuthCubit>(context)
-                    .userdata!
-                    .location) //BlocProvider.of<AuthCubit>(context).userdata!.location
+                location) //BlocProvider.of<AuthCubit>(context).userdata!.location
             .toList();
         // egaarProp = property
         //     .where((e) => e.category!.name == allcategories[1].name)
@@ -348,10 +351,7 @@ class AppCubit extends Cubit<AppState> {
                   //             ? item.floor! > 4
                   //             : item.floor == numberofFloor)))
 
-                  (item.category!.name == propType
-                  &&
-                      item.city == propLocation
-                  )
+                  (item.category!.name == propType && item.city == propLocation)
               // &&
               // ((item.price! >= priceStart && item.price! <= priceEnd) &&
               //     (item.space! >= spaceStart && item.space! <= spaceEnd) &&
@@ -415,10 +415,7 @@ class AppCubit extends Cubit<AppState> {
               //             ? item.floor! > 4
               //             : item.floor == numberofFloor)))
 
-              (item.category!.name == propType
-              &&
-                  item.city == propLocation
-              ) &&
+              (item.category!.name == propType && item.city == propLocation) &&
               ((item.price! >= priceStart && item.price! <= priceEnd) &&
                   (item.space! >= spaceStart && item.space! <= spaceEnd) &&
                   (((isAllRooms == true)
@@ -580,7 +577,7 @@ class AppCubit extends Cubit<AppState> {
     await getAllFavorites();
   }
 
- bool isNavigatetoDetailsFromMap=false;
+  bool isNavigatetoDetailsFromMap = false;
   seenOrnot({required propertyID}) async {
     Response response = await DioHelper.postData(
         url: EndPoints.seen,
@@ -588,7 +585,7 @@ class AppCubit extends Cubit<AppState> {
         token: 'Token $tokenHolder');
 
     debugPrint('SEEN');
-    isNavigatetoDetailsFromMap=true;
+    isNavigatetoDetailsFromMap = true;
     print(isNavigatetoDetailsFromMap);
     if (response.statusCode == 200) {
       // await getAllproperties(context: context);

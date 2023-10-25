@@ -5,15 +5,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maskany_app/core/app_resources/colors.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
-import 'package:maskany_app/presentation/views/advanced_search_result_view.dart';
-import 'package:maskany_app/presentation/views/widgets/advanced_search_view_widgets/custom_textfiled_forAdvSearch.dart';
 import 'package:maskany_app/presentation/views/widgets/advanced_search_view_widgets/price_widget.dart';
 import 'package:page_animation_transition/animations/right_to_left_faded_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
-import '../../core/app_resources/images.dart';
-import '../../core/common_widgets/custom_snackbar.dart';
-import 'widgets/advanced_search_view_widgets/CustomPropertyCategoryTypeWidget.dart';
-import 'widgets/advanced_search_view_widgets/customLocationDropDownWidget.dart';
+
+import '../../../core/app_resources/images.dart';
+import '../../../core/common_widgets/custom_snackbar.dart';
+import '../widgets/advanced_search_view_widgets/CustomPropertyCategoryTypeWidget.dart';
+import '../widgets/advanced_search_view_widgets/customLocationDropDownWidget.dart';
+import 'advanced_search_result_view.dart';
 
 class AdnvancedSearchView extends StatelessWidget {
   AdnvancedSearchView({super.key});

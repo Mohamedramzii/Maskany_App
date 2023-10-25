@@ -32,25 +32,18 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // isviewed = CacheHelper.getData(key: 'loc');
+
   isAllRequestsDone = true;
-  debugPrint('Request Status is: $isAllRequestsDone');
-  // isviewed = await SessionManager().get('view') ?? false;
-  // debugPrint(isviewed.toString());
+  debugPrint('Request Status From Main is: $isAllRequestsDone');
+
   runApp(DevicePreview(
     builder: (context) => const MyApp(),
     enabled: !kReleaseMode,
   ));
-  // Widget widget;
+
   tokenHolder = CacheHelper.getData(key: tokenKey) ?? '';
   debugPrint('USER TOKEN : ${CacheHelper.getData(key: tokenKey)}');
 
-  // if(tokenHolder != null){
-  //   widget= AppLayout();
-
-  // }else{
-  //   widget =
-  // }
 }
 
 class MyApp extends StatefulWidget {
@@ -106,7 +99,7 @@ class _MyAppState extends State<MyApp> {
                 ..checkLocationPermission(Permission.locationWhenInUse, context)
                 // ..getAdvancedSearchedFor()
                 // ..getCurrentLatLong()
-                ..getAllproperties(context)
+                ..getAllproperties(context: context)
                 ..getCategories()
                 ..getAllFavorites(),
             ),

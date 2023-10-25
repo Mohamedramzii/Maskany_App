@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -27,15 +28,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
-    // tokenHolder = BlocProvider.of<AuthCubit>(context).loginModel!.token!;
-    debugPrint('Token Holder: $tokenHolder');
-    // CacheHelper.getData(key: tokenKey);
-    // debugPrint(CacheHelper.getData(key: tokenKey));
-
-    if (!isAllRequestsDone) {
-    BlocProvider.of<AuthCubit>(context).getUserData();
-      BlocProvider.of<AppCubit>(context).getAllproperties();
-
+    if (isAllRequestsDone == false) {
+      debugPrint('Token Holder: $tokenHolder');
+      BlocProvider.of<AppCubit>(context).getAllproperties(context: context);
       BlocProvider.of<AppCubit>(context).getAllFavorites();
       debugPrint('In Home, All requests Status is: $isAllRequestsDone');
       isAllRequestsDone = true;
@@ -46,6 +41,10 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
+      BlocProvider.of<AuthCubit>(context).getUserData();
+    }
+
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: BlocConsumer<AppCubit, AppState>(
@@ -147,7 +146,6 @@ class _HomeViewState extends State<HomeView> {
                                     physics: const BouncingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) {
-                                 
                                       return GestureDetector(
                                           onTap: () {
                                             Navigator.of(context).push(
@@ -163,7 +161,11 @@ class _HomeViewState extends State<HomeView> {
                                           child: CustomHorizontalCOntainer(
                                               // favs: cubit.allfavorites[index],
                                               model: cubit.nearestPlaces,
-                                              index: index));
+                                              index: index)).animate()
+                                            .slide(
+                                                begin: Offset(2, 0),
+                                                duration: Duration(
+                                                    milliseconds: 500));
                                     },
                                     separatorBuilder: (context, index) =>
                                         SizedBox(
@@ -205,17 +207,24 @@ class _HomeViewState extends State<HomeView> {
                                 child: ListView.separated(
                                     itemBuilder: (context, index) =>
                                         GestureDetector(
-                                            onTap: () => Navigator.of(context)
-                                                .push(PageAnimationTransition(
-                                                    page: DetailsView(
-                                                        model: cubit
-                                                            .property[index]),
-                                                    pageAnimationType:
-                                                        RightToLeftTransition())),
-                                            child: CustomVerticalContainer(
-                                              model: cubit.property[index],
-                                              index: index,
-                                            )),
+                                                onTap: () => Navigator.of(
+                                                        context)
+                                                    .push(PageAnimationTransition(
+                                                        page: DetailsView(
+                                                            model:
+                                                                cubit.property[
+                                                                    index]),
+                                                        pageAnimationType:
+                                                            RightToLeftTransition())),
+                                                child: CustomVerticalContainer(
+                                                  model: cubit.property[index],
+                                                  index: index,
+                                                ))
+                                            .animate()
+                                            .slide(
+                                                begin: Offset(2, 0),
+                                                duration: Duration(
+                                                    milliseconds: 500)),
                                     separatorBuilder: (context, index) =>
                                         SizedBox(
                                           height: 10.h,

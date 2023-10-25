@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -20,9 +21,10 @@ class FavoriteView extends StatefulWidget {
 class _FavoriteViewState extends State<FavoriteView> {
   @override
   void initState() {
-    BlocProvider.of<AppCubit>(context).getAllFavorites();  
+    BlocProvider.of<AppCubit>(context).getAllFavorites();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     // BlocProvider.of<AppCubit>(context).getAllFavorites();
@@ -88,7 +90,9 @@ class _FavoriteViewState extends State<FavoriteView> {
                     itemBuilder: (context, index) => CustomHorizontalFavItems(
                       favs: cubit.allfavorites,
                       index: index,
-                    ),
+                    ).animate().slide(
+                        begin: Offset(2, 0),
+                        duration: Duration(milliseconds: 400)),
                     itemCount: cubit.allfavorites.length,
                   ))
                 ],

@@ -6,15 +6,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:maskany_app/presentation/views/Auth/login_view.dart';
-import 'package:maskany_app/presentation/views/global_settings_view.dart';
 import 'package:maskany_app/presentation/views/packages_view.dart';
-import 'package:maskany_app/presentation/views/profile_settings_view.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
-import '../../core/app_resources/images.dart';
-import '../../core/constants.dart';
+import '../../../core/app_resources/images.dart';
+import '../../../core/constants.dart';
+import 'global_settings_view.dart';
+import 'profile_settings_view.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});

@@ -7,9 +7,10 @@ import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../core/app_resources/colors.dart';
-import '../../core/app_resources/images.dart';
-import '../../core/common_widgets/custom_snackbar.dart';
+import '../../../core/app_resources/colors.dart';
+import '../../../core/app_resources/images.dart';
+import '../../../core/common_widgets/custom_snackbar.dart';
+
 
 class ProfileSettingsVIew extends StatelessWidget {
   const ProfileSettingsVIew(

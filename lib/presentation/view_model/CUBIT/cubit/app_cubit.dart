@@ -20,7 +20,7 @@ import '../../../../data/models/propertiesModel/properties_model2/properties_mod
 import '../../../views/favorite_view.dart';
 import '../../../views/home_view.dart';
 import '../../../views/location_map_view.dart';
-import '../../../views/profile_view.dart';
+import '../../../views/profile_settings/profile_view.dart';
 
 part 'app_state.dart';
 
@@ -216,7 +216,7 @@ class AppCubit extends Cubit<AppState> {
   // List<PropertiesModel2> bee3Prop = [];
   // List<PropertiesModel2> egaarProp = [];
   List<PropertiesModel2> nearestPlaces = [];
-  getAllproperties([context]) async {
+  getAllproperties({required context} ) async {
     // isInternetConnectFunc();
     CacheHelper.getData(key: tokenKey);
     property = [];
@@ -258,7 +258,7 @@ class AppCubit extends Cubit<AppState> {
         return ServerFailure.fromDioError(e);
       } else {
         // Handle other exceptions
-        getAllproperties(context);
+        getAllproperties(context: context);
         // Display an appropriate error message to the user
       }
       debugPrint('Get All properties Failed -- ${e.toString()}');
@@ -589,8 +589,9 @@ class AppCubit extends Cubit<AppState> {
 
     debugPrint('SEEN');
     isNavigatetoDetailsFromMap=true;
+    print(isNavigatetoDetailsFromMap);
     if (response.statusCode == 200) {
-      await getAllproperties();
+      // await getAllproperties(context: context);
       // filterCategories(0);
     }
 

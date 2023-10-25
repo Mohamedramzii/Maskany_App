@@ -5,11 +5,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 
-import '../../core/app_resources/colors.dart';
-import '../../core/app_resources/images.dart';
-import '../../core/common_widgets/custom_OTP.dart';
-import '../../core/common_widgets/custom_dialog.dart';
-import '../../core/common_widgets/custom_snackbar.dart';
+import '../../../core/app_resources/colors.dart';
+import '../../../core/app_resources/images.dart';
+import '../../../core/common_widgets/custom_OTP.dart';
+import '../../../core/common_widgets/custom_dialog.dart';
+import '../../../core/common_widgets/custom_snackbar.dart';
 
 class GlobalSettingsView extends StatelessWidget {
   const GlobalSettingsView({super.key});

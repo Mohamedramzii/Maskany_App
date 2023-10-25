@@ -30,10 +30,11 @@ class DetailsView extends StatelessWidget {
         return WillPopScope(
           onWillPop: () async {
             // await BlocProvider.of<AppCubit>(context).filterCategories(0);
-            await BlocProvider.of<AppCubit>(context).getAllproperties();
-
-            debugPrint(
-                '################ User navigated back from Screen map ##############');
+            if (cubit.isNavigatetoDetailsFromMap) {
+              await BlocProvider.of<AppCubit>(context).filterCategories(0);
+              debugPrint(
+                  '################ User navigated back to Screen map ##############');
+            }
             return Future.value(true);
           },
           child: Scaffold(

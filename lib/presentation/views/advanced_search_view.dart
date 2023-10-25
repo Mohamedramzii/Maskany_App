@@ -349,7 +349,7 @@ class AdnvancedSearchView extends StatelessWidget {
                           // cubit.getAdvancedSearchedFor();
                           cubit.getAdvancedSearchedFor1(
                             propType: propTypecontroller.text,
-                            // propLocation: 'حدائق الاهرام',
+                            propLocation: locationcontroller.text,
                           );
 
                           if (cubit.advancedSearch.isNotEmpty) {
@@ -376,7 +376,7 @@ class AdnvancedSearchView extends StatelessWidget {
                           // cubit.getAdvancedSearchedFor();
                           cubit.getAdvancedSearchedFor2(
                               propType: propTypecontroller.text,
-                              // propLocation: 'حدائق الاهرام',
+                              propLocation: locationcontroller.text,
                               priceStart: int.parse(priceStart.text.trim()),
                               priceEnd: int.parse(priceEnd.text.trim()),
                               spaceStart: int.parse(spaceStart.text.trim()),

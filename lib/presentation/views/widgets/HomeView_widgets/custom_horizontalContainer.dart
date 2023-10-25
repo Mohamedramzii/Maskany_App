@@ -48,11 +48,15 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                     child: LoadingAnimationWidget.staggeredDotsWave(
                         color: ColorsManager.kprimaryColor, size: 40.r),
                   ),
-                  errorWidget: (context, url, error) => const Center(child: Icon(Icons.image_not_supported_rounded),),
+                  errorWidget: (context, url, error) => const Center(
+                    child: Icon(Icons.image_not_supported_rounded),
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 20.h,),
+            SizedBox(
+              height: 20.h,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -65,26 +69,31 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 15.sp),
                   ),
-                  
                 ),
                 GestureDetector(
-                onTap: () {
-                  print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
-                  print('#*#*#*#*#*#* ${model[index].id} #*#*#*#*#*#');
-                  BlocProvider.of<AppCubit>(context).favoritesID.contains(model[index].id)
-                      ? BlocProvider.of<AppCubit>(context).deleteFromFav(propertyID: model[index].id!)
-                      : BlocProvider.of<AppCubit>(context).addtoFavorites(id: model[index].id);
-                },
-                child: Icon(
-                  Icons.favorite,
-                  color: BlocProvider.of<AppCubit>(context).favoritesID.contains(model[index].id)
-                      ? Colors.red
-                      : Colors.grey,
-                  size:
-                      ResponsiveBreakpoints.of(context).isMobile ? 25.r : 30.r,
+                  onTap: () {
+                    print('#*#*#*#*#*#* ${index} #*#*#*#*#*#');
+                    print('#*#*#*#*#*#* ${model[index].id} #*#*#*#*#*#');
+                    BlocProvider.of<AppCubit>(context)
+                            .favoritesID
+                            .contains(model[index].id)
+                        ? BlocProvider.of<AppCubit>(context)
+                            .deleteFromFav(propertyID: model[index].id!)
+                        : BlocProvider.of<AppCubit>(context)
+                            .addtoFavorites(id: model[index].id);
+                  },
+                  child: Icon(
+                    Icons.favorite,
+                    color: BlocProvider.of<AppCubit>(context)
+                            .favoritesID
+                            .contains(model[index].id)
+                        ? Colors.red
+                        : Colors.grey,
+                    size: ResponsiveBreakpoints.of(context).isMobile
+                        ? 25.r
+                        : 30.r,
+                  ),
                 ),
-              ),
-               
               ],
             ),
             Text(
@@ -95,7 +104,9 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                   .copyWith(fontSize: 10.sp),
             ),
             Text(
-              'شهريأ / ${model[index].price.toString()}',
+              model[index].rent! == true
+                  ? '${model[index].price.toString()} - شهريأ'
+                  : '${model[index].price.toString()}',
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
@@ -112,7 +123,7 @@ class CustomHorizontalCOntainer extends StatelessWidget {
                 IconRow(
                     count: model[index].space!,
                     fontsize: 10,
-                    icon:const Text('م²')),
+                    icon: const Text('م²')),
                 IconRow(
                     count: model[index].bathrooms!,
                     fontsize: 10,

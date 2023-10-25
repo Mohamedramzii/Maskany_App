@@ -21,6 +21,7 @@ class PropertiesModel2 {
 	String? lat;
 	String? long;
 	bool? isSeen;
+	bool? rent; 
 
 	PropertiesModel2({
 		this.id, 
@@ -42,6 +43,7 @@ class PropertiesModel2 {
 		this.lat, 
 		this.long, 
 		this.isSeen, 
+		this.rent, 
 	});
 
 	factory PropertiesModel2.fromJson(Map<String, dynamic> json) {
@@ -69,6 +71,7 @@ class PropertiesModel2 {
 			lat: json['lat'] as String?,
 			long: json['long'] as String?,
 			isSeen: json['is_seen'] as bool?,
+			rent: json['rent'] as bool?,
 		);
 	}
 
@@ -94,5 +97,6 @@ class PropertiesModel2 {
 				'lat': lat,
 				'long': long,
 				'is_seen': isSeen,
+				'rent': rent,
 			};
 }

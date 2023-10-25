@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
             //   create: (context) => InternetCubit(),
             // ),
             BlocProvider(
-              create: (context) => AuthCubit(),
+              create: (context) => AuthCubit()..getUserData(),
             ),
             BlocProvider(
               create: (context) => AppCubit()

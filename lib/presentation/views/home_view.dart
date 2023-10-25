@@ -32,9 +32,9 @@ class _HomeViewState extends State<HomeView> {
     // CacheHelper.getData(key: tokenKey);
     // debugPrint(CacheHelper.getData(key: tokenKey));
 
-    BlocProvider.of<AuthCubit>(context).getUserData();
     if (!isAllRequestsDone) {
-      BlocProvider.of<AppCubit>(context).getAllproperties(context);
+    BlocProvider.of<AuthCubit>(context).getUserData();
+      BlocProvider.of<AppCubit>(context).getAllproperties();
 
       BlocProvider.of<AppCubit>(context).getAllFavorites();
       debugPrint('In Home, All requests Status is: $isAllRequestsDone');

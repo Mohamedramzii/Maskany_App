@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/core/serverFailure.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
+import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants.dart';
@@ -231,7 +232,9 @@ class AppCubit extends Cubit<AppState> {
         nearestPlaces = property
             .where((e) =>
                 e.city ==
-                'الجيزة') //BlocProvider.of<AuthCubit>(context).userdata!.location
+                BlocProvider.of<AuthCubit>(context)
+                    .userdata!
+                    .location) //BlocProvider.of<AuthCubit>(context).userdata!.location
             .toList();
         // egaarProp = property
         //     .where((e) => e.category!.name == allcategories[1].name)
@@ -316,7 +319,7 @@ class AppCubit extends Cubit<AppState> {
   // String emptyValue = '';
   getAdvancedSearchedFor1({
     required String propType,
-    // required String propLocation,
+    required String propLocation,
     // required int priceStart,
     // required int priceEnd,
     // required int spaceStart,
@@ -325,7 +328,8 @@ class AppCubit extends Cubit<AppState> {
     // int? numberofFloor,
   }) {
     //! Gonna make try catch
-    // print(propType);
+    print(propType);
+    print(propLocation);
     // print(priceStart);
     // print(priceEnd);
     // print(spaceStart);
@@ -345,8 +349,8 @@ class AppCubit extends Cubit<AppState> {
                   //             : item.floor == numberofFloor)))
 
                   (item.category!.name == propType
-                  // &&
-                  //     item.city == 'دمياط الجديدة'
+                  &&
+                      item.city == propLocation
                   )
               // &&
               // ((item.price! >= priceStart && item.price! <= priceEnd) &&
@@ -383,7 +387,7 @@ class AppCubit extends Cubit<AppState> {
 
   getAdvancedSearchedFor2({
     required String propType,
-    // required String propLocation,
+    required String propLocation,
     required int priceStart,
     required int priceEnd,
     required int spaceStart,
@@ -412,8 +416,8 @@ class AppCubit extends Cubit<AppState> {
               //             : item.floor == numberofFloor)))
 
               (item.category!.name == propType
-              // &&
-              //     item.city == 'دمياط الجديدة'
+              &&
+                  item.city == propLocation
               ) &&
               ((item.price! >= priceStart && item.price! <= priceEnd) &&
                   (item.space! >= spaceStart && item.space! <= spaceEnd) &&
@@ -576,6 +580,7 @@ class AppCubit extends Cubit<AppState> {
     await getAllFavorites();
   }
 
+ bool isNavigatetoDetailsFromMap=false;
   seenOrnot({required propertyID}) async {
     Response response = await DioHelper.postData(
         url: EndPoints.seen,
@@ -583,6 +588,7 @@ class AppCubit extends Cubit<AppState> {
         token: 'Token $tokenHolder');
 
     debugPrint('SEEN');
+    isNavigatetoDetailsFromMap=true;
     if (response.statusCode == 200) {
       await getAllproperties();
       // filterCategories(0);

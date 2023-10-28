@@ -45,30 +45,21 @@ backend developer, and a graphic designer.
 
 ## Screenshots
 
-Splash Screen
-![Splash Screen](https://ibb.co/ssJcDPG)
+- Splash Screen
+  ![Mobile-Screen](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/e16e4f68-1cc4-44d5-bf3f-8d0bf92824be)
 
-Login Screen
-![login Screen](https://ibb.co/CBnQGbs)
+- Login Screen
+  ![Mobile-Screen – 1](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/b35e0596-1307-42f3-bd9f-21b4db3fa96d)
 
-Register Screen
-![Register Screen](https://ibb.co/yscHr5R)
+- Register Screen
+  ![Mobile-Screen – 2](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/9be62ddf-2f98-4162-a7e6-845a412d7d73)
 
-Forgor Password Screen
-![Forgor Password Screen](https://ibb.co/YLFp01t)
+- Forgot Password Screen
+  ![Mobile-Screen – 3](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/31cd20c7-7e5c-4c6c-9b3a-ff06bcf7fc27)
 
-Login Screen
-![login Screen](https://ibb.co/CBnQGbs)
+- Password Reset Successfully
+  ![Mobile-Screen – 4](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/dde0c95c-1b8d-4aba-8cf7-2a7661d2463a)
 
-Login Screen
-![login Screen](https://ibb.co/CBnQGbs)
-
-Passowrd Reset Success 
-![Passowrd Reset Success](https://ibb.co/drfG1sr)
-
-Location Screen
-![Location Screen](https://ibb.co/cFFQLW7)
-
-https://ibb.co/ssJcDPG
+  
 
 

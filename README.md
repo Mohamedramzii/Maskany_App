@@ -45,11 +45,11 @@ backend developer, and a graphic designer.
 
 ## Screenshots
 
-- Splash Screen
   ![Mobile-Screen](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/e16e4f68-1cc4-44d5-bf3f-8d0bf92824be)
+- Splash Screen
 
-- Login Screen
   ![Mobile-Screen – 1](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/b35e0596-1307-42f3-bd9f-21b4db3fa96d)
+- Login Screen
 
 - Register Screen
   ![Mobile-Screen – 2](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/9be62ddf-2f98-4162-a7e6-845a412d7d73)
@@ -59,6 +59,8 @@ backend developer, and a graphic designer.
 
 - Password Reset Successfully
   ![Mobile-Screen – 4](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/dde0c95c-1b8d-4aba-8cf7-2a7661d2463a)
+
+
 
   
 

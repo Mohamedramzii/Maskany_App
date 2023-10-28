@@ -19,7 +19,7 @@ backend developer, and a graphic designer.
 ## Features
 
 1. Users can authenticate using his email.
-2. Users can reset his password using his email.
+2. Users can reset his password using his email to send an OTP code.
 3. Users can add or remove his favorite properties.
 4. Users can locate all properties on a geographical map with markers depending on a specified category.
 5. Properties will be shown according to user location (Nearest Properties will appear).

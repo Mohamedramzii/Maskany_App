@@ -45,20 +45,50 @@ backend developer, and a graphic designer.
 
 ## Screenshots
 
-### Splash Screen
+#### Splash Screen
 ![Mobile-Screen](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/e16e4f68-1cc4-44d5-bf3f-8d0bf92824be)
 
-- Login Screen
+#### Login Screen
 ![Mobile-Screen – 1](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/b35e0596-1307-42f3-bd9f-21b4db3fa96d)
 
-- Register Screen
+#### Register Screen
 ![Mobile-Screen – 2](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/9be62ddf-2f98-4162-a7e6-845a412d7d73)
 
-- Forgot Password Screen
+#### Forgot Password Screen
 ![Mobile-Screen – 3](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/31cd20c7-7e5c-4c6c-9b3a-ff06bcf7fc27)
 
-- Password Reset Successfully
+#### Password Reset Successfully
 ![Mobile-Screen – 4](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/dde0c95c-1b8d-4aba-8cf7-2a7661d2463a)
+
+#### Home Screen
+![Mobile-Screen – 6](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/aeeb48d1-e0a0-4e1c-b29a-0fc7dd536593)
+
+#### Details Screen
+![Mobile-Screen – 12](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/d22ad840-5f4d-4e88-b7f0-df52d4b4d6a2)
+
+#### Favorites Screen
+![Mobile-Screen – 7](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/6a1da656-a379-474b-abf1-6e01e701dafe)
+
+#### Properties Locations On Map (Markers)
+![Mobile-Screen – 13](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/9da312af-ad03-4cad-ae37-078bb3a1f196)
+
+#### When Tap on a marker
+![Mobile-Screen – 20](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/f3230112-f40a-4b2e-92ff-549709168f9a)
+
+#### Nearest Properties Screen
+![Mobile-Screen – 19](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/524bc880-ea4b-45cb-a255-80518a5dc63d)
+
+#### App Settings
+![Mobile-Screen – 10](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/eb30d3eb-f281-4b08-929a-14fef132dc1f)
+
+#### Profile Settings
+![Mobile-Screen – 8](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/51942058-e51a-494e-9b4f-bf5412b42381)
+
+#### Subscribtion Packages
+![Mobile-Screen – 11](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/973563d6-7b68-4fad-9a27-1321e23bfbcb)
+
+#### Advanced Search For Properties
+![Mobile-Screen – 24](https://github.com/Mohamedramzii/Maskany_App/assets/57300921/ba7ac909-7291-467d-82bd-9407bedb43c2)
 
 
 

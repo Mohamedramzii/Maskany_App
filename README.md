@@ -1,4 +1,4 @@
-# Maskany App - مسكني
+# Maskany App - مسكني  ~ Freelance
 
 An application for publishing real-estate announcements, searching for real estate
 and providing users with listings and geographical locations for published real estate.

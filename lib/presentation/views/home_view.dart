@@ -28,18 +28,17 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
-    // if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
-    //   BlocProvider.of<AuthCubit>(context).getUserData();
-    // }
-    if (isAllRequestsDone == false) {
+    BlocProvider.of<AuthCubit>(context).getUserData();
+
+    if (isAllRequestsDone == false ||
+        BlocProvider.of<AuthCubit>(context).isUserChangedHisLocation) {
       debugPrint('Token Holder: $tokenHolder');
-      // if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
-      //   BlocProvider.of<AuthCubit>(context).getUserData();
-      // }
+
       BlocProvider.of<AppCubit>(context).getAllproperties(context: context);
       BlocProvider.of<AppCubit>(context).getAllFavorites();
       debugPrint('In Home, All requests Status is: $isAllRequestsDone');
       isAllRequestsDone = true;
+      BlocProvider.of<AuthCubit>(context).isUserChangedHisLocation=false;
     }
 
     super.initState();
@@ -142,6 +141,7 @@ class _HomeViewState extends State<HomeView> {
                               SizedBox(
                                 height: 15.h,
                               ),
+                             cubit.nearestPlaces.isEmpty ? Center(child: Text('لا توجد عقارات بالقرب من منطقتك حاليا !'),):
                               SizedBox(
                                 height: 250.h,
                                 child: ListView.separated(

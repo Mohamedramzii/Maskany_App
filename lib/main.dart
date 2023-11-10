@@ -54,29 +54,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // StreamController<ConnectivityResult> _connectivityStreamController =
-  //     StreamController<ConnectivityResult>();
-
-  // Stream<ConnectivityResult> get _connectivityStream =>
-  //     _connectivityStreamController.stream;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   startConnectivityStream();
-  // }
-
-  // void startConnectivityStream() {
-  //   Connectivity().onConnectivityChanged.listen((result) {
-  //     _connectivityStreamController.add(result);
-  //   });
-  // }
-
-  // @override
-  // void dispose() {
-  //   _connectivityStreamController.close();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +68,7 @@ class _MyAppState extends State<MyApp> {
             //   create: (context) => InternetCubit(),
             // ),
             BlocProvider(
-              create: (context) => AuthCubit()..getUserData(),
+              create: (context) => AuthCubit()..getUserData()..userdata,
             ),
             BlocProvider(
               create: (context) => AppCubit()

@@ -28,18 +28,21 @@ class CustomMarker extends StatelessWidget {
                 clipBehavior: Clip.none,
                 width: 50.w,
                 height: 30.h,
+                padding: EdgeInsets.all(3.r),
                 decoration: BoxDecoration(
                     color:
                         isviewed ? Colors.green : ColorsManager.kprimaryColor,
                     borderRadius: BorderRadius.circular(10.r)),
                 child:
                     // Center(child: Text(price),)
-                    Center(
-                        child: Text('${(price / 1000000).toStringAsFixed(0)}مليون',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: Colors.black))),
+                    FittedBox(
+                      child: Center(
+                          child: Text('${(price / 1000000).toStringAsFixed(0)}مليون',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: Colors.black))),
+                    ),
               ),
             ),
           if (price >= 1000 && price <= 1000000)
@@ -49,18 +52,21 @@ class CustomMarker extends StatelessWidget {
                 clipBehavior: Clip.none,
                 width: 50.w,
                 height: 30.h,
+                 padding: EdgeInsets.all(3.r),
                 decoration: BoxDecoration(
                     color:
                         isviewed ? Colors.green : ColorsManager.kprimaryColor,
                     borderRadius: BorderRadius.circular(10.r)),
                 child:
                     // Center(child: Text(price),)
-                    Center(
-                        child: Text('${(price / 1000).toStringAsFixed(0)}ألف',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: Colors.black))),
+                    FittedBox(
+                      child: Center(
+                          child: Text('${(price / 1000).toStringAsFixed(0)}ألف',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: Colors.black))),
+                    ),
               ),
             ),
           Positioned(

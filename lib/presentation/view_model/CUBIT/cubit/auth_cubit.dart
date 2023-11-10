@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maskany_app/data/models/userdata_model/user_data_model.dart';
 import 'package:maskany_app/generated/l10n.dart';
+import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/views/services_announce.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
@@ -23,6 +24,7 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
+  bool isUserChangedHisLocation = false;
 //! Login
   LoginModel2? loginModel;
   // String? successLogin = '';
@@ -48,11 +50,6 @@ class AuthCubit extends Cubit<AuthState> {
         SnackBars.failureSnackBar(
             context, S.of(context).login, loginModel!.detail);
       }
-      // print(CacheHelper.getData(key: tokenKey));
-      // successLogin = loginModel!.detail;
-      // PageAnimationTransition(
-      //           page: const AppLayout(),
-      //           pageAnimationType: LeftToRightTransition());
       emit(LoginSuccessState(successMessage: loginModel!.detail!));
     } on DioError catch (e) {
       if (e.response != null) {
@@ -228,9 +225,14 @@ class AuthCubit extends Cubit<AuthState> {
     } else {}
   }
 
-  Future<void> logout() async {
+  Future<void> logout(context) async {
     await CacheHelper.clearData(key: tokenKey);
-    isAllRequestsDone=false;
+    isAllRequestsDone = false;
+    userdata = null;
+    BlocProvider.of<AppCubit>(context).property = [];
+    BlocProvider.of<AppCubit>(context).nearestPlaces = [];
+    BlocProvider.of<AppCubit>(context).allfavorites = [];
+    BlocProvider.of<AppCubit>(context).favoritesID = {};
     emit(UserLoggedOutSuccessState());
   }
 }

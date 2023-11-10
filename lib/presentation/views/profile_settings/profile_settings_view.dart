@@ -11,12 +11,15 @@ import '../../../core/app_resources/colors.dart';
 import '../../../core/app_resources/images.dart';
 import '../../../core/common_widgets/custom_snackbar.dart';
 
-
 class ProfileSettingsVIew extends StatelessWidget {
   const ProfileSettingsVIew(
-      {super.key, required this.email, required this.phoneNumber});
+      {super.key,
+      required this.email,
+      required this.phoneNumber,
+      required this.userlocation});
   final String email;
   final String phoneNumber;
+  final String userlocation;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,6 +146,7 @@ class ProfileSettingsVIew extends StatelessWidget {
                                       'أضف رقم الهاتف',
                                   needWidget: true,
                                   whatToUpdate: 'phoneNumber',
+                                  nottochange: false,
                                 ),
                                 SizedBox(
                                   height: 10.h,
@@ -152,6 +156,7 @@ class ProfileSettingsVIew extends StatelessWidget {
                                   hint: cubit.userdata!.email!,
                                   needWidget: true,
                                   whatToUpdate: 'email',
+                                  nottochange: false,
                                 ),
                                 SizedBox(
                                   height: 10.h,
@@ -159,8 +164,9 @@ class ProfileSettingsVIew extends StatelessWidget {
                                 const _buildRowdata(
                                   label: 'تاريخ الميلاد',
                                   hint: '2000/01/25',
-                                  needWidget: true,
+                                  needWidget: false,
                                   whatToUpdate: '',
+                                  nottochange: true,
                                 ),
                                 SizedBox(
                                   height: 10.h,
@@ -170,6 +176,7 @@ class ProfileSettingsVIew extends StatelessWidget {
                                   hint: cubit.userdata!.location ?? 'غير محدد',
                                   needWidget: false,
                                   whatToUpdate: '',
+                                  nottochange: true,
                                 ),
                                 Text(
                                   '.يتم تحديد منطقة حسابك في البداية بناء علي وقت التسجيل ومكانه',
@@ -207,12 +214,14 @@ class _buildRowdata extends StatelessWidget {
     required this.hint,
     required this.needWidget,
     required this.whatToUpdate,
+    required this.nottochange,
     // required this.ontap,
   });
   final String label;
   final String hint;
   final String whatToUpdate;
   final bool needWidget;
+  final bool nottochange;
   // final Function() ontap;
   static TextEditingController controller = TextEditingController();
   @override
@@ -227,10 +236,13 @@ class _buildRowdata extends StatelessWidget {
               .bodySmall!
               .copyWith(color: Colors.black),
         ),
-        !needWidget
+        !needWidget && !nottochange
             ? Container()
             : GestureDetector(
                 onTap: () {
+                  if (nottochange) {
+                    return null;
+                  }
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -350,7 +362,7 @@ class _buildRowdata extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    SvgPicture.asset(Images.editdata),
+                    if (!nottochange) SvgPicture.asset(Images.editdata),
                     SizedBox(
                       width: 5.w,
                     ),

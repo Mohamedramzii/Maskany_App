@@ -450,7 +450,6 @@ class AppCubit extends Cubit<AppState> {
 
   List<PropertiesModel2> allfavorites = [];
   Set<int> favoritesID = {};
-  // Set<int> favoritesID2 = {};
   getAllFavorites() async {
     CacheHelper.getData(key: tokenKey);
 

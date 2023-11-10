@@ -20,7 +20,7 @@ class GlobalSettingsView extends StatelessWidget {
   static TextEditingController pin4 = TextEditingController();
   static TextEditingController passwordcontroller = TextEditingController();
 
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  // static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

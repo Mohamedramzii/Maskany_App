@@ -89,8 +89,8 @@ class _LocationMapViewState extends State<LocationMapView> {
                           // initialCameraPosition: cubit.firstVIew!,
                           initialCameraPosition: CameraPosition(
                               target: LatLng(
-                                double.parse(cubit.property[0].lat!),
-                                double.parse(cubit.property[0].long!),
+                                double.parse(cubit.allProperties[0].lat!),
+                                double.parse(cubit.allProperties[0].long!),
                               ),
                               zoom: 9),
                           myLocationButtonEnabled: true,
@@ -134,24 +134,11 @@ class _LocationMapViewState extends State<LocationMapView> {
                               itemCount: cubit.allcategories.length)),
                     ),
 
-                    // Align(
-                    //   alignment: Alignment.bottomRight,
-
-                    //   child: Container(
-                    //     width: 100.w,
-                    //     height: 40.h,
-                    //     decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(20.r),
-                    //         color: ColorsManager.kprimaryColor),
-                    //   ),
-                    // )
+                 
                   ],
                 )
-          // : Center(
-          //     child: LoadingAnimationWidget.staggeredDotsWave(
-          //         color: ColorsManager.kprimaryColor, size: 40.r),
-          //   ),
-          ,
+     ,
+          
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -206,16 +193,16 @@ class _LocationMapViewState extends State<LocationMapView> {
     );
   }
 
-  // void onMapCreated(GoogleMapController controller) {
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  // // void onMapCreated(GoogleMapController controller) {
+  // BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
-  void customMarker(image) {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(10, 10)), image)
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
-  }
+  // void customMarker(image) {
+  //   BitmapDescriptor.fromAssetImage(
+  //           const ImageConfiguration(size: Size(10, 10)), image)
+  //       .then((icon) {
+  //     setState(() {
+  //       markerIcon = icon;
+  //     });
+  //   });
+  // }
 }

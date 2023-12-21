@@ -170,6 +170,11 @@ class AuthCubit extends Cubit<AuthState> {
       debugPrint(userdata!.username);
       emit(GetUserDataSuccessState());
     } catch (e) {
+      if(e is DioError){
+        if(e.type == DioErrorType.connectionError){
+          emit(GetUserDataFailureState(errMessage: e.toString()));
+        }
+      }
       emit(GetUserDataFailureState(errMessage: e.toString()));
     }
   }
@@ -229,7 +234,9 @@ class AuthCubit extends Cubit<AuthState> {
     await CacheHelper.clearData(key: tokenKey);
     isAllRequestsDone = false;
     userdata = null;
+    userdata!.location=null;
     BlocProvider.of<AppCubit>(context).property = [];
+    BlocProvider.of<AppCubit>(context).allProperties = [];
     BlocProvider.of<AppCubit>(context).nearestPlaces = [];
     BlocProvider.of<AppCubit>(context).allfavorites = [];
     BlocProvider.of<AppCubit>(context).favoritesID = {};

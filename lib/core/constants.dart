@@ -120,4 +120,6 @@ abstract class EndPoints {
   static const seen = '/properties/seen/';
   static const userData = '/auth/user/update/';
   static const updateUserData = '/auth/user/update/';
+  static const map = '/properties/map/';
+  static const ads = '/ads/';
 }

@@ -37,7 +37,7 @@ class _DetailsViewState extends State<DetailsView> {
             //  await BlocProvider.of<AppCubit>(context).filterCategories(0);
             if (cubit.isNavigatetoDetailsFromMap) {
               await BlocProvider.of<AppCubit>(context)
-                  .getAllproperties(context: context);
+                  .getAllpropertiesWithPagination(context: context);
               // setState(() {});
               debugPrint(
                   '################ User navigated back to Screen map ##############');

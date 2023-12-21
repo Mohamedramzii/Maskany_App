@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maskany_app/presentation/views/pagination.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'core/constants.dart';
@@ -76,7 +77,8 @@ class _MyAppState extends State<MyApp> {
                 ..checkLocationPermission(Permission.locationWhenInUse, context)
                 // ..getAdvancedSearchedFor()
                 // ..getCurrentLatLong()
-                ..getAllproperties(context: context)
+                ..getAllpropertiesWithPagination(context: context)
+                ..getAllPropertiesWithOutPagination(context)..getAllAds(context)
                 ..getCategories()
                 ..getAllFavorites(),
             ),

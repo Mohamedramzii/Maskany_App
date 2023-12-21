@@ -83,6 +83,30 @@ final class DeleteFavoritesFailureState extends AppState {
 
   DeleteFavoritesFailureState(this.errMsg);
 }
+//! Get Favs
+final class GetNearestPlacesSuccessState extends AppState {
+  // final String successMsg;
+
+  // GetAllPropertiesSuccessState(this.successMsg);
+}
+
+final class GetNearestPlacesLoadingState extends AppState {}
+
+final class GetNearestPlacesFailureState extends AppState {
+  final String errMsg;
+
+  GetNearestPlacesFailureState(this.errMsg);
+}
+
+
+final class GetAdsLoadingState extends AppState {}
+final class GetAdsSuccessState extends AppState {}
+
+final class GetAdsFailureState extends AppState {
+  final String errMsg;
+
+  GetAdsFailureState(this.errMsg);
+}
 
 
 final class GetCategoriesState extends AppState {}

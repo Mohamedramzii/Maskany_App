@@ -10,12 +10,14 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maskany_app/core/serverFailure.dart';
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
+import 'package:maskany_app/data/models/ads_model/property.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
+import '../../../../data/models/ads_model/ads_model.dart';
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../../../views/favorite_view.dart';
 import '../../../views/home_view.dart';
@@ -197,8 +199,8 @@ class AppCubit extends Cubit<AppState> {
       zoom: 15,
     );
   }
-
-  List<String> category = ['الكل', 'شقق للأيجار', 'شقق للبيع'];
+// 
+  // List<String> category = ['الكل', 'شقق للأيجار', 'شقق للبيع'];
   List<CategoriesModel> allcategories = [];
   List<CategoriesModel> allcategoriesForAdvSearch = [];
   getCategories() {
@@ -213,15 +215,15 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<PropertiesModel2> property = [];
-  // List<PropertiesModel2> bee3Prop = [];
-  // List<PropertiesModel2> egaarProp = [];
   List<PropertiesModel2> nearestPlaces = [];
-  getAllproperties({required context}) async {
+  int limit = 2;
+  int page = 1;
+  bool hasMore = true;
+  bool isLoading = false;
+  getAllpropertiesWithPagination({required context}) async {
     // isInternetConnectFunc();
     CacheHelper.getData(key: tokenKey);
-    property = [];
-    // bee3Prop = [];
-    // egaarProp = [];
+    nearestPlaces = [];
     emit(GetAllPropertiesLoadingState());
     if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
       await BlocProvider.of<AuthCubit>(context).getUserData();
@@ -231,41 +233,113 @@ class AppCubit extends Cubit<AppState> {
     print('User Location From GetAllProps Method is: $location');
     try {
       Response response = await DioHelper.getData(
-          url: EndPoints.properties, token: 'Token $tokenHolder');
-      for (var item in response.data) {
-        property.add(PropertiesModel2.fromJson(item));
-        nearestPlaces = property
-            .where((e) =>
-                e.city ==
-                location) //BlocProvider.of<AuthCubit>(context).userdata!.location
-            .toList();
-        // egaarProp = property
-        //     .where((e) => e.category!.name == allcategories[1].name)
-        //     .toList();
-        // bee3Prop = property
-        //     .where((e) => e.category!.name == allcategories[2].name)
-        //     .toList();
+        url: 'http://66.45.248.247:8000/properties/?objects=$limit&page=$page',
+        token: 'Token $tokenHolder',
+      );
+      if (response.statusCode == 200) {
+        final List<PropertiesModel2> newItems = [];
+        // List<PropertiesModel2> newItemsPerLocation = [];
+        for (var item in response.data['results']) {
+          newItems.add(PropertiesModel2.fromJson(item));
+        }
+        // setState(() {
+        page++;
+        isLoading = false;
+
+        print(newItems.length);
+        // nearestPlaces=[];
+        if (newItems.length < limit) {
+          hasMore = false;
+          print(hasMore);
+        }
+        property.addAll(newItems);
       }
+      nearestPlaces =
+          property.where((element) => element.city == location).toList();
 
       debugPrint('######### ${property.length} ###############');
       debugPrint('######### ${nearestPlaces.length} ###############');
-      // debugPrint('######### ${BlocProvider.of<AuthCubit>(context).userdata!.location} ###############');
-      // debugPrint('######### ${egaarProp.length} ###############');
-      // debugPrint('######### ${bee3Prop.length} ###############');
 
-      // property.add(properties!);
       debugPrint('Get All properties Success');
       emit(GetAllPropertiesSuccessState());
+    } catch (e) {
+      if (e is DioError) {
+        if (e.type == DioErrorType.connectionError) {
+          emit(GetAllPropertiesFailureState());
+        }
+      } else {
+        // Handle other exceptions
+        getAllpropertiesWithPagination(context: context);
+        // Display an appropriate error message to the user
+      }
+      debugPrint('Get All properties Failed -- ${e.toString()}');
+      emit(GetAllPropertiesFailureState());
+    }
+  }
+
+  List<PropertiesModel2> allProperties = [];
+
+  getAllPropertiesWithOutPagination(BuildContext context) async {
+    // isInternetConnectFunc();
+    CacheHelper.getData(key: tokenKey);
+    allProperties = [];
+    emit(GetNearestPlacesLoadingState());
+
+    print('User Location From GetAllProps Method is: $location');
+    try {
+      Response response = await DioHelper.getData(
+          url: EndPoints.map, token: 'Token $tokenHolder');
+      // List<PropertiesModel2> tempList = [];
+      for (var item in response.data) {
+        allProperties.add(PropertiesModel2.fromJson(item));
+      }
+
+      debugPrint('######### ${nearestPlaces.length} ###############');
+
+      debugPrint('Get All properties Success');
+      emit(GetNearestPlacesSuccessState());
     } catch (e) {
       if (e is DioError) {
         return ServerFailure.fromDioError(e);
       } else {
         // Handle other exceptions
-        getAllproperties(context: context);
+        getAllPropertiesWithOutPagination(context);
         // Display an appropriate error message to the user
       }
       debugPrint('Get All properties Failed -- ${e.toString()}');
-      emit(GetAllPropertiesFailureState());
+      emit(GetNearestPlacesFailureState(e.toString()));
+    }
+  }
+
+  //!  Ads Method
+  List<Property> ads = [];
+
+  getAllAds(BuildContext context) async {
+    // isInternetConnectFunc();
+    CacheHelper.getData(key: tokenKey);
+    ads = [];
+    emit(GetAdsLoadingState());
+
+    
+    try {
+      Response response = await DioHelper.getData(
+          url: EndPoints.ads, );
+      for (var item in response.data) {
+        ads.add(Property.fromJson(item['property']));
+      }
+
+    
+
+      debugPrint('Get All ads Success ${ads.length} , ${ads[0].title}');
+      emit(GetAdsSuccessState());
+    } catch (e) {
+      if (e is DioError) {
+        return ServerFailure.fromDioError(e);
+      } else {
+       
+      }
+      debugPrint('Get All ads Failed -- ${e.toString()}');
+      emit(GetAdsFailureState(e.toString()));
     }
   }
 
@@ -278,8 +352,8 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<PropertiesModel2> filterCategories(int index) {
-    if (index == 0) return property;
-    return property
+    if (index == 0) return allProperties;
+    return allProperties
         .where((e) => e.category!.name == allcategories[index].name)
         .toList();
   }
@@ -287,7 +361,7 @@ class AppCubit extends Cubit<AppState> {
   List<PropertiesModel2> search = [];
   String emptyValue = '';
   getSearchedFor(String query) {
-    search = property
+    search = allProperties
         .where(
             (item) => item.title!.toLowerCase().contains(query.toLowerCase()))
         .toList();
@@ -340,7 +414,7 @@ class AppCubit extends Cubit<AppState> {
     // print(numberofRooms);
     // print(numberofFloor);
     try {
-      advancedSearch = property
+      advancedSearch = allProperties
           .where((item) =>
                   // (item.category!.name == propType.toString()) &&
                   // ((item.price! >= priceStart && item.price! <= priceEnd) &&
@@ -404,7 +478,7 @@ class AppCubit extends Cubit<AppState> {
     print(numberofRooms);
     print(numberofFloor);
     try {
-      advancedSearch = property
+      advancedSearch = allProperties
           .where((item) =>
               // (item.category!.name == propType.toString()) &&
               // ((item.price! >= priceStart && item.price! <= priceEnd) &&

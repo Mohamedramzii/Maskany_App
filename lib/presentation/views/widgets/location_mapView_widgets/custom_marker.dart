@@ -69,6 +69,30 @@ class CustomMarker extends StatelessWidget {
                     ),
               ),
             ),
+            if (price <= 999 )
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                clipBehavior: Clip.none,
+                width: 50.w,
+                height: 30.h,
+                 padding: EdgeInsets.all(3.r),
+                decoration: BoxDecoration(
+                    color:
+                        isviewed ? Colors.green : ColorsManager.kprimaryColor,
+                    borderRadius: BorderRadius.circular(10.r)),
+                child:
+                    // Center(child: Text(price),)
+                    FittedBox(
+                      child: Center(
+                          child: Text('${price}جنيه',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: Colors.black))),
+                    ),
+              ),
+            ),
           Positioned(
             top: 32.h,
             right: 11.w,

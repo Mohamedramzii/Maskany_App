@@ -22,7 +22,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
     required this.model,
     required this.index,
   });
-  final List<PropertiesModel2> model;
+  final List<dynamic> model;
   final int index;
 
   @override

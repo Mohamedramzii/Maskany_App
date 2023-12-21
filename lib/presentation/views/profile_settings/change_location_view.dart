@@ -91,7 +91,10 @@ class ChangeUserLocation extends StatelessWidget {
                                           updateData: govern);
                                   BlocProvider.of<AuthCubit>(context)
                                       .isUserChangedHisLocation = true;
-                                  Navigator.of(context).pop();
+                                  // BlocProvider.of<AppCubit>(context).nearestPlaces=[];
+                                  if (state is! UpdateUserDataLoadingState) {
+                                    Navigator.of(context).pop();
+                                  }
                                 }
                               })
                     ]),

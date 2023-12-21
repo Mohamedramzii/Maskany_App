@@ -5,24 +5,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:maskany_app/data/models/ads_model/property.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
-import '../../data/models/propertiesModel/properties_model2/properties_model2.dart';
-import '../view_model/CUBIT/cubit/app_cubit.dart';
-import 'package:read_more_text/read_more_text.dart';
-import '../../core/app_resources/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../core/common_widgets/custom_buttom.dart';
-import 'widgets/HomeView_widgets/custom_rowIcons.dart';
-import '../../core/app_resources/images.dart';
-import '../../generated/l10n.dart';
+import '../../../../core/app_resources/colors.dart';
+import '../../../../core/app_resources/images.dart';
+import '../../../../core/common_widgets/custom_buttom.dart';
+import '../../../../generated/l10n.dart';
+import '../../../view_model/CUBIT/cubit/app_cubit.dart';
 
-class DetailsViewForHorizontal extends StatelessWidget {
-  const DetailsViewForHorizontal({
+import 'package:read_more_text/read_more_text.dart';
+
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'custom_rowIcons.dart';
+
+class CustomAdsDetailsView extends StatelessWidget {
+  const CustomAdsDetailsView({
     super.key,
     required this.model,
     required this.index,
   });
-  final List<PropertiesModel2> model;
+  final List<Property> model;
   final int index;
 
   @override

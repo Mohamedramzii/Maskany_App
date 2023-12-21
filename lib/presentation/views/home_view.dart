@@ -16,6 +16,7 @@ import 'package:page_animation_transition/page_animation_transition.dart';
 import '../../generated/l10n.dart';
 import '../view_model/CUBIT/cubit/auth_cubit.dart';
 import 'details_view.dart';
+import 'widgets/HomeView_widgets/custom_ads_details_view.dart';
 import 'widgets/HomeView_widgets/custom_horizontalContainer.dart';
 import 'widgets/HomeView_widgets/custom_textfield.dart';
 import 'widgets/HomeView_widgets/custom_vertical_container.dart';
@@ -254,7 +255,7 @@ class _HomeViewState extends State<HomeView> {
                                               Navigator.of(context).push(
                                                   PageAnimationTransition(
                                                       page:
-                                                          DetailsViewForHorizontal(
+                                                          CustomAdsDetailsView(
                                                         model: cubit.ads,
                                                         index: index,
                                                       ),

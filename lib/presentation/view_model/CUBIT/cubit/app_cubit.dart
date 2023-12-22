@@ -199,7 +199,8 @@ class AppCubit extends Cubit<AppState> {
       zoom: 15,
     );
   }
-// 
+
+//
   // List<String> category = ['الكل', 'شقق للأيجار', 'شقق للبيع'];
   List<CategoriesModel> allcategories = [];
   List<CategoriesModel> allcategoriesForAdvSearch = [];
@@ -294,7 +295,7 @@ class AppCubit extends Cubit<AppState> {
         allProperties.add(PropertiesModel2.fromJson(item));
       }
 
-      debugPrint('######### ${nearestPlaces.length} ###############');
+      debugPrint('######### ALL Props without pagination ${allProperties.length} ###############');
 
       debugPrint('Get All properties Success');
       emit(GetNearestPlacesSuccessState());
@@ -320,24 +321,20 @@ class AppCubit extends Cubit<AppState> {
     ads = [];
     emit(GetAdsLoadingState());
 
-    
     try {
       Response response = await DioHelper.getData(
-          url: EndPoints.ads, );
+        url: EndPoints.ads,
+      );
       for (var item in response.data) {
         ads.add(Property.fromJson(item['property']));
       }
-
-    
 
       debugPrint('Get All ads Success ${ads.length} , ${ads[0].title}');
       emit(GetAdsSuccessState());
     } catch (e) {
       if (e is DioError) {
         return ServerFailure.fromDioError(e);
-      } else {
-       
-      }
+      } else {}
       debugPrint('Get All ads Failed -- ${e.toString()}');
       emit(GetAdsFailureState(e.toString()));
     }
@@ -352,10 +349,12 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<PropertiesModel2> filterCategories(int index) {
-    if (index == 0) return allProperties;
-    return allProperties
-        .where((e) => e.category!.name == allcategories[index].name)
-        .toList();
+    if (index == 0)
+      return allProperties;
+    else
+      return allProperties
+          .where((e) => e.category!.name == allcategories[index].name)
+          .toList();
   }
 
   List<PropertiesModel2> search = [];

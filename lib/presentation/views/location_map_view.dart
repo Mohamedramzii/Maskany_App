@@ -51,7 +51,7 @@ class _LocationMapViewState extends State<LocationMapView> {
                           cubit.filterCategories(cubit.categoryIndex).map((e) {
                         return MarkerData(
                             marker: Marker(
-                                markerId: MarkerId(e.locationLink!),
+                                markerId: MarkerId(e.id!.toString()),
                                 position: LatLng(
                                   double.parse(e.lat!),
                                   double.parse(e.long!),

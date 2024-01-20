@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maskany_app/presentation/views/Auth/phone_number_check.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
@@ -11,7 +12,6 @@ import '../../../core/common_widgets/custom_textformfield_widget.dart';
 import '../../../core/constants.dart';
 import '../../../generated/l10n.dart';
 import '../../view_model/CUBIT/cubit/auth_cubit.dart';
-import 'location_view.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -104,7 +104,7 @@ class _RegisterViewState extends State<RegisterView> {
                           fullnamecontroller.text = newValue!;
                         },
                         onvalidate: (value) {
-                          if (value!.isNotEmpty && value.length < 6) {
+                          if (value!.length < 6) {
                             return S.of(context).errorName;
                           }
                           return null;
@@ -118,7 +118,7 @@ class _RegisterViewState extends State<RegisterView> {
                         height: 20.h,
                       ),
 
-                      //! Email Or Phone
+                      //! Email
                       CustomTextFormFieldWIdget(
                         controller: emailcontroller,
                         hinttext: S.of(context).email,
@@ -142,29 +142,29 @@ class _RegisterViewState extends State<RegisterView> {
                         height: 20.h,
                       ),
 
-                      //! Phone Number
-                      CustomTextFormFieldWIdget(
-                        controller: phonecontroller,
-                        hinttext: S.of(context).phone,
-                        isEmail: false,
-                        isPassword: false,
-                        onsave: (newValue) {
-                          phonecontroller.text = newValue!;
-                        },
-                        onvalidate: (value) {
-                          if (value!.isNotEmpty && value.length < 11) {
-                            return S.of(context).errorPhone;
-                          }
-                          return null;
-                        },
-                        textInputType: TextInputType.number,
-                        textinputaction: TextInputAction.next,
-                        obsecure: false,
-                      ),
+                      // //! Phone Number
+                      // CustomTextFormFieldWIdget(
+                      //   controller: phonecontroller,
+                      //   hinttext: S.of(context).phone,
+                      //   isEmail: false,
+                      //   isPassword: false,
+                      //   onsave: (newValue) {
+                      //     phonecontroller.text = newValue!;
+                      //   },
+                      //   onvalidate: (value) {
+                      //     if (value!.isNotEmpty && value.length < 11) {
+                      //       return S.of(context).errorPhone;
+                      //     }
+                      //     return null;
+                      //   },
+                      //   textInputType: TextInputType.number,
+                      //   textinputaction: TextInputAction.next,
+                      //   obsecure: false,
+                      // ),
 
-                      SizedBox(
-                        height: 20.h,
-                      ),
+                      // SizedBox(
+                      //   height: 20.h,
+                      // ),
 
                       //! Password
                       CustomTextFormFieldWIdget(
@@ -213,26 +213,28 @@ class _RegisterViewState extends State<RegisterView> {
                         height: 40.h,
                       ),
                       CustomButton(
-                              text: 'ابدأ الأن',
-                              onpressed: () async {
-                                if (formKey2.currentState!.validate()) {
-                                  formKey2.currentState!.save();
+                          text: 'ابدأ الأن',
+                          onpressed: () async {
+                            //! Attention here to uncommment these lines
 
-                                  Navigator.of(context).push(
-                                      PageAnimationTransition(
-                                          page: LocationView(
-                                              email:
-                                                  emailcontroller.text.trim(),
-                                              password: passwordcontroller.text
-                                                  .trim(),
-                                              username: fullnamecontroller.text
-                                                  .trim(),
-                                              phoneNumber:
-                                                  phonecontroller.text.trim()),
-                                          pageAnimationType:
-                                              LeftToRightTransition()));
-                                }
-                              }),
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //   builder: (context) => PhoneNumberCheckView(),
+                            // ));
+                            if (formKey2.currentState!.validate()) {
+                              formKey2.currentState!.save();
+
+                              Navigator.of(context).push(
+                                  PageAnimationTransition(
+                                      page: PhoneNumberCheckView(
+                                        email: emailcontroller.text.trim(),
+                                        username:
+                                            fullnamecontroller.text.trim(),
+                                        password: passwordcontroller.text,
+                                      ),
+                                      pageAnimationType:
+                                          LeftToRightTransition()));
+                            }
+                          }),
 
                       SizedBox(
                         height: ResponsiveBreakpoints.of(context).isMobile

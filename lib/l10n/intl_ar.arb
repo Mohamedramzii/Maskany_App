@@ -23,6 +23,7 @@
    "password":"كلمة المرور",
    "repassword":"إعادة كتابة كلمة المرور",
    "errorRePassword":"كلمة المرور غير متطابقة",
+   "enterPhoneNumber":"أدخل رقم هاتف صحيح",
 
    "haveAnAccount":"هل لديك حساب بالفعل ؟",
 

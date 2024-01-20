@@ -133,12 +133,8 @@ class _LocationMapViewState extends State<LocationMapView> {
                                       index: index, list: cubit.allcategories),
                               itemCount: cubit.allcategories.length)),
                     ),
-
-                 
                   ],
-                )
-     ,
-          
+                ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,

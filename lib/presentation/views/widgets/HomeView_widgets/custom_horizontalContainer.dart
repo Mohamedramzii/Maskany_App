@@ -10,7 +10,6 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
-import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../../../view_model/CUBIT/cubit/app_cubit.dart';
 import 'custom_rowIcons.dart';
 

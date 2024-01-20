@@ -80,7 +80,7 @@ class AuthCubit extends Cubit<AuthState> {
       });
 
       registerModel = RegisterModel2.fromJson(response.data);
-      debugPrint('Register Message: ${registerModel!.detail}');
+      // debugPrint('Register Message: ${registerModel!.detail}');
       if (response.statusCode == 200) {
         tokenHolder = registerModel!.token!;
         CacheHelper.saveData(key: tokenKey, value: tokenHolder);
@@ -91,9 +91,11 @@ class AuthCubit extends Cubit<AuthState> {
             pageAnimationType: LeftToRightTransition()));
       } else {
         SnackBars.failureSnackBar(
-            context, S.of(context).CreateAccount, registerModel!.detail);
+            context, S.of(context).CreateAccount, 'تم استخدام هذا البريد الالكتروني من قبل');
+
+      
       }
-      emit(RegisterSuccessState(successMessage: registerModel!.detail!));
+      emit(RegisterSuccessState(successMessage:'تم انشاء الحساب بنجاح'));
     } on DioError catch (e) {
       if (e.response != null) {
         debugPrint('Register Error: ${e.response!.data['detail']}');
@@ -170,8 +172,8 @@ class AuthCubit extends Cubit<AuthState> {
       debugPrint(userdata!.username);
       emit(GetUserDataSuccessState());
     } catch (e) {
-      if(e is DioError){
-        if(e.type == DioErrorType.connectionError){
+      if (e is DioError) {
+        if (e.type == DioErrorType.connectionError) {
           emit(GetUserDataFailureState(errMessage: e.toString()));
         }
       }
@@ -230,11 +232,42 @@ class AuthCubit extends Cubit<AuthState> {
     } else {}
   }
 
+  //! Check if Phone number is sent or not
+  bool isPhoneNumberCorrectandSMSCodeSent = false;
+  String correctOTP = '';
+  sendingPhoneNumberToRetrieveSMScode({
+    required String phoneNumber,
+  }) async {
+    isPhoneNumberCorrectandSMSCodeSent = true;
+    print('SMS Is Sent ==>$isPhoneNumberCorrectandSMSCodeSent ');
+    emit(SmsCodeSentLoadinhState());
+    try {
+      Response response = await DioHelper.getData(
+          url: 'http://66.45.248.247:8000/auth/sms/',
+          query: {'phone': phoneNumber});
+      correctOTP = response.data['otp'];
+      print('Server OTP : $correctOTP');
+
+      emit(SmsCodeSentSuccesState());
+    } catch (e) {
+      emit(SmsCodeSentFailureState());
+    }
+  }
+
+  bool isOtpCorrect = false;
+  checkIfServerOtpAndUserOtpAreMatched({required String code}) {
+    if (correctOTP == code) {
+      isOtpCorrect = true;
+      debugPrint('Server OTP $correctOTP  == UserOTP $code');
+    }
+    emit(OTPMatchedSuccesState());
+  }
+
   Future<void> logout(context) async {
     await CacheHelper.clearData(key: tokenKey);
     isAllRequestsDone = false;
     userdata = null;
-    userdata!.location=null;
+    userdata!.location = null;
     BlocProvider.of<AppCubit>(context).property = [];
     BlocProvider.of<AppCubit>(context).allProperties = [];
     BlocProvider.of<AppCubit>(context).nearestPlaces = [];

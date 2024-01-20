@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:maskany_app/core/constants.dart';
+import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 
 class TestView extends StatelessWidget {
@@ -17,23 +19,9 @@ class TestView extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                    child: ListView.builder(
-                  itemCount: cubit.property.length,
-                  itemBuilder: (context, index) {
-                    var distanceDiff = Geolocator.distanceBetween(
-                            cubit.currentLocation!.latitude,
-                            cubit.currentLocation!.longitude,
-                            double.parse(cubit.property[index].lat!),
-                            double.parse(cubit.property[index].long!))
-                        .toStringAsFixed(2);
-
-                    return Card(
-                      child: Center(
-                        child: Text('Distance : ${distanceDiff} Km'),
-                      ),
-                    );
-                  },
-                ))
+                    child: TextButton(onPressed: () {
+                      CacheHelper.clearData(key: tokenKey);
+                    }, child: Text('Press')))
               ],
             ),
           );

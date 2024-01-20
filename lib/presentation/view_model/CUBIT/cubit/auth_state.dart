@@ -93,3 +93,10 @@ final class UpdateUserDataFailureState extends AuthState {
 final class ImagePickerSuccessState extends AuthState {}
 
 final class UserLoggedOutSuccessState extends AuthState {}
+
+//! SMS code sent
+final class SmsCodeSentSuccesState extends AuthState {}
+final class SmsCodeSentLoadinhState extends AuthState {}
+final class SmsCodeSentFailureState extends AuthState {}
+
+final class OTPMatchedSuccesState extends AuthState {}

@@ -114,72 +114,7 @@ class AppCubit extends Cubit<AppState> {
     }
     getCurrentLatLong();
   }
-  // void checkLocationPermission(context) async {
-  //   LocationPermission permission = await Geolocator.checkPermission();
-  //   if (permission == LocationPermission.denied) {
-  //     // Location permission is denied
-  //     LocationPermission newPermission = await Geolocator.requestPermission();
-  //     handlePermissionStatus(newPermission, context);
-  //   } else if (permission == LocationPermission.deniedForever) {
-  //     // Location permission is permanently denied
-  //     // Show a dialog or navigate to app settings
-  //     // to enable location permission manually
-  //     handleForeverDeniedPermission(context);
-  //   } else {
-  //     // Location permission is granted
-  //     // Proceed with location-related functionality
-  //     handleLocationPermissionGranted(context);
-  //   }
-  // }
 
-  // void handlePermissionStatus(LocationPermission permission, context) {
-  //   if (permission == LocationPermission.denied) {
-  //     // Location permission is still denied
-  //     // Show a dialog or provide an alternative functionality
-  //     // to proceed without location access
-  //     handleDeniedPermission(context);
-  //   } else if (permission == LocationPermission.deniedForever) {
-  //     // Location permission is permanently denied
-  //     // Show a dialog or navigate to app settings
-  //     // to enable location permission manually
-  //     handleForeverDeniedPermission(context);
-  //   } else {
-  //     // Location permission is granted
-  //     // Proceed with location-related functionality
-  //     handleLocationPermissionGranted(context);
-  //   }
-  // }
-
-  // void handleDeniedPermission(context) {
-  //   print('Location permission is denied');
-  //   // Implement your logic here when location permission is denied
-  //   openAppSettings().catchError((error) {
-  //   // Error handling if the app settings cannot be opened
-  //   print('Error opening app settings: $error');
-  // });
-  //   // Dialogs.successDialog(context);
-  //   // SnackBars.failureSnackBar(
-  //   //     context, "Location", 'Location permission is denied');
-  // }
-
-  // void handleForeverDeniedPermission(context) {
-  //   print('Location permission is permanently denied');
-  //   // Implement your logic here when location permission is permanently denied
-  //   // SnackBars.failureSnackBar(
-  //   //     context, "Location", 'Location permission is permanently denied');
-  //       openAppSettings().catchError((error) {
-  //   // Error handling if the app settings cannot be opened
-  //   print('Error opening app settings: $error');
-  // });
-  // }
-
-  // void handleLocationPermissionGranted(context) {
-  //   print('Location permission is granted');
-  //   // Implement your logic here when location permission is granted
-  //   // You can start using location-related functionality
-  //   // SnackBars.failureSnackBar(
-  //   //     context, "Location", 'Location permission is granted');
-  // }
 
   //! Getting Current location using lat long
   Future<void> getCurrentLatLong() async {
@@ -205,12 +140,13 @@ class AppCubit extends Cubit<AppState> {
   List<CategoriesModel> allcategories = [];
   List<CategoriesModel> allcategoriesForAdvSearch = [];
   getCategories() {
-    DioHelper.getData(url: EndPoints.categories).then((value) {
+    DioHelper.getData(url: EndPoints.categories, token: 'Token $tokenHolder').then((value) {
       for (var category in value.data) {
         allcategories.add(CategoriesModel.fromJson(category));
         allcategoriesForAdvSearch.add(CategoriesModel.fromJson(category));
       }
       allcategories.insert(0, CategoriesModel(id: 1, name: 'الكل'));
+      print('###### All categories : $allcategories ######');
       emit(GetCategoriesState());
     });
   }
@@ -270,7 +206,7 @@ class AppCubit extends Cubit<AppState> {
         }
       } else {
         // Handle other exceptions
-        getAllpropertiesWithPagination(context: context);
+        // getAllpropertiesWithPagination(context: context);//!
         // Display an appropriate error message to the user
       }
       debugPrint('Get All properties Failed -- ${e.toString()}');
@@ -304,7 +240,7 @@ class AppCubit extends Cubit<AppState> {
         return ServerFailure.fromDioError(e);
       } else {
         // Handle other exceptions
-        getAllPropertiesWithOutPagination(context);
+        // getAllPropertiesWithOutPagination(context);//!
         // Display an appropriate error message to the user
       }
       debugPrint('Get All properties Failed -- ${e.toString()}');
@@ -323,7 +259,7 @@ class AppCubit extends Cubit<AppState> {
 
     try {
       Response response = await DioHelper.getData(
-        url: EndPoints.ads,
+        url: EndPoints.ads,token: 'Token $tokenHolder'
       );
       for (var item in response.data) {
         ads.add(Property.fromJson(item['property']));

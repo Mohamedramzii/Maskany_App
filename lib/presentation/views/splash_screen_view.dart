@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maskany_app/presentation/views/test_view.dart';
 import '../../core/constants.dart';
 import '../../data/data_sources/local/shared_pref.dart';
 import 'AppLayout.dart';
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context,
           PageAnimationTransition(
               page: CacheHelper.getData(key: tokenKey) != null
-                  ? const AppLayout()
+                  ? const AppLayout() //applayout instead
                   : const LoginView(),
               pageAnimationType: BottomToTopTransition()));
     });

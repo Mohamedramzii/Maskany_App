@@ -1,17 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
+// Project imports:
+import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import '../../../core/app_resources/images.dart';
 import '../details_view.dart';
 import '../widgets/HomeView_widgets/custom_vertical_container.dart';
 import '../widgets/searchView_widgets/custom_textfield.dart';
 import 'advanced_search_view.dart';
-
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});

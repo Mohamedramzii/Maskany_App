@@ -1,10 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
+// Project imports:
 import '../../../core/app_resources/colors.dart';
 import '../../../core/common_widgets/custom_OTP.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
@@ -149,7 +153,7 @@ class _OTPViewState extends State<OTPView> {
                       controller: passwordcontroller,
                       hinttext: S.of(context).newPassowrd,
                       isEmail: true,
-                      isPassword: true,
+                      isPassword: cubit.isvisible,
                       onsave: (newValue) {
                         passwordcontroller.text = newValue!;
                       },
@@ -171,7 +175,7 @@ class _OTPViewState extends State<OTPView> {
                       controller: repasswordcontroller,
                       hinttext: S.of(context).repassword,
                       isEmail: true,
-                      isPassword: true,
+                      isPassword: cubit.isvisible,
                       onsave: (newValue) {
                         repasswordcontroller.text = newValue!;
                       },

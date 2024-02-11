@@ -1,10 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
+// Project imports:
 import '../../../../core/app_resources/colors.dart';
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../../../view_model/CUBIT/cubit/app_cubit.dart';
@@ -25,14 +29,15 @@ class CustomBtmsheetCard extends StatelessWidget {
         return GestureDetector(
           onTap: () async {
             // Navigator.of(context).pop();
-            cubit.seenOrnot(propertyID: model.id);
+            cubit.seenOrnot(propertyID: model.id,context: context);
             Navigator.of(context).pop();
 
             Navigator.push(
                 context,
                 PageAnimationTransition(
                     page: DetailsView(
-                      model: model ?? PropertiesModel2(),
+                      // model: model ?? PropertiesModel2(),
+                      model: model,
                     ),
                     pageAnimationType: BottomToTopTransition()));
           },
@@ -102,7 +107,12 @@ class CustomBtmsheetCard extends StatelessWidget {
                             ),
                       ),
                       MaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                           cubit.navigateToWhatsapp(
+                            model.phoneNumber == null
+                                ? '01111111111'
+                                : model.phoneNumber!);
+                        },
                         color: ColorsManager.kprimaryColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.r)),

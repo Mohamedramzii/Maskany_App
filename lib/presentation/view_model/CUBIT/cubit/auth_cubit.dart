@@ -1,21 +1,26 @@
+// Dart imports:
 import 'dart:io';
 
-import 'package:dio/dio.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:page_animation_transition/animations/left_to_right_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
+
+// Project imports:
 import 'package:maskany_app/data/models/userdata_model/user_data_model.dart';
 import 'package:maskany_app/generated/l10n.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/views/services_announce.dart';
-import 'package:page_animation_transition/animations/left_to_right_transition.dart';
-import 'package:page_animation_transition/page_animation_transition.dart';
 import '../../../../core/common_widgets/custom_snackbar.dart';
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/local/shared_pref.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
 import '../../../../data/models/login_model/login_model2/login_model2.dart';
-
 import '../../../../data/models/register_model/register_model2/register_model2.dart';
 import '../../../views/AppLayout.dart';
 
@@ -43,9 +48,12 @@ class AuthCubit extends Cubit<AuthState> {
         // CacheHelper.saveData(key: tokenKey, value: loginModel!.token);
         SnackBars.successSnackBar(
             context, S.of(context).login, loginModel!.detail);
-        Navigator.of(context).pushReplacement(PageAnimationTransition(
-            page: const AppLayout(),
-            pageAnimationType: LeftToRightTransition()));
+        Navigator.of(context)
+            .pushReplacement(PageAnimationTransition(
+                page: const AppLayout(),
+                pageAnimationType: LeftToRightTransition()))
+            //! recently added 2/10/2024
+            .then((value) => BlocProvider.of<AppCubit>(context).btmNavBar(0));
       } else {
         SnackBars.failureSnackBar(
             context, S.of(context).login, loginModel!.detail);
@@ -90,12 +98,10 @@ class AuthCubit extends Cubit<AuthState> {
             page: const ServicesAnnouncementView(),
             pageAnimationType: LeftToRightTransition()));
       } else {
-        SnackBars.failureSnackBar(
-            context, S.of(context).CreateAccount, 'تم استخدام هذا البريد الالكتروني من قبل');
-
-      
+        SnackBars.failureSnackBar(context, S.of(context).CreateAccount,
+            'تم استخدام هذا البريد الالكتروني من قبل');
       }
-      emit(RegisterSuccessState(successMessage:'تم انشاء الحساب بنجاح'));
+      emit(RegisterSuccessState(successMessage: 'تم انشاء الحساب بنجاح'));
     } on DioError catch (e) {
       if (e.response != null) {
         debugPrint('Register Error: ${e.response!.data['detail']}');
@@ -110,9 +116,12 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       var response = await DioHelper.postData(
           url: EndPoints.sendOTP, data: {"email": email});
-      // CacheHelper.saveData(key: tokenKey, value: response.data['token']);
-      debugPrint("SendOTP token: ${response.data['token']}");
-      emit(SendOTPSuccessState(successMessage: response.data['detail']));
+
+      if(response.statusCode == 200){
+        emit(SendOTPSuccessState(successMessage: response.data['detail']));
+      }else{
+        emit(SendOTPFailureState(errMessage: response.data['detail']));
+      }
       debugPrint("SendOTP Success: ${response.data['detail']}");
     } on DioError catch (e) {
       if (e.response != null) {
@@ -136,14 +145,15 @@ class AuthCubit extends Cubit<AuthState> {
           data: {'otp': otpCode, 'new_password': newPassword},
           token: 'Token $tokenHolder');
 
-      if (response.statusCode == 400) {
+      if (response.statusCode == 200) {
+        debugPrint('ChangePassword Success: ${response.data['detail']} ');
+        emit(ChangePasswordSuccessState(
+            successMessage: response.data['detail']));
+      } else if (response.statusCode == 400) {
         wrongOTP = response.data['detail'];
         isOTPwrong = true;
         emit(ChangePasswordFailureState(errMessage: response.data['detail']));
       }
-
-      debugPrint('ChangePassword Success: ${response.data['detail']} ');
-      emit(ChangePasswordSuccessState(successMessage: response.data['detail']));
     } on DioError catch (e) {
       if (e.response != null) {
         debugPrint(
@@ -169,14 +179,9 @@ class AuthCubit extends Cubit<AuthState> {
           url: EndPoints.userData, token: 'Token $tokenHolder');
 
       userdata = UserDataModel.fromJson(response.data);
-      debugPrint(userdata!.username);
+      debugPrint('Username : ${userdata!.username ?? 'Guest'}');
       emit(GetUserDataSuccessState());
     } catch (e) {
-      if (e is DioError) {
-        if (e.type == DioErrorType.connectionError) {
-          emit(GetUserDataFailureState(errMessage: e.toString()));
-        }
-      }
       emit(GetUserDataFailureState(errMessage: e.toString()));
     }
   }
@@ -263,14 +268,16 @@ class AuthCubit extends Cubit<AuthState> {
     emit(OTPMatchedSuccesState());
   }
 
-  Future<void> logout(context) async {
-    await CacheHelper.clearData(key: tokenKey);
+  logout(context) async {
+    CacheHelper.clearData(key: tokenKey);
+    debugPrint(
+        'After Logging out, token is ${CacheHelper.getData(key: tokenKey)}');
     isAllRequestsDone = false;
-    userdata = null;
-    userdata!.location = null;
+    // userdata = null;
+    // userdata!.location = null;
     BlocProvider.of<AppCubit>(context).property = [];
     BlocProvider.of<AppCubit>(context).allProperties = [];
-    BlocProvider.of<AppCubit>(context).nearestPlaces = [];
+    BlocProvider.of<AppCubit>(context).allnearestProperties = [];
     BlocProvider.of<AppCubit>(context).allfavorites = [];
     BlocProvider.of<AppCubit>(context).favoritesID = {};
     emit(UserLoggedOutSuccessState());

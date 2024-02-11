@@ -21,6 +21,19 @@ final class GetAllPropertiesSuccessState extends AppState {
 final class GetAllPropertiesLoadingState extends AppState {}
 
 final class GetAllPropertiesFailureState extends AppState {
+  // final String errMsg;z
+
+  // GetAllPropertiesFailureState(this.errMsg);
+}
+
+// final String successMsg;
+final class GetPaginatedPropertiesSuccessState extends AppState {
+  // GetAllPropertiesSuccessState(this.successMsg);
+}
+
+final class GetPaginatedPropertiesLoadingState extends AppState {}
+
+final class GetPaginatedPropertiesFailureState extends AppState {
   // final String errMsg;
 
   // GetAllPropertiesFailureState(this.errMsg);
@@ -83,6 +96,7 @@ final class DeleteFavoritesFailureState extends AppState {
 
   DeleteFavoritesFailureState(this.errMsg);
 }
+
 //! Get Favs
 final class GetNearestPlacesSuccessState extends AppState {
   // final String successMsg;
@@ -98,8 +112,8 @@ final class GetNearestPlacesFailureState extends AppState {
   GetNearestPlacesFailureState(this.errMsg);
 }
 
-
 final class GetAdsLoadingState extends AppState {}
+
 final class GetAdsSuccessState extends AppState {}
 
 final class GetAdsFailureState extends AppState {
@@ -108,18 +122,46 @@ final class GetAdsFailureState extends AppState {
   GetAdsFailureState(this.errMsg);
 }
 
+//! Get packages
+final class GetPackagesLoadingState extends AppState {}
+
+final class GetPackagesSuccessState extends AppState {}
+
+final class GetPackagesFailureState extends AppState {
+  final String errMsg;
+
+  GetPackagesFailureState(this.errMsg);
+}
+
+//! Get package Payment Info (URL)
+final class GetPayementPackagesURLLoadingState extends AppState {}
+
+final class GetPayementPackagesURLSuccessState extends AppState {}
+final class UserAlreadySubscribedInAPackageState extends AppState {}
+
+final class GetPayementPackagesURLFailureState extends AppState {
+  final String errMsg;
+
+  GetPayementPackagesURLFailureState(this.errMsg);
+}
 
 final class GetCategoriesState extends AppState {}
-final class FillListsSuccessState extends AppState {}
+
+// final class FillListsSuccessState extends AppState {}
+
 final class ToggleMapTypeSuccessState extends AppState {}
 
+final class AddOrRemoveSuccessState extends AppState {}
 
-final class AddOrRemoveSuccessState extends AppState{}
-final class AddOrRemoveFailureState extends AppState{}
+// final class AddOrRemoveFailureState extends AppState {}
 
+final class SeenOrNotSuccessState extends AppState {}
 
+final class SeenOrNotFailureState extends AppState {}
 
-final class SeenOrNotSuccessState extends AppState{}
-final class SeenOrNotFailureState extends AppState{}
-final class AdvSearchIndexChangeSuccessState extends AppState{}
-final class CheckBoxTappedSuccessState extends AppState{}
+final class AdvSearchIndexChangeSuccessState extends AppState {}
+
+final class CheckBoxTappedSuccessState extends AppState {}
+final class ConfirmTransactionSuccessState extends AppState {}
+final class ConfirmTransactionLoadingState extends AppState {}
+final class Refresh extends AppState {}

@@ -1,20 +1,25 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
-import '../../data/models/propertiesModel/properties_model2/properties_model2.dart';
-import '../view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:read_more_text/read_more_text.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
+
+// Project imports:
 import '../../core/app_resources/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../core/common_widgets/custom_buttom.dart';
-import 'widgets/HomeView_widgets/custom_rowIcons.dart';
 import '../../core/app_resources/images.dart';
+import '../../core/common_widgets/custom_buttom.dart';
+import '../../data/models/propertiesModel/properties_model2/properties_model2.dart';
 import '../../generated/l10n.dart';
+import '../view_model/CUBIT/cubit/app_cubit.dart';
+import 'widgets/HomeView_widgets/custom_rowIcons.dart';
 
 class DetailsView extends StatefulWidget {
   const DetailsView({super.key, required this.model, this.index = 0});
@@ -338,7 +343,12 @@ class _DetailsViewState extends State<DetailsView> {
                     SizedBox(
                       height: 30.h,
                     ),
-                    CustomButton(text: 'أشتري الأن', onpressed: () {}),
+                    CustomButton(text: 'أشتري الأن', onpressed: () {
+                       cubit.navigateToWhatsapp(
+                           widget.model.phoneNumber == null
+                                ? '01111111111'
+                                : widget.model.phoneNumber!);
+                    }),
                     SizedBox(
                       height: 30.h,
                     ),

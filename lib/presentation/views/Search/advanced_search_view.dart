@@ -1,14 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_animation_transition/animations/right_to_left_faded_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
+
+// Project imports:
 import 'package:maskany_app/core/app_resources/colors.dart';
 import 'package:maskany_app/core/common_widgets/custom_buttom.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/views/widgets/advanced_search_view_widgets/price_widget.dart';
-import 'package:page_animation_transition/animations/right_to_left_faded_transition.dart';
-import 'package:page_animation_transition/page_animation_transition.dart';
-
 import '../../../core/app_resources/images.dart';
 import '../../../core/common_widgets/custom_snackbar.dart';
 import '../widgets/advanced_search_view_widgets/CustomPropertyCategoryTypeWidget.dart';
@@ -69,17 +73,18 @@ class AdnvancedSearchView extends StatelessWidget {
                   children: [
                     Checkbox.adaptive(
                       activeColor: ColorsManager.kprimaryColor,
-                      value: cubit.isCheckBoxTapped,
+                      value: cubit.isCheckBox1Tapped,
                       onChanged: (value) {
                         cubit.checkBoxTapped();
-                        print(cubit.isCheckBoxTapped);
+                        print(
+                            'More details checkbox status: ${cubit.isCheckBox1Tapped}');
                       },
                     ),
                     Text('المزيد من التفاصيل')
                   ],
                 ),
                 Visibility(
-                  visible: cubit.isCheckBoxTapped,
+                  visible: cubit.isCheckBox1Tapped,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -123,7 +128,8 @@ class AdnvancedSearchView extends StatelessWidget {
                             onTap: () {
                               print('Pressed');
                               cubit.isAllRooms = true;
-                              print(cubit.isAllRooms);
+                              print(
+                                  'Is All rooms option selected : ${cubit.isAllRooms}');
                               cubit
                                   .changeNumbersIndexSelectionInAdvSearchForRooms(
                                       0);
@@ -147,74 +153,74 @@ class AdnvancedSearchView extends StatelessWidget {
                             width: 25.w,
                           ),
                           Container(
-                              height: 30.h,
-                              width: 160.w,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: ColorsManager.kprimaryColor),
-                                  borderRadius: BorderRadius.circular(7.r)),
-                              child:
-                          // Flexible(
-                          //   child: CustomTextFieldForAdvSearch(
-                          //     controller: numberOfRooms,
-                          //     hinttext: 'اكتب العدد',
-                          //     textalign: TextAlign.center,
-                          //   ),
-                          // ),
+                            height: 30.h,
+                            width: 160.w,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: ColorsManager.kprimaryColor),
+                                borderRadius: BorderRadius.circular(7.r)),
+                            child:
+                                // Flexible(
+                                //   child: CustomTextFieldForAdvSearch(
+                                //     controller: numberOfRooms,
+                                //     hinttext: 'اكتب العدد',
+                                //     textalign: TextAlign.center,
+                                //   ),
+                                // ),
 
-                          Wrap(
-                            direction: Axis.vertical,
-                            alignment: WrapAlignment.center,
-                            children: numbers.map((e) {
-                              return Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 15.w,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      cubit.isAllRooms = false;
-                                      cubit
-                                          .changeNumbersIndexSelectionInAdvSearchForRooms(
-                                              e);
-                                    },
-                                    child: Text(
-                                      e == 4 ? '$e' : e.toString(),
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(
-                                              fontWeight:
-                                                  cubit.advSearchIndexForrooms ==
-                                                          e
-                                                      ? FontWeight.bold
-                                                      : FontWeight.normal,
-                                              color:
-                                                  cubit.advSearchIndexForrooms ==
-                                                          e
-                                                      ? Colors.black
-                                                      : ColorsManager
-                                                          .kprimaryColor),
+                                Wrap(
+                              direction: Axis.vertical,
+                              alignment: WrapAlignment.center,
+                              children: numbers.map((e) {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 15.w,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 15.w,
-                                  ),
-                                  if (e != 4)
-                                    Container(
-                                      height: 17.h,
-                                      width: 1.w,
-                                      color: ColorsManager.kprimaryColor,
+                                    GestureDetector(
+                                      onTap: () {
+                                        cubit.isAllRooms = false;
+                                        cubit
+                                            .changeNumbersIndexSelectionInAdvSearchForRooms(
+                                                e);
+                                      },
+                                      child: Text(
+                                        e == 4 ? '$e' : e.toString(),
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                fontWeight:
+                                                    cubit.advSearchIndexForrooms ==
+                                                            e
+                                                        ? FontWeight.bold
+                                                        : FontWeight.normal,
+                                                color:
+                                                    cubit.advSearchIndexForrooms ==
+                                                            e
+                                                        ? Colors.black
+                                                        : ColorsManager
+                                                            .kprimaryColor),
+                                      ),
                                     ),
-                                ],
-                              );
-                            }).toList(),
-                          ),
+                                    SizedBox(
+                                      width: 15.w,
+                                    ),
+                                    if (e != 4)
+                                      Container(
+                                        height: 17.h,
+                                        width: 1.w,
+                                        color: ColorsManager.kprimaryColor,
+                                      ),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
                           )
                         ],
                       ),
@@ -336,70 +342,39 @@ class AdnvancedSearchView extends StatelessWidget {
                     text: 'بحث الأن',
                     onpressed: () {
                       print('***** ${propTypecontroller.text} ****');
-                      if (!cubit.isCheckBoxTapped) {
-                        if (propTypecontroller.text.isNotEmpty
-                            // &&
-                            // location.isNotEmpty
-                            // &&
-                            // priceStart.text.isNotEmpty &&
-                            // priceEnd.text.isNotEmpty &&
-                            // spaceStart.text.isNotEmpty &&
-                            // spaceEnd.text.isNotEmpty
-                            ) {
-                          // cubit.getAdvancedSearchedFor();
-                          cubit.getAdvancedSearchedFor1(
+
+                      if (propTypecontroller.text.isNotEmpty &&
+                          locationcontroller.text.isNotEmpty) {
+                        cubit.getAdvancedSearchedFor2(
                             propType: propTypecontroller.text,
                             propLocation: locationcontroller.text,
-                          );
+                            priceStart: int.parse(priceStart.text.trim().isEmpty
+                                ? '0'
+                                : priceStart.text.trim()),
+                            priceEnd: int.parse(priceEnd.text.trim().isEmpty
+                                ? '0'
+                                : priceEnd.text.trim()),
+                            spaceStart: int.parse(spaceStart.text.trim().isEmpty
+                                ? '0'
+                                : spaceStart.text.trim()),
+                            spaceEnd: int.parse(spaceEnd.text.trim().isEmpty
+                                ? '0'
+                                : spaceEnd.text.trim()),
+                            numberofFloor: cubit.advSearchIndexForFloor,
+                            numberofRooms: cubit.advSearchIndexForrooms);
+                      }
 
-                          if (cubit.advancedSearch.isNotEmpty) {
-                            Navigator.of(context).push(PageAnimationTransition(
-                                page: AdvancedSearchResultView(
-                                    resultSearch: cubit.advancedSearch),
-                                pageAnimationType:
-                                    RightToLeftFadedTransition()));
-                          }
-                          if (cubit.advancedSearch.isEmpty) {
-                            SnackBars.failureSnackBar(
-                                context, 'بحث متقدم', 'لا توجد نتائج لبحثك');
-                          }
-                        }
-                      } else {
-                        if (propTypecontroller.text.isNotEmpty &&
-                            // location.isNotEmpty
-                            // &&
-                            priceStart.text.isNotEmpty &&
-                            priceEnd.text.isNotEmpty &&
-                            spaceStart.text.isNotEmpty &&
-                            spaceEnd.text.isNotEmpty) {
-                          print('ROOOMS : ${cubit.advSearchIndexForrooms}');
-                          // cubit.getAdvancedSearchedFor();
-                          cubit.getAdvancedSearchedFor2(
-                              propType: propTypecontroller.text,
-                              propLocation: locationcontroller.text,
-                              priceStart: int.parse(priceStart.text.trim()),
-                              priceEnd: int.parse(priceEnd.text.trim()),
-                              spaceStart: int.parse(spaceStart.text.trim()),
-                              spaceEnd: int.parse(spaceEnd.text.trim()),
-                              numberofFloor: cubit.advSearchIndexForFloor,
-                              numberofRooms: cubit.advSearchIndexForrooms);
-                              // numberofRooms: int.parse(numberOfRooms.text.trim()));
-
-                          if (cubit.advancedSearch.isNotEmpty) {
-                            Navigator.of(context).push(PageAnimationTransition(
-                                page: AdvancedSearchResultView(
-                                    resultSearch: cubit.advancedSearch),
-                                pageAnimationType:
-                                    RightToLeftFadedTransition()));
-                          }
-                          if (cubit.advancedSearch.isEmpty) {
-                            SnackBars.failureSnackBar(
-                                context, 'بحث متقدم', 'لا توجد نتائج لبحثك');
-                          }
-                        }
+                      if (cubit.advancedSearch.isNotEmpty) {
+                        Navigator.of(context).push(PageAnimationTransition(
+                            page: AdvancedSearchResultView(
+                                resultSearch: cubit.advancedSearch),
+                            pageAnimationType: RightToLeftFadedTransition()));
+                      }
+                      if (cubit.advancedSearch.isEmpty) {
+                        SnackBars.failureSnackBar(
+                            context, 'بحث متقدم', 'لا توجد نتائج لبحثك');
                       }
                     }),
-                // if (cubit.advancedSearch.isEmpty) Text('ZEROOO')
               ],
             ),
           ),

@@ -122,4 +122,9 @@ abstract class EndPoints {
   static const updateUserData = '/auth/user/update/';
   static const map = '/properties/map/';
   static const ads = '/ads/';
+  static const nearest = '/nearbyproperties/';
+  static const packages = '/payment/packages/';
+  static const createInvoice = '/payment/createinvoice/';
+  static const confirmTrx = '/payment/confirmtxn/';
+
 }

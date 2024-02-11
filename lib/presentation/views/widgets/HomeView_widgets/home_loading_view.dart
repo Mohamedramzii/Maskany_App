@@ -1,11 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+
+// Project imports:
 import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/custom_textfield.dart';
 import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/hotizontal_shimmer.dart';
 import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/vertical_shimmer.dart';
-import 'package:responsive_framework/responsive_framework.dart';
-
 import '../../../../core/app_resources/colors.dart';
 import '../../../../generated/l10n.dart';
 import '../../../view_model/CUBIT/cubit/app_cubit.dart';

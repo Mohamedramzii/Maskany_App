@@ -1,15 +1,21 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
-// import 'package:lottie/lottie.dart';
+
+// Project imports:
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/views/widgets/favoritesView_widgets/custom_horizontal_fav_items.dart';
-
 import '../../core/app_resources/colors.dart';
 import '../../core/app_resources/images.dart';
+
+// import 'package:lottie/lottie.dart';
+
 
 class FavoriteView extends StatefulWidget {
   const FavoriteView({super.key});
@@ -60,19 +66,7 @@ class _FavoriteViewState extends State<FavoriteView> {
                     style: Theme.of(context).textTheme.displayLarge,
                     textAlign: TextAlign.center,
                   ),
-                  // Row(
-                  //   children: [
-                  //     Icon(Icons.location_on_outlined,
-                  //         color: ColorsManager.kprimaryColor),
-                  //     SizedBox(
-                  //       width: 6.w,
-                  //     ),
-                  //     Text(
-                  //       'السعودية, البارحة',
-                  //       style: Theme.of(context).textTheme.bodySmall,
-                  //     ),
-                  //   ],
-                  // ),
+                  
                   SizedBox(
                     height: 10.h,
                   ),

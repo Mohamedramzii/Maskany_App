@@ -1,11 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
-import 'package:maskany_app/presentation/views/details_view.dart';
 import 'package:page_animation_transition/animations/right_to_left_faded_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
+// Project imports:
+import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
+import 'package:maskany_app/presentation/views/details_view.dart';
 import 'widgets/HomeView_widgets/custom_vertical_container.dart';
 
 class NearestPropsView extends StatelessWidget {
@@ -18,7 +22,7 @@ class NearestPropsView extends StatelessWidget {
         padding: EdgeInsets.only(top: 50.h, left: 20.w, right: 20.w),
         child: Column(
           children: [
-            const Text('الأماكن القريبة منك'),
+            const Text('العقارات القريبة منك'),
             Expanded(
                 child: ListView.separated(
                     itemBuilder: (context, index) {
@@ -27,12 +31,12 @@ class NearestPropsView extends StatelessWidget {
                             PageAnimationTransition(
                                 page: DetailsView(
                                     model: BlocProvider.of<AppCubit>(context)
-                                        .nearestPlaces[index]),
+                                        .allnearestProperties[index]),
                                 pageAnimationType:
                                     RightToLeftFadedTransition())),
                         child: CustomVerticalContainer(
                             model: BlocProvider.of<AppCubit>(context)
-                                .nearestPlaces[index],
+                                .allnearestProperties[index],
                             index: index),
                       );
                     },
@@ -40,7 +44,7 @@ class NearestPropsView extends StatelessWidget {
                           height: 20.h,
                         ),
                     itemCount: BlocProvider.of<AppCubit>(context)
-                        .nearestPlaces
+                        .allnearestProperties
                         .length))
           ],
         ),

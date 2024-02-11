@@ -1,0 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
+
+part 'location_state.dart';
+
+class LocationCubit extends Cubit<LocationState> {
+  LocationCubit() : super(LocationInitial());
+}

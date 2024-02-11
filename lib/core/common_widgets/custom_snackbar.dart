@@ -1,5 +1,8 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 abstract class SnackBars {
   static successSnackBar(context, proccessText, successtext) {

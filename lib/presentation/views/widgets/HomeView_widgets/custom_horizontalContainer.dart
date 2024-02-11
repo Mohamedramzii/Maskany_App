@@ -1,13 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Package imports:
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
 import 'package:responsive_framework/responsive_framework.dart';
 
+// Project imports:
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
 import '../../../view_model/CUBIT/cubit/app_cubit.dart';

@@ -1,19 +1,24 @@
-import 'package:custom_map_markers/custom_map_markers.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:custom_map_markers/custom_map_markers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:maskany_app/presentation/views/nearest_props_view.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'widgets/location_mapView_widgets/custom_marker.dart';
-import 'widgets/location_mapView_widgets/custom_category_container.dart';
+
+// Project imports:
+import 'package:maskany_app/presentation/views/nearest_props_view.dart';
 import '../../core/app_resources/colors.dart';
 import '../../core/app_resources/images.dart';
 import '../view_model/CUBIT/cubit/app_cubit.dart';
 import 'widgets/location_mapView_widgets/custom_btmsheet.dart';
+import 'widgets/location_mapView_widgets/custom_category_container.dart';
+import 'widgets/location_mapView_widgets/custom_marker.dart';
 
 class LocationMapView extends StatefulWidget {
   const LocationMapView({super.key});
@@ -189,16 +194,4 @@ class _LocationMapViewState extends State<LocationMapView> {
     );
   }
 
-  // // void onMapCreated(GoogleMapController controller) {
-  // BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-
-  // void customMarker(image) {
-  //   BitmapDescriptor.fromAssetImage(
-  //           const ImageConfiguration(size: Size(10, 10)), image)
-  //       .then((icon) {
-  //     setState(() {
-  //       markerIcon = icon;
-  //     });
-  //   });
-  // }
 }

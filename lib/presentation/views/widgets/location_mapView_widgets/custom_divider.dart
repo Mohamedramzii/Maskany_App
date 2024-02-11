@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// Project imports:
 import '../../../../core/app_resources/colors.dart';
 
 class CustomDivider extends StatelessWidget {

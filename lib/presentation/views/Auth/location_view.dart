@@ -1,14 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+// Project imports:
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import '../../../core/app_resources/colors.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
-
 import '../../../core/constants.dart';
 import '../../../generated/l10n.dart';
-
 
 class LocationView extends StatelessWidget {
   LocationView(

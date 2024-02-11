@@ -1,38 +1,43 @@
-import 'package:arabic_font/arabic_font.dart';
-
-import 'package:device_preview/device_preview.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:arabic_font/arabic_font.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:maskany_app/presentation/views/pagination.dart';
-
 import 'package:permission_handler/permission_handler.dart';
-import 'core/constants.dart';
-import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
-import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
+// Project imports:
 import 'classobserve.dart';
 import 'core/app_resources/colors.dart';
+import 'core/constants.dart';
 import 'data/data_sources/local/shared_pref.dart';
 import 'data/data_sources/network/dio_helper.dart';
 import 'generated/l10n.dart';
+import 'presentation/view_model/CUBIT/cubit/app_cubit.dart';
+import 'presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'presentation/views/splash_screen_view.dart';
+
+// import 'package:maskany_app/presentation/views/pagination.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
+  
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.grey.shade100));
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
 
   isAllRequestsDone = true;
   debugPrint('Request Status From Main is: $isAllRequestsDone');
@@ -44,7 +49,8 @@ void main() async {
 
   tokenHolder = CacheHelper.getData(key: tokenKey) ?? '';
   debugPrint('USER TOKEN : ${CacheHelper.getData(key: tokenKey)}');
-
+  CacheHelper.clearData(key: 'trxBool');
+  debugPrint('Transaction Status : ${CacheHelper.getData(key: 'trxBool')}');
 }
 
 class MyApp extends StatefulWidget {
@@ -55,7 +61,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     //  SystemUiOverlayStyle(statusBarColor: Colors.white);
@@ -65,20 +70,18 @@ class _MyAppState extends State<MyApp> {
         designSize: const Size(375, 812),
         builder: (context, child) => MultiBlocProvider(
           providers: [
-            // BlocProvider(
-            //   create: (context) => InternetCubit(),
-            // ),
             BlocProvider(
-              create: (context) => AuthCubit()..getUserData()..userdata,
+              create: (context) => AuthCubit()
+                ..getUserData()
+                ..userdata,
             ),
             BlocProvider(
               create: (context) => AppCubit()
-                // ..isInternetConnectFunc()
                 ..checkLocationPermission(Permission.locationWhenInUse, context)
-                // ..getAdvancedSearchedFor()
-                // ..getCurrentLatLong()
+                ..getNearestPlaces(context)
                 ..getAllpropertiesWithPagination(context: context)
-                ..getAllPropertiesWithOutPagination(context)..getAllAds(context)
+                ..getAllPropertiesWithOutPagination(context)
+                ..getAllAds(context)
                 ..getCategories()
                 ..getAllFavorites(),
             ),

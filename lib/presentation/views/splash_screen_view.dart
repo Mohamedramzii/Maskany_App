@@ -1,17 +1,19 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+// Package imports:
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:maskany_app/presentation/views/test_view.dart';
+import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
+
+import '../../core/app_resources/images.dart';
 import '../../core/constants.dart';
 import '../../data/data_sources/local/shared_pref.dart';
 import 'AppLayout.dart';
-
-import '../../core/app_resources/images.dart';
 import 'Auth/login_view.dart';
-import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
-import 'package:page_animation_transition/page_animation_transition.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

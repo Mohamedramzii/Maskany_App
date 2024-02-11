@@ -2,6 +2,7 @@
 //
 //     final registerModel = registerModelFromJson(jsonString);
 
+// Dart imports:
 import 'dart:convert';
 
 RegisterModel registerModelFromJson(String str) => RegisterModel.fromJson(json.decode(str));

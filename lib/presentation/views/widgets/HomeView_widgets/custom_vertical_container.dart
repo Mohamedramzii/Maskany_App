@@ -1,9 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 
+// Project imports:
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
@@ -23,7 +27,7 @@ class CustomVerticalContainer extends StatelessWidget {
       child: FittedBox(
         child: Container(
           width: 350.w,
-          height: ResponsiveBreakpoints.of(context).isMobile ? 90.h : 110.h,
+          height: ResponsiveBreakpoints.of(context).isMobile ? 102.h : 110.h,
           padding: EdgeInsets.all(8.r),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r), color: Colors.white),
@@ -104,7 +108,7 @@ class CustomVerticalContainer extends StatelessWidget {
               FittedBox(
                 child: SizedBox(
                     width: 200.w,
-                    height: 150.h,
+                    height: 140.h,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(6.r),
                       child: CachedNetworkImage(

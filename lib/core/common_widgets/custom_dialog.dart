@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// Project imports:
 import '../../generated/l10n.dart';
 import '../app_resources/images.dart';
 import 'custom_buttom.dart';

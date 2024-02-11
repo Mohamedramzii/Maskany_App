@@ -1,12 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:maskany_app/presentation/views/details_view.dart';
-import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/custom_vertical_container.dart';
 import 'package:page_animation_transition/animations/right_to_left_faded_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
+// Project imports:
+import 'package:maskany_app/presentation/views/details_view.dart';
+import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/custom_vertical_container.dart';
 import '../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
-
 
 class AdvancedSearchResultView extends StatelessWidget {
   const AdvancedSearchResultView({super.key, required this.resultSearch});

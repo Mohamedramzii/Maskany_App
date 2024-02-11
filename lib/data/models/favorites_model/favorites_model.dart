@@ -2,6 +2,7 @@
 //
 //     final favoritesModel = favoritesModelFromJson(jsonString);
 
+// Dart imports:
 import 'dart:convert';
 
 FavoritesModel favoritesModelFromJson(String str) =>

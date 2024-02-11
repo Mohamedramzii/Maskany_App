@@ -1,22 +1,24 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:maskany_app/data/models/ads_model/property.dart';
+import 'package:read_more_text/read_more_text.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
+
+// Project imports:
+import 'package:maskany_app/data/models/ads_model/property.dart';
 import '../../../../core/app_resources/colors.dart';
 import '../../../../core/app_resources/images.dart';
 import '../../../../core/common_widgets/custom_buttom.dart';
 import '../../../../generated/l10n.dart';
 import '../../../view_model/CUBIT/cubit/app_cubit.dart';
-
-import 'package:read_more_text/read_more_text.dart';
-
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'custom_rowIcons.dart';
 
 class CustomAdsDetailsView extends StatelessWidget {
@@ -384,7 +386,12 @@ class CustomAdsDetailsView extends StatelessWidget {
                   SizedBox(
                     height: 30.h,
                   ),
-                  CustomButton(text: 'أشتري الأن', onpressed: () {}),
+                  CustomButton(text: 'أشتري الأن', onpressed: () {
+                     cubit.navigateToWhatsapp(
+                            model[index].phoneNumber == null
+                                ? '01111111111'
+                                : model[index].phoneNumber!);
+                  }),
                   SizedBox(
                     height: 30.h,
                   ),

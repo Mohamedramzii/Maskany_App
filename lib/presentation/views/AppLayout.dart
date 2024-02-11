@@ -1,7 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// Project imports:
 import '../../core/app_resources/colors.dart';
 import '../view_model/CUBIT/cubit/app_cubit.dart';
 
@@ -19,7 +23,7 @@ class AppLayout extends StatelessWidget {
           bottomNavigationBar: Directionality(
             textDirection: TextDirection.ltr,
             child: SizedBox(
-              height: 70.h,
+              height: 74.h,
               child: BottomNavigationBar(
                   currentIndex: cubit.currentindex,
                   onTap: (index) {

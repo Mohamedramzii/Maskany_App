@@ -2,6 +2,7 @@
 //
 //     final propertiesModel = propertiesModelFromJson(jsonString);
 
+// Dart imports:
 import 'dart:convert';
 
 List<PropertiesModel> propertiesModelFromJson(String str) => List<PropertiesModel>.from(json.decode(str).map((x) => PropertiesModel.fromJson(x)));

@@ -1,19 +1,23 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:page_animation_transition/animations/right_to_left_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
+
+// Project imports:
 import 'package:maskany_app/core/app_resources/colors.dart';
 import 'package:maskany_app/presentation/views/detailsForhorizontal.dart';
 import 'package:maskany_app/presentation/views/widgets/HomeView_widgets/home_loading_view.dart';
-import 'package:responsive_framework/responsive_breakpoints.dart';
 import '../../core/constants.dart';
-import '../view_model/CUBIT/cubit/app_cubit.dart';
-import 'package:page_animation_transition/animations/right_to_left_transition.dart';
-import 'package:page_animation_transition/page_animation_transition.dart';
-
 import '../../generated/l10n.dart';
+import '../view_model/CUBIT/cubit/app_cubit.dart';
 import '../view_model/CUBIT/cubit/auth_cubit.dart';
 import 'details_view.dart';
 import 'widgets/HomeView_widgets/custom_ads_details_view.dart';
@@ -48,10 +52,11 @@ class _HomeViewState extends State<HomeView> {
     if (isAllRequestsDone == false ||
         BlocProvider.of<AuthCubit>(context).isUserChangedHisLocation) {
       debugPrint('Token Holder: $tokenHolder');
+
       BlocProvider.of<AppCubit>(context).getAllAds(context);
       BlocProvider.of<AppCubit>(context)
           .getAllpropertiesWithPagination(context: context);
-      // BlocProvider.of<AppCubit>(context).getNearestProperties(context);
+      BlocProvider.of<AppCubit>(context).getNearestPlaces(context);
       BlocProvider.of<AppCubit>(context).getAllFavorites();
       debugPrint('In Home, All requests Status is: $isAllRequestsDone');
       isAllRequestsDone = true;
@@ -148,7 +153,7 @@ class _HomeViewState extends State<HomeView> {
                   SizedBox(
                     height: 15.h,
                   ),
-                  state is GetAllPropertiesLoadingState
+                  state is GetNearestPlacesLoadingState
                       ? SizedBox(
                           height: 250.h,
                           child: Column(
@@ -162,7 +167,7 @@ class _HomeViewState extends State<HomeView> {
                             ],
                           ),
                         )
-                      : cubit.nearestPlaces.isEmpty
+                      : cubit.allnearestProperties.isEmpty
                           ? SizedBox(
                               height: 250.h,
                               child: Center(
@@ -182,8 +187,8 @@ class _HomeViewState extends State<HomeView> {
                                                   PageAnimationTransition(
                                                       page:
                                                           DetailsViewForHorizontal(
-                                                        model:
-                                                            cubit.nearestPlaces,
+                                                        model: cubit
+                                                            .allnearestProperties,
                                                         index: index,
                                                       ),
                                                       pageAnimationType:
@@ -191,7 +196,8 @@ class _HomeViewState extends State<HomeView> {
                                             },
                                             child: CustomHorizontalCOntainer(
                                                 // favs: cubit.allfavorites[index],
-                                                model: cubit.nearestPlaces,
+                                                model:
+                                                    cubit.allnearestProperties,
                                                 index: index))
                                         .animate()
                                         .slide(
@@ -203,7 +209,7 @@ class _HomeViewState extends State<HomeView> {
                                       SizedBox(
                                         width: 20.w,
                                       ),
-                                  itemCount: cubit.nearestPlaces.length),
+                                  itemCount: cubit.allnearestProperties.length),
                             ),
                   SizedBox(
                     height: 20.h,
@@ -320,10 +326,13 @@ class _HomeViewState extends State<HomeView> {
                                     begin: Offset(2, 0),
                                     duration: Duration(milliseconds: 500));
                           } else {
-                            return Center(
-                              child: cubit.hasMore
-                                  ? const Text('اسحب للمزيد  ')
-                                  : const Text('لا توجد عقارات اخري'),
+                            return Padding(
+                              padding:  EdgeInsets.only(bottom: 8.h),
+                              child: Center(
+                                child: cubit.hasMore
+                                    ? const Text('اسحب للمزيد')
+                                    : const Text('لا توجد عقارات اخري'),
+                              ),
                             );
                           }
                         },

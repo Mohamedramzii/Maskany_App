@@ -1,10 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_animation_transition/animations/left_to_right_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
+// Project imports:
 import '../../../core/app_resources/colors.dart';
 import '../../../core/app_resources/strings.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
@@ -37,16 +41,8 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   // systemOverlayStyle:
-      //   //     const SystemUiOverlayStyle(statusBarColor: Colors.white),
-      // ),
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          // if (state is LoginSuccessState) {
-          // } else if (state is LoginFailureState) {
-           
-          // }
         },
         builder: (context, state) {
           var cubit = BlocProvider.of<AuthCubit>(context);

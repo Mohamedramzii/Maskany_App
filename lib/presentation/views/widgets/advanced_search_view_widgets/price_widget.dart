@@ -1,8 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:maskany_app/presentation/views/widgets/advanced_search_view_widgets/custom_textfiled_forAdvSearch.dart';
 
+// Project imports:
+import 'package:maskany_app/presentation/views/widgets/advanced_search_view_widgets/custom_textfiled_forAdvSearch.dart';
 import '../../../../core/app_resources/images.dart';
 
 class PriceWidget extends StatelessWidget {

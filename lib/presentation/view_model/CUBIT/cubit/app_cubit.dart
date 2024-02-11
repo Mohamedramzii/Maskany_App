@@ -1,24 +1,27 @@
 // ignore_for_file: body_might_complete_normally_catch_error, unused_local_variable
 
-import 'dart:io';
-
+// Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:maskany_app/core/serverFailure.dart';
+// Project imports:
+
 import 'package:maskany_app/data/data_sources/local/shared_pref.dart';
 import 'package:maskany_app/data/models/ads_model/property.dart';
 import 'package:maskany_app/data/models/categories_model/categories_model.dart';
-import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
+import 'package:maskany_app/data/models/packages_model/packages_model.dart';
+import 'package:maskany_app/data/models/payment_model/payment_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../../core/constants.dart';
 import '../../../../data/data_sources/network/dio_helper.dart';
-import '../../../../data/models/ads_model/ads_model.dart';
 import '../../../../data/models/propertiesModel/properties_model2/properties_model2.dart';
+import '../../../views/WebView_view.dart';
 import '../../../views/favorite_view.dart';
 import '../../../views/home_view.dart';
 import '../../../views/location_map_view.dart';
@@ -74,9 +77,9 @@ class AppCubit extends Cubit<AppState> {
       screen[1];
       emit(NavBarIndexChangedSuccess());
     }
-    if (index == 2) {
+    if (index == 3) {
       // getAllproperties();
-      // screen[2];
+      screen[3];
       // emit(NavBarIndexChangedSuccess());
     }
     emit(NavBarIndexChangedSuccess());
@@ -115,7 +118,6 @@ class AppCubit extends Cubit<AppState> {
     getCurrentLatLong();
   }
 
-
   //! Getting Current location using lat long
   Future<void> getCurrentLatLong() async {
     //! getCurrentPosition() gets latlong
@@ -140,7 +142,8 @@ class AppCubit extends Cubit<AppState> {
   List<CategoriesModel> allcategories = [];
   List<CategoriesModel> allcategoriesForAdvSearch = [];
   getCategories() {
-    DioHelper.getData(url: EndPoints.categories, token: 'Token $tokenHolder').then((value) {
+    DioHelper.getData(url: EndPoints.categories, token: 'Token $tokenHolder')
+        .then((value) {
       for (var category in value.data) {
         allcategories.add(CategoriesModel.fromJson(category));
         allcategoriesForAdvSearch.add(CategoriesModel.fromJson(category));
@@ -152,7 +155,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<PropertiesModel2> property = [];
-  List<PropertiesModel2> nearestPlaces = [];
+  // List<PropertiesModel2> nearestPlaces = [];
   int limit = 2;
   int page = 1;
   bool hasMore = true;
@@ -160,14 +163,14 @@ class AppCubit extends Cubit<AppState> {
   getAllpropertiesWithPagination({required context}) async {
     // isInternetConnectFunc();
     CacheHelper.getData(key: tokenKey);
-    nearestPlaces = [];
-    emit(GetAllPropertiesLoadingState());
-    if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
-      await BlocProvider.of<AuthCubit>(context).getUserData();
-      print('From getAllProps | getUserData');
-    }
-    var location = BlocProvider.of<AuthCubit>(context).userdata!.location;
-    print('User Location From GetAllProps Method is: $location');
+    // nearestPlaces = [];
+    emit(GetPaginatedPropertiesLoadingState());
+    // if (BlocProvider.of<AuthCubit>(context).userdata?.location == null) {
+    // await BlocProvider.of<AuthCubit>(context).getUserData();
+    //   print('From getAllProps | getUserData');
+    // }
+    // var location = BlocProvider.of<AuthCubit>(context).userdata!.location;
+    // print('User Location From GetAllProps Method is: $location');
     try {
       Response response = await DioHelper.getData(
         url: 'http://66.45.248.247:8000/properties/?objects=$limit&page=$page',
@@ -187,30 +190,43 @@ class AppCubit extends Cubit<AppState> {
         // nearestPlaces=[];
         if (newItems.length < limit) {
           hasMore = false;
-          print(hasMore);
+          debugPrint(hasMore.toString());
         }
         property.addAll(newItems);
-      }
-      nearestPlaces =
-          property.where((element) => element.city == location).toList();
+        debugPrint('######### ${property.length} ###############');
+        // debugPrint('######### ${nearestPlaces.length} ###############');
 
-      debugPrint('######### ${property.length} ###############');
-      debugPrint('######### ${nearestPlaces.length} ###############');
-
-      debugPrint('Get All properties Success');
-      emit(GetAllPropertiesSuccessState());
-    } catch (e) {
-      if (e is DioError) {
-        if (e.type == DioErrorType.connectionError) {
-          emit(GetAllPropertiesFailureState());
-        }
+        debugPrint('Get Paginated properties Success');
+        emit(GetPaginatedPropertiesSuccessState());
       } else {
-        // Handle other exceptions
-        // getAllpropertiesWithPagination(context: context);//!
-        // Display an appropriate error message to the user
+        hasMore = false;
+        emit(GetPaginatedPropertiesSuccessState());
       }
-      debugPrint('Get All properties Failed -- ${e.toString()}');
-      emit(GetAllPropertiesFailureState());
+      // nearestPlaces =
+      //     property.where((element) => element.city == location).toList();
+    } catch (e) {
+      debugPrint('Get Paginated properties Failed -- ${e.toString()}');
+      getAllpropertiesWithPagination(context: context);
+      emit(GetPaginatedPropertiesFailureState());
+    }
+  }
+
+  List<PropertiesModel2> allnearestProperties = [];
+
+  getNearestPlaces(BuildContext context) async {
+    allnearestProperties = [];
+    emit(GetNearestPlacesLoadingState());
+    try {
+      Response response = await DioHelper.getData(
+          url: EndPoints.nearest, token: 'Token $tokenHolder');
+
+      for (var item in response.data) {
+        allnearestProperties.add(PropertiesModel2.fromJson(item));
+      }
+      debugPrint('All Nearest Properties: ${allnearestProperties.length}');
+      emit(GetNearestPlacesSuccessState());
+    } catch (e) {
+      emit(GetNearestPlacesFailureState(e.toString()));
     }
   }
 
@@ -220,9 +236,9 @@ class AppCubit extends Cubit<AppState> {
     // isInternetConnectFunc();
     CacheHelper.getData(key: tokenKey);
     allProperties = [];
-    emit(GetNearestPlacesLoadingState());
+    emit(GetAllPropertiesLoadingState());
 
-    print('User Location From GetAllProps Method is: $location');
+    // print('User Location From GetAllProps Method is: $location');
     try {
       Response response = await DioHelper.getData(
           url: EndPoints.map, token: 'Token $tokenHolder');
@@ -231,20 +247,14 @@ class AppCubit extends Cubit<AppState> {
         allProperties.add(PropertiesModel2.fromJson(item));
       }
 
-      debugPrint('######### ALL Props without pagination ${allProperties.length} ###############');
+      debugPrint(
+          '######### ALL Props without pagination ${allProperties.length} ###############');
 
       debugPrint('Get All properties Success');
-      emit(GetNearestPlacesSuccessState());
+      emit(GetAllPropertiesSuccessState());
     } catch (e) {
-      if (e is DioError) {
-        return ServerFailure.fromDioError(e);
-      } else {
-        // Handle other exceptions
-        // getAllPropertiesWithOutPagination(context);//!
-        // Display an appropriate error message to the user
-      }
       debugPrint('Get All properties Failed -- ${e.toString()}');
-      emit(GetNearestPlacesFailureState(e.toString()));
+      emit(GetAllPropertiesFailureState());
     }
   }
 
@@ -259,8 +269,7 @@ class AppCubit extends Cubit<AppState> {
 
     try {
       Response response = await DioHelper.getData(
-        url: EndPoints.ads,token: 'Token $tokenHolder'
-      );
+          url: EndPoints.ads, token: 'Token $tokenHolder');
       for (var item in response.data) {
         ads.add(Property.fromJson(item['property']));
       }
@@ -268,9 +277,6 @@ class AppCubit extends Cubit<AppState> {
       debugPrint('Get All ads Success ${ads.length} , ${ads[0].title}');
       emit(GetAdsSuccessState());
     } catch (e) {
-      if (e is DioError) {
-        return ServerFailure.fromDioError(e);
-      } else {}
       debugPrint('Get All ads Failed -- ${e.toString()}');
       emit(GetAdsFailureState(e.toString()));
     }
@@ -307,18 +313,20 @@ class AppCubit extends Cubit<AppState> {
   int advSearchIndexForrooms = 1;
   changeNumbersIndexSelectionInAdvSearchForRooms(index) {
     advSearchIndexForrooms = index;
+    debugPrint('Number of rooms: $advSearchIndexForrooms');
     emit(AdvSearchIndexChangeSuccessState());
   }
 
   int advSearchIndexForFloor = 1;
   changeNumbersIndexSelectionInAdvSearchForFloor(index) {
     advSearchIndexForFloor = index;
+    debugPrint('Number of floor: $advSearchIndexForFloor');
     emit(AdvSearchIndexChangeSuccessState());
   }
 
-  bool isCheckBoxTapped = false;
+  bool isCheckBox1Tapped = false;
   checkBoxTapped() {
-    isCheckBoxTapped = !isCheckBoxTapped;
+    isCheckBox1Tapped = !isCheckBox1Tapped;
     emit(CheckBoxTappedSuccessState());
   }
 
@@ -327,73 +335,73 @@ class AppCubit extends Cubit<AppState> {
   bool isAllRooms = false;
   bool isAnotherFloor = false;
 
-  List<PropertiesModel2> advancedSearch = [];
   // String emptyValue = '';
-  getAdvancedSearchedFor1({
-    required String propType,
-    required String propLocation,
-    // required int priceStart,
-    // required int priceEnd,
-    // required int spaceStart,
-    // required int spaceEnd,
-    // int? numberofRooms,
-    // int? numberofFloor,
-  }) {
-    //! Gonna make try catch
-    print(propType);
-    print(propLocation);
-    // print(priceStart);
-    // print(priceEnd);
-    // print(spaceStart);
-    // print(spaceEnd);
-    // print(numberofRooms);
-    // print(numberofFloor);
-    try {
-      advancedSearch = allProperties
-          .where((item) =>
-                  // (item.category!.name == propType.toString()) &&
-                  // ((item.price! >= priceStart && item.price! <= priceEnd) &&
-                  //     (item.space! >= spaceStart && item.price! <= spaceEnd) ||
-                  //     (isAllRooms == true
-                  //         ? item.rooms! > 0
-                  //         : item.rooms == numberofRooms && isAnotherFloor == true
-                  //             ? item.floor! > 4
-                  //             : item.floor == numberofFloor)))
+  // getAdvancedSearchedFor1({
+  //   required String propType,
+  //   required String propLocation,
+  //   // required int priceStart,
+  //   // required int priceEnd,
+  //   // required int spaceStart,
+  //   // required int spaceEnd,
+  //   // int? numberofRooms,
+  //   // int? numberofFloor,
+  // }) {
+  //   //! Gonna make try catch
+  //   print(propType);
+  //   print(propLocation);
+  //   // print(priceStart);
+  //   // print(priceEnd);
+  //   // print(spaceStart);
+  //   // print(spaceEnd);
+  //   // print(numberofRooms);
+  //   // print(numberofFloor);
+  //   try {
+  //     advancedSearch = allProperties
+  //         .where((item) =>
+  //                 // (item.category!.name == propType.toString()) &&
+  //                 // ((item.price! >= priceStart && item.price! <= priceEnd) &&
+  //                 //     (item.space! >= spaceStart && item.price! <= spaceEnd) ||
+  //                 //     (isAllRooms == true
+  //                 //         ? item.rooms! > 0
+  //                 //         : item.rooms == numberofRooms && isAnotherFloor == true
+  //                 //             ? item.floor! > 4
+  //                 //             : item.floor == numberofFloor)))
 
-                  (item.category!.name == propType && item.city == propLocation)
-              // &&
-              // ((item.price! >= priceStart && item.price! <= priceEnd) &&
-              //     (item.space! >= spaceStart && item.space! <= spaceEnd) &&
-              //     ((isAllRooms == true)
-              //         ? item.rooms! > 0
-              //         : item.rooms == numberofRooms && isAnotherFloor == true
-              //             ? item.floor! > 4
-              //             : item.floor == numberofFloor))
-              )
+  //                 (item.category!.name == propType && item.city == propLocation)
+  //             // &&
+  //             // ((item.price! >= priceStart && item.price! <= priceEnd) &&
+  //             //     (item.space! >= spaceStart && item.space! <= spaceEnd) &&
+  //             //     ((isAllRooms == true)
+  //             //         ? item.rooms! > 0
+  //             //         : item.rooms == numberofRooms && isAnotherFloor == true
+  //             //             ? item.floor! > 4
+  //             //             : item.floor == numberofFloor))
+  //             )
 
-          // (item.category!.name == 'شقق للبيع'
-          // // &&
-          // //     item.city == 'دمياط الجديدة'
-          // ) &&
-          // ((item.price! >= 0 && item.price! <= 250000) &&
-          //     (item.space! >= 100 && item.space! <= 250) &&
-          //     (isAllRooms
-          //         ? item.rooms! > 0
-          //         : item.rooms == 2 && isAnotherFloor == true
-          //             ? item.floor! > 4
-          //             : item.floor == 2)))
-          .toList();
-    } catch (e) {
-      print(e.toString());
-    }
-    debugPrint('Advanced Search Length : ${advancedSearch.length}');
-    if (advancedSearch.isNotEmpty) {
-      debugPrint('Advanced Search Item is : ${advancedSearch[0].title}');
-    }
-    // search=[];
-    emit(GetSearchSuccessState());
-  }
+  //         // (item.category!.name == 'شقق للبيع'
+  //         // // &&
+  //         // //     item.city == 'دمياط الجديدة'
+  //         // ) &&
+  //         // ((item.price! >= 0 && item.price! <= 250000) &&
+  //         //     (item.space! >= 100 && item.space! <= 250) &&
+  //         //     (isAllRooms
+  //         //         ? item.rooms! > 0
+  //         //         : item.rooms == 2 && isAnotherFloor == true
+  //         //             ? item.floor! > 4
+  //         //             : item.floor == 2)))
+  //         .toList();
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  //   debugPrint('Advanced Search Length : ${advancedSearch.length}');
+  //   if (advancedSearch.isNotEmpty) {
+  //     debugPrint('Advanced Search Item is : ${advancedSearch[0].title}');
+  //   }
+  //   // search=[];
+  //   emit(GetSearchSuccessState());
+  // }
 
+  List<PropertiesModel2> advancedSearch = [];
   getAdvancedSearchedFor2({
     required String propType,
     required String propLocation,
@@ -405,46 +413,32 @@ class AppCubit extends Cubit<AppState> {
     int? numberofFloor,
   }) {
     //! Gonna make try catch
-    print(propType);
-    print(priceStart);
-    print(priceEnd);
-    print(spaceStart);
-    print(spaceEnd);
-    print(numberofRooms);
-    print(numberofFloor);
+    print('Property type: $propType');
+    print('start price : $priceStart');
+    print('End price : $priceEnd');
+    print('Start Space : $spaceStart');
+    print('End Space : $spaceEnd');
+    print('Number of Rooms : $numberofRooms');
+    print('Number of Floor : $numberofFloor');
+
     try {
       advancedSearch = allProperties
           .where((item) =>
-              // (item.category!.name == propType.toString()) &&
-              // ((item.price! >= priceStart && item.price! <= priceEnd) &&
-              //     (item.space! >= spaceStart && item.price! <= spaceEnd) ||
-              //     (isAllRooms == true
-              //         ? item.rooms! > 0
-              //         : item.rooms == numberofRooms && isAnotherFloor == true
-              //             ? item.floor! > 4
-              //             : item.floor == numberofFloor)))
-
               (item.category!.name == propType && item.city == propLocation) &&
-              ((item.price! >= priceStart && item.price! <= priceEnd) &&
-                  (item.space! >= spaceStart && item.space! <= spaceEnd) &&
+              ((priceStart == 0 && priceEnd == 0
+                      ? item.price! >= 0
+                      : (item.price! >= priceStart &&
+                          item.price! <= priceEnd)) &&
+                  (spaceStart == 0 && spaceEnd == 0
+                      ? item.space! > 0
+                      : (item.space! >= spaceStart &&
+                          item.space! <= spaceEnd)) &&
                   (((isAllRooms == true)
-                          ? item.rooms! > 0
+                          ? item.rooms! >= 0
                           : item.rooms == numberofRooms) &&
                       (isAnotherFloor == true
-                          ? item.floor! > 4
+                          ? item.floor! >= 0
                           : item.floor == numberofFloor))))
-
-          // (item.category!.name == 'شقق للبيع'
-          // // &&
-          // //     item.city == 'دمياط الجديدة'
-          // ) &&
-          // ((item.price! >= 0 && item.price! <= 250000) &&
-          //     (item.space! >= 100 && item.space! <= 250) &&
-          //     (isAllRooms
-          //         ? item.rooms! > 0
-          //         : item.rooms == 2 && isAnotherFloor == true
-          //             ? item.floor! > 4
-          //             : item.floor == 2)))
           .toList();
     } catch (e) {
       print(e.toString());
@@ -461,7 +455,7 @@ class AppCubit extends Cubit<AppState> {
   Set<int> favoritesID = {};
   getAllFavorites() async {
     CacheHelper.getData(key: tokenKey);
-
+    allfavorites = [];
     allfavorites.clear();
     favoritesID.clear();
     emit(GetFavoritesLoadingState());
@@ -527,25 +521,9 @@ class AppCubit extends Cubit<AppState> {
       }
       emit(DeleteFavoritesSuccessState());
     } catch (e) {
-      if (e is DioError) {
-        if (e.error is SocketException && e.error == 113) {
-          // Handle "No route to host" error
-          print(
-              '*-*-*-*-*-*-*-No route to host error occurred*-*-*-*-*-*-*-*-');
-          // Display an appropriate error message to the user
-        } else {
-          // Handle other Dio errors
-          print('Dio error occurred: ${e.error}');
-          // Display an appropriate error message to the user
-        }
-      } else {
-        // Handle other exceptions
-        print('Exception occurred: $e');
-        // Display an appropriate error message to the user
-      }
       emit(DeleteFavoritesFailureState(e.toString()));
     }
-    //  await getAllFavorites();
+    await getAllFavorites();
   }
 
   deleteFromFavortiteView({
@@ -564,29 +542,13 @@ class AppCubit extends Cubit<AppState> {
       // }
       emit(DeleteFavoritesSuccessState());
     } catch (e) {
-      if (e is DioError) {
-        if (e.error is SocketException && e.error == 113) {
-          // Handle "No route to host" error
-          print(
-              '*-*-*-*-*-*-*-No route to host error occurred*-*-*-*-*-*-*-*-');
-          // Display an appropriate error message to the user
-        } else {
-          // Handle other Dio errors
-          print('Dio error occurred: ${e.error}');
-          // Display an appropriate error message to the user
-        }
-      } else {
-        // Handle other exceptions
-        print('Exception occurred: $e');
-        // Display an appropriate error message to the user
-      }
       emit(DeleteFavoritesFailureState(e.toString()));
     }
     await getAllFavorites();
   }
 
   bool isNavigatetoDetailsFromMap = false;
-  seenOrnot({required propertyID}) async {
+  seenOrnot({required propertyID, required BuildContext context}) async {
     Response response = await DioHelper.postData(
         url: EndPoints.seen,
         data: {'property_id': propertyID},
@@ -596,12 +558,103 @@ class AppCubit extends Cubit<AppState> {
     isNavigatetoDetailsFromMap = true;
     print(isNavigatetoDetailsFromMap);
     if (response.statusCode == 200) {
-      // await getAllproperties(context: context);
+      await getAllPropertiesWithOutPagination(context);
       // filterCategories(0);
+      emit(SeenOrNotSuccessState());
     }
-
-    emit(SeenOrNotSuccessState());
   }
+
+  List<PackagesModel> packages = [];
+  getPackages() async {
+    CacheHelper.clearData(key: 'trxBool');
+    // print(status);
+    print(CacheHelper.clearData(key: 'trxBool'));
+    packages = [];
+    emit(GetPackagesLoadingState());
+
+    try {
+      Response response = await DioHelper.getData(
+          url: EndPoints.packages, token: 'Token $tokenHolder');
+
+      for (var item in response.data) {
+        packages.add(PackagesModel.fromJson(item));
+      }
+      debugPrint(packages.length.toString());
+      emit(GetPackagesSuccessState());
+    } catch (e) {
+      debugPrint(e.toString());
+      emit(GetPackagesFailureState(e.toString()));
+    }
+  }
+
+  PaymentModel? packagePaymentInfo;
+  String? TrxidFromURL;
+  String? TrxURL;
+  String? isTrxConfirmed;
+  // String originalButtonText = 'اشترك';
+  List<int> packagesTemp = [];
+  getPackagePaymentURL(
+      {required packageID, required BuildContext context}) async {
+    packagesTemp = [];
+    emit(GetPayementPackagesURLLoadingState());
+
+    try {
+      Response response = await DioHelper.postData(
+          url: EndPoints.createInvoice,
+          data: {'package_id': packageID},
+          token: 'Token $tokenHolder');
+
+      if (response.statusCode == 200) {
+        packagePaymentInfo = await PaymentModel.fromJson(response.data);
+        packagesTemp.add(packageID);
+        debugPrint('Temp Packages length: ${packagesTemp.length}');
+        emit(GetPayementPackagesURLSuccessState());
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => WebView(
+                  url: packagePaymentInfo!.url!,
+                  packageID: packageID,
+                )));
+      } else {
+        emit(UserAlreadySubscribedInAPackageState());
+      }
+    } catch (e) {
+      emit(GetPayementPackagesURLFailureState(e.toString()));
+      print(e.toString());
+    }
+  }
+
+  bool isConfirmed = false;
+  confirmTransaction(
+      {required packageID,
+      required transactionID,
+      required subscriptionID,
+      required BuildContext context}) async {
+    emit(ConfirmTransactionLoadingState());
+    Response response = await DioHelper.postData(
+        url: EndPoints.confirmTrx,
+        data: {
+          'package_id': packageID,
+          'txn_id': transactionID,
+          'subscription_id': subscriptionID
+        },
+        token: 'Token $tokenHolder');
+    debugPrint('Transaction id : $transactionID');
+    if (response.statusCode == 200) {
+      debugPrint('Transaction Payment is Done');
+      // confirmedPackages.add(packageID);
+      // isConfirmed = true;
+      emit(ConfirmTransactionSuccessState());
+
+      // getPackages();
+    } else if (response.statusCode == 400) {
+      debugPrint(
+          'Transaction Payment isnot Done because ${response.data['message']}');
+    }
+  }
+
+  // refresh() {
+  //   emit(Refresh());
+  // }
 
   Future<void> navigateToGoogleMaps(String link) async {
     final url = link;
@@ -615,9 +668,15 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  // bool isInternetConnected = true;
-
-  // Future<bool> isInternetConnectFunc() async {
-  //   return await InternetConnectionChecker().hasConnection;
-  // }
+  Future<void> navigateToWhatsapp(String phone_number) async {
+    var whatsappUrl = "https://wa.me/phone=2$phone_number";
+    if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
+      await launchUrl(
+        Uri.parse(whatsappUrl),
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      throw 'Could not launch $whatsappUrl';
+    }
+  }
 }

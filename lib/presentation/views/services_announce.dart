@@ -1,14 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../core/app_resources/colors.dart';
-import '../../core/common_widgets/custom_buttom.dart';
-import '../../generated/l10n.dart';
-import 'AppLayout.dart';
-import 'widgets/servicesView_widgets/custom_container.dart';
 import 'package:page_animation_transition/animations/bottom_to_top_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 
+// Project imports:
+import '../../core/app_resources/colors.dart';
+import '../../core/common_widgets/custom_buttom.dart';
 import '../../data/models/services_model/services_model.dart';
+import '../../generated/l10n.dart';
+import 'AppLayout.dart';
+import 'widgets/servicesView_widgets/custom_container.dart';
 
 class ServicesAnnouncementView extends StatelessWidget {
   const ServicesAnnouncementView({super.key});

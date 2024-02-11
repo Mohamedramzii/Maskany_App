@@ -2,6 +2,7 @@
 //
 //     final propertiesModel3 = propertiesModel3FromJson(jsonString);
 
+// Dart imports:
 import 'dart:convert';
 
 PropertiesModel3 propertiesModel3FromJson(String str) =>

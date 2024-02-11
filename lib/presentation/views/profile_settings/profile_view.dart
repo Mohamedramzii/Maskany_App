@@ -1,11 +1,13 @@
+// Flutter imports:
+// Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+// Project imports:
 import 'package:maskany_app/core/app_resources/colors.dart';
-import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:maskany_app/presentation/views/Auth/login_view.dart';
 import 'package:maskany_app/presentation/views/packages_view.dart';
@@ -15,7 +17,6 @@ import 'package:page_animation_transition/animations/right_to_left_transition.da
 import 'package:page_animation_transition/page_animation_transition.dart';
 
 import '../../../core/app_resources/images.dart';
-import '../../../core/constants.dart';
 import 'global_settings_view.dart';
 import 'profile_settings_view.dart';
 
@@ -165,38 +166,37 @@ class ProfileView extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
+                      // ListTile(
+                      //   onTap: () {},
+                      //   leading: const Icon(Icons.add_card),
+                      //   title: Text(
+                      //     'طرق الدفع',
+                      //     style: Theme.of(context).textTheme.bodyMedium,
+                      //   ),
+                      //   trailing: SizedBox(
+                      //     width: 155.w,
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.end,
+                      //       children: [
+                      //         SvgPicture.asset(Images.visa),
+                      //         SizedBox(
+                      //           width: 10.w,
+                      //         ),
+                      //         Image.asset(
+                      //           'assets/images/pngegg.png',
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       ListTile(
-                        onTap: () {},
-                        leading: const Icon(Icons.add_card),
-                        title: Text(
-                          'طرق الدفع',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        trailing: SizedBox(
-                          width: 155.w,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SvgPicture.asset(Images.visa),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Image.asset(
-                                'assets/images/pngegg.png',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushReplacement(PageAnimationTransition(
-                                  page: const LoginView(),
-                                  pageAnimationType: BottomToTopTransition()))
-                              .then((value) => cubit.logout(context));
-                          print(tokenHolder);
-                          BlocProvider.of<AppCubit>(context).btmNavBar(0);
+                        onTap: () async {
+                          await cubit.logout(context).then((value) =>
+                              Navigator.of(context).pushReplacement(
+                                  PageAnimationTransition(
+                                      page: const LoginView(),
+                                      pageAnimationType:
+                                          BottomToTopTransition())));
                         },
                         leading: const Icon(
                           Icons.logout,

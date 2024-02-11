@@ -1,3 +1,7 @@
+## Note
+This app is still under development and other screens will be uploaded soon !
+
+
 # Maskany App - مسكني  ~ Freelance
 
 An application for publishing real-estate announcements, searching for real estate
@@ -93,6 +97,8 @@ backend developer, and a graphic designer.
 
 
 
+# Note
+This app is still under development and other screens will be uploaded soon !
   
 
 

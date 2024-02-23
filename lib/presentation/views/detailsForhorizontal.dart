@@ -387,7 +387,7 @@ class DetailsViewForHorizontal extends StatelessWidget {
                     height: 30.h,
                   ),
                   CustomButton(
-                      text: 'أشتري الأن',
+                      text: 'تواصل مع المالك',
                       onpressed: () {
                         cubit.navigateToWhatsapp(
                             model[index].phoneNumber == null

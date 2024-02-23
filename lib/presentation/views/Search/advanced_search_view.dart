@@ -341,8 +341,6 @@ class AdnvancedSearchView extends StatelessWidget {
                 CustomButton(
                     text: 'بحث الأن',
                     onpressed: () {
-                      print('***** ${propTypecontroller.text} ****');
-
                       if (propTypecontroller.text.isNotEmpty &&
                           locationcontroller.text.isNotEmpty) {
                         cubit.getAdvancedSearchedFor2(
@@ -370,7 +368,9 @@ class AdnvancedSearchView extends StatelessWidget {
                                 resultSearch: cubit.advancedSearch),
                             pageAnimationType: RightToLeftFadedTransition()));
                       }
-                      if (cubit.advancedSearch.isEmpty) {
+                      if (cubit.advancedSearch.isEmpty &&
+                          propTypecontroller.text.isNotEmpty &&
+                          locationcontroller.text.isNotEmpty) {
                         SnackBars.failureSnackBar(
                             context, 'بحث متقدم', 'لا توجد نتائج لبحثك');
                       }

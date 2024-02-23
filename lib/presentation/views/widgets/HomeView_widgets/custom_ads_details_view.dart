@@ -386,7 +386,7 @@ class CustomAdsDetailsView extends StatelessWidget {
                   SizedBox(
                     height: 30.h,
                   ),
-                  CustomButton(text: 'أشتري الأن', onpressed: () {
+                  CustomButton(text: 'تواصل مع المالك', onpressed: () {
                      cubit.navigateToWhatsapp(
                             model[index].phoneNumber == null
                                 ? '01111111111'

@@ -14,6 +14,7 @@ import '../../../core/app_resources/images.dart';
 import '../../../core/common_widgets/custom_OTP.dart';
 import '../../../core/common_widgets/custom_dialog.dart';
 import '../../../core/common_widgets/custom_snackbar.dart';
+import '../../../generated/l10n.dart';
 
 class GlobalSettingsView extends StatelessWidget {
   const GlobalSettingsView({super.key});
@@ -36,13 +37,38 @@ class GlobalSettingsView extends StatelessWidget {
         centerTitle: true,
       ),
       body: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
+          if (state is SendOTPSuccessState) {
+            SnackBars.successSnackBar(
+                context, S.of(context).verificationcode, state.successMessage);
+            emailController.clear();
+            await InsertOTPDialog(context, state)
+                .then((value) => Navigator.of(context).pop());
+
+            // Navigator.of(context).pop();
+          } else if (state is SendOTPFailureState) {
+            SnackBars.failureSnackBar(
+                context, S.of(context).verificationcode, state.errMessage);
+          }
           if (state is ChangePasswordSuccessState) {
+            pin1.clear();
+            pin2.clear();
+            pin3.clear();
+            pin4.clear();
+            passwordcontroller.clear();
             Dialogs.successDialog(
               context,
               'أبدأ الان',
-              () => Navigator.of(context).pop(),
+              () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
             );
+
+            // Navigator.of(context).pop();
+          } else if (state is ChangePasswordFailureState) {
+            SnackBars.failureSnackBar(
+                context, S.of(context).changePassword, state.errMessage);
           }
         },
         builder: (context, state) => Padding(
@@ -119,7 +145,7 @@ class GlobalSettingsView extends StatelessWidget {
     return showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.6),
-      builder: (context) {
+      builder: (InserEmailDialogcontext) {
         return Dialog(
           backgroundColor: Colors.white,
           shape:
@@ -213,9 +239,8 @@ class GlobalSettingsView extends StatelessWidget {
                       if (emailController.text.isNotEmpty) {
                         BlocProvider.of<AuthCubit>(context)
                             .sendOTP(email: emailController.text.trim());
-                        Navigator.of(context).pop();
-                        emailController.clear();
-                        InsertOTPDialog(context, state);
+                        // emailController.clear();
+                        // Navigator.of(InserEmailDialogcontext).pop();
                       }
                     }),
                 SizedBox(height: 18.0.h),
@@ -272,11 +297,7 @@ class GlobalSettingsView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 12.0.h),
-                // Text(
-                //   'أدخل الرمز',
-                //   style: Theme.of(context).textTheme.bodySmall,
-                // ),
-                // SizedBox(height: 12.0.h),
+
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: Row(
@@ -389,31 +410,31 @@ class GlobalSettingsView extends StatelessWidget {
                           pin3.text.isNotEmpty &&
                           pin4.text.isNotEmpty &&
                           passwordcontroller.text.isNotEmpty) {
-                        if (!BlocProvider.of<AuthCubit>(context).isOTPwrong) {
-                          BlocProvider.of<AuthCubit>(context).changePassword(
-                              otpCode:
-                                  pin1.text + pin2.text + pin3.text + pin4.text,
-                              newPassword: passwordcontroller.text.trim());
-                        } else {
-                          // Navigator.of(context).pop();
-                          SnackBars.failureSnackBar(
-                              context,
-                              'تغيير الرقم السري',
-                              'لقد قمت بأدخال كود تفعيل خاطئ');
-                          pin1.clear();
-                          pin2.clear();
-                          pin3.clear();
-                          pin4.clear();
-                          passwordcontroller.clear();
-                        }
+                        // if (!BlocProvider.of<AuthCubit>(context).isOTPwrong) {
+                        BlocProvider.of<AuthCubit>(context).changePassword(
+                            otpCode:
+                                pin1.text + pin2.text + pin3.text + pin4.text,
+                            newPassword: passwordcontroller.text.trim());
+                        // } else {
+                        // Navigator.of(context).pop();
+                        // SnackBars.failureSnackBar(
+                        //     context,
+                        //     'تغيير الرقم السري',
+                        //     'لقد قمت بأدخال كود تفعيل خاطئ');
+                        // pin1.clear();
+                        // pin2.clear();
+                        // pin3.clear();
+                        // pin4.clear();
+                        // passwordcontroller.clear();
+                        // }
                       }
 
-                      Navigator.of(context).pop();
-                      pin1.clear();
-                      pin2.clear();
-                      pin3.clear();
-                      pin4.clear();
-                      passwordcontroller.clear();
+                      // Navigator.of(context).pop();
+                      // pin1.clear();
+                      // pin2.clear();
+                      // pin3.clear();
+                      // pin4.clear();
+                      // passwordcontroller.clear();
                     }),
                 SizedBox(height: 18.0.h),
               ],

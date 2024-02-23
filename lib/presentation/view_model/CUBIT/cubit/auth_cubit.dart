@@ -109,7 +109,7 @@ class AuthCubit extends Cubit<AuthState> {
       }
     }
   }
-
+String? otpToken;
   sendOTP({required email}) async {
     emit(SendOTPLoadingState());
 
@@ -118,6 +118,8 @@ class AuthCubit extends Cubit<AuthState> {
           url: EndPoints.sendOTP, data: {"email": email});
 
       if(response.statusCode == 200){
+        otpToken=response.data['token'];
+        debugPrint('OTP Token: $otpToken');
         emit(SendOTPSuccessState(successMessage: response.data['detail']));
       }else{
         emit(SendOTPFailureState(errMessage: response.data['detail']));
@@ -140,10 +142,11 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ChangePasswordLoadingState());
 
     try {
+      debugPrint('OTP sent is : $otpCode ');
       Response response = await DioHelper.postData(
           url: EndPoints.changePassword,
           data: {'otp': otpCode, 'new_password': newPassword},
-          token: 'Token $tokenHolder');
+          token: 'Token $otpToken');
 
       if (response.statusCode == 200) {
         debugPrint('ChangePassword Success: ${response.data['detail']} ');

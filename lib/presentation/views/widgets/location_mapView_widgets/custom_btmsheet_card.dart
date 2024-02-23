@@ -118,7 +118,7 @@ class CustomBtmsheetCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.r)),
                         minWidth: 140.w,
                         child: Text(
-                          'أشتري الأن',
+                          'تواصل مع المالك',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

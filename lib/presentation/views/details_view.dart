@@ -343,7 +343,7 @@ class _DetailsViewState extends State<DetailsView> {
                     SizedBox(
                       height: 30.h,
                     ),
-                    CustomButton(text: 'أشتري الأن', onpressed: () {
+                    CustomButton(text: 'تواصل مع المالك', onpressed: () {
                        cubit.navigateToWhatsapp(
                            widget.model.phoneNumber == null
                                 ? '01111111111'

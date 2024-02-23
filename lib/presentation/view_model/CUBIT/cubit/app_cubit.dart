@@ -310,14 +310,14 @@ class AppCubit extends Cubit<AppState> {
     emit(GetSearchSuccessState());
   }
 
-  int advSearchIndexForrooms = 1;
+  int advSearchIndexForrooms = 0;
   changeNumbersIndexSelectionInAdvSearchForRooms(index) {
     advSearchIndexForrooms = index;
     debugPrint('Number of rooms: $advSearchIndexForrooms');
     emit(AdvSearchIndexChangeSuccessState());
   }
 
-  int advSearchIndexForFloor = 1;
+  int advSearchIndexForFloor = 0;
   changeNumbersIndexSelectionInAdvSearchForFloor(index) {
     advSearchIndexForFloor = index;
     debugPrint('Number of floor: $advSearchIndexForFloor');
@@ -433,10 +433,10 @@ class AppCubit extends Cubit<AppState> {
                       ? item.space! > 0
                       : (item.space! >= spaceStart &&
                           item.space! <= spaceEnd)) &&
-                  (((isAllRooms == true)
+                  (((isAllRooms == true || advSearchIndexForrooms == 0)
                           ? item.rooms! >= 0
                           : item.rooms == numberofRooms) &&
-                      (isAnotherFloor == true
+                      ((isAnotherFloor == true || advSearchIndexForFloor == 0)
                           ? item.floor! >= 0
                           : item.floor == numberofFloor))))
           .toList();

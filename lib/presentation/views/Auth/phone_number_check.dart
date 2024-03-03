@@ -50,21 +50,26 @@ class _PhoneNumberCheckViewState extends State<PhoneNumberCheckView> {
       appBar: AppBar(),
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is ChangePasswordSuccessState) {
-            // Dialogs.successDialog(
-            //     context,
-            //   );
-            Dialogs.successDialog(
-                context,
-                'أبدأ الأن',
-                () => Navigator.of(context).pushReplacement(
-                    PageAnimationTransition(
-                        page: const LoginView(),
-                        pageAnimationType: BottomToTopTransition())));
-          } else if (state is ChangePasswordFailureState) {
-            SnackBars.failureSnackBar(
-                context, S.of(context).changePassword, state.errMessage);
-          }
+          // if (state is ChangePasswordSuccessState) {
+          //   // Dialogs.successDialog(
+          //   //     context,
+          //   //   );
+          //   Dialogs.successDialog(
+          //       context,
+          //       'أبدأ الأن',
+          //       () => Navigator.of(context).pushReplacement(
+          //           PageAnimationTransition(
+          //               page: const LoginView(),
+          //               pageAnimationType: BottomToTopTransition())));
+          // } else if (state is ChangePasswordFailureState) {
+          //   SnackBars.failureSnackBar(
+          //       context, S.of(context).changePassword, state.errMessage);
+          // }
+
+          //   if(state is SmsCodeSentFailureState){
+          //   SnackBars.failureSnackBar(
+          //       context, 'كود التأكيد','تأكد من كتابة البريد الألكتروني بشكل صحيح' );
+          // }
         },
         builder: (context, state) {
           var cubit = BlocProvider.of<AuthCubit>(context);
@@ -209,41 +214,58 @@ class _PhoneNumberCheckViewState extends State<PhoneNumberCheckView> {
                                     email: widget.email);
                               }
                             })
-                        : CustomButton(
-                            text: 'تحقق',
-                            onpressed: () {
-                              if (formKey5.currentState!.validate()) {
-                                formKey5.currentState!.save();
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomButton(
+                                  text: 'تحقق',
+                                  onpressed: () {
+                                    if (formKey5.currentState!.validate()) {
+                                      formKey5.currentState!.save();
 
-                                //! Check if the entered code is the same like the sent code then navigate to location view
-                                cubit.checkIfServerOtpAndUserOtpAreMatched(
-                                    code: pin1.text +
-                                        pin2.text +
-                                        pin3.text +
-                                        pin4.text);
-                                if (cubit.isOtpCorrect == true) {
-                                  Navigator.of(context).push(
-                                      PageAnimationTransition(
-                                          page: LocationView(
-                                            email: widget.email,
-                                            username: widget.username,
-                                            password: widget.password,
-                                            phoneNumber: phoneNumber_controller
-                                                .text
-                                                .trim(),
-                                          ),
-                                          pageAnimationType:
-                                              LeftToRightFadedTransition()));
-                                } else {
-                                  Flushbar(
-                                    message: 'تأكد من كتابة الرمز المرسل اليك ',
-                                    backgroundColor: Colors.red,
-                                    duration: Duration(seconds: 3),
-                                    flushbarStyle: FlushbarStyle.GROUNDED,
-                                  )..show(context);
-                                }
-                              }
-                            })
+                                      //! Check if the entered code is the same like the sent code then navigate to location view
+                                      cubit
+                                          .checkIfServerOtpAndUserOtpAreMatched(
+                                              code: pin1.text +
+                                                  pin2.text +
+                                                  pin3.text +
+                                                  pin4.text);
+                                      if (cubit.isOtpCorrect == true) {
+                                        Navigator.of(context).push(
+                                            PageAnimationTransition(
+                                                page: LocationView(
+                                                  email: widget.email,
+                                                  username: widget.username,
+                                                  password: widget.password,
+                                                  phoneNumber:
+                                                      phoneNumber_controller
+                                                          .text
+                                                          .trim(),
+                                                ),
+                                                pageAnimationType:
+                                                    LeftToRightFadedTransition()));
+                                      } else {
+                                        Flushbar(
+                                          message:
+                                              'تأكد من كتابة الرمز المرسل اليك ',
+                                          backgroundColor: Colors.red,
+                                          duration: Duration(seconds: 3),
+                                          flushbarStyle: FlushbarStyle.GROUNDED,
+                                        )..show(context);
+                                      }
+                                    }
+                                  }),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  cubit.viceversa();
+                                },
+                                child: Text('اعادة ارسال ؟ '),
+                              )
+                            ],
+                          )
                   ],
                 ),
               ),

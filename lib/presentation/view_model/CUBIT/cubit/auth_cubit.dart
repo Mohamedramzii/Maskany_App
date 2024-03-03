@@ -109,7 +109,8 @@ class AuthCubit extends Cubit<AuthState> {
       }
     }
   }
-String? otpToken;
+
+  String? otpToken;
   sendOTP({required email}) async {
     emit(SendOTPLoadingState());
 
@@ -117,11 +118,11 @@ String? otpToken;
       var response = await DioHelper.postData(
           url: EndPoints.sendOTP, data: {"email": email});
 
-      if(response.statusCode == 200){
-        otpToken=response.data['token'];
+      if (response.statusCode == 200) {
+        otpToken = response.data['token'];
         debugPrint('OTP Token: $otpToken');
         emit(SendOTPSuccessState(successMessage: response.data['detail']));
-      }else{
+      } else {
         emit(SendOTPFailureState(errMessage: response.data['detail']));
       }
       debugPrint("SendOTP Success: ${response.data['detail']}");
@@ -240,23 +241,31 @@ String? otpToken;
     } else {}
   }
 
-  //! Check if Phone number is sent or not
+  //! Check if email address is sent or not
   bool isPhoneNumberCorrectandSMSCodeSent = false;
+  viceversa() {
+    isPhoneNumberCorrectandSMSCodeSent = !isPhoneNumberCorrectandSMSCodeSent;
+    emit(SmsCodeSentSuccesState());
+  }
+
   String correctOTP = '';
   sendingEmailToRetrieveSMScode({
     required String email,
   }) async {
     isPhoneNumberCorrectandSMSCodeSent = true;
+
     print('SMS Is Sent ==>$isPhoneNumberCorrectandSMSCodeSent ');
     emit(SmsCodeSentLoadinhState());
     try {
       Response response = await DioHelper.getData(
-          url: 'http://66.45.248.247:8000/auth/sms/',
-          query: {'email': email});
-      correctOTP = response.data['otp'];
-      print('Server OTP : $correctOTP');
-
-      emit(SmsCodeSentSuccesState());
+          url: 'http://66.45.248.247:8000/auth/sms/', query: {'email': email});
+      if (response.statusCode == 200) {
+        correctOTP = response.data['otp'];
+        print('Server OTP : $correctOTP');
+        emit(SmsCodeSentSuccesState());
+      } else {
+        emit(SmsCodeSentFailureState());
+      }
     } catch (e) {
       emit(SmsCodeSentFailureState());
     }

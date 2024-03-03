@@ -243,8 +243,8 @@ String? otpToken;
   //! Check if Phone number is sent or not
   bool isPhoneNumberCorrectandSMSCodeSent = false;
   String correctOTP = '';
-  sendingPhoneNumberToRetrieveSMScode({
-    required String phoneNumber,
+  sendingEmailToRetrieveSMScode({
+    required String email,
   }) async {
     isPhoneNumberCorrectandSMSCodeSent = true;
     print('SMS Is Sent ==>$isPhoneNumberCorrectandSMSCodeSent ');
@@ -252,7 +252,7 @@ String? otpToken;
     try {
       Response response = await DioHelper.getData(
           url: 'http://66.45.248.247:8000/auth/sms/',
-          query: {'phone': phoneNumber});
+          query: {'email': email});
       correctOTP = response.data['otp'];
       print('Server OTP : $correctOTP');
 

@@ -15,7 +15,6 @@ import '../../../core/common_widgets/custom_OTP.dart';
 import '../../../core/common_widgets/custom_buttom.dart';
 import '../../../core/common_widgets/custom_dialog.dart';
 import '../../../core/common_widgets/custom_snackbar.dart';
-import '../../../core/common_widgets/custom_textformfield_widget.dart';
 import '../../../generated/l10n.dart';
 import '../../view_model/CUBIT/cubit/auth_cubit.dart';
 import 'login_view.dart';
@@ -79,8 +78,9 @@ class _PhoneNumberCheckViewState extends State<PhoneNumberCheckView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(S.of(context).phone,
-                        style: Theme.of(context).textTheme.bodyLarge),
+                    Text(
+                        'سيتم ارسال رمز التفعيل علي البريد الالكتروني التالي :',
+                        style: Theme.of(context).textTheme.bodyMedium),
                     // Text(S.of(context).enterPhoneNumber,
                     //     style: Theme.of(context)
                     //         .textTheme
@@ -89,25 +89,27 @@ class _PhoneNumberCheckViewState extends State<PhoneNumberCheckView> {
                     SizedBox(
                       height: 20.h,
                     ),
+                    Text(widget.email,
+                        style: Theme.of(context).textTheme.bodyMedium),
                     //! Phone Number
-                    CustomTextFormFieldWIdget(
-                      controller: phoneNumber_controller,
-                      hinttext: S.of(context).phone,
-                      isEmail: true,
-                      isPassword: false,
-                      onsave: (newValue) {
-                        phoneNumber_controller.text = newValue!;
-                      },
-                      onvalidate: (value) {
-                        if (value!.length < 11) {
-                          return S.of(context).errorPhone;
-                        }
-                        return null;
-                      },
-                      textInputType: TextInputType.text,
-                      textinputaction: TextInputAction.next,
-                      obsecure: false,
-                    ),
+                    // CustomTextFormFieldWIdget(
+                    //   controller: phoneNumber_controller,
+                    //   hinttext: S.of(context).phone,
+                    //   isEmail: true,
+                    //   isPassword: false,
+                    //   onsave: (newValue) {
+                    //     phoneNumber_controller.text = newValue!;
+                    //   },
+                    //   onvalidate: (value) {
+                    //     if (value!.length < 11) {
+                    //       return S.of(context).errorPhone;
+                    //     }
+                    //     return null;
+                    //   },
+                    //   textInputType: TextInputType.text,
+                    //   textinputaction: TextInputAction.next,
+                    //   obsecure: false,
+                    // ),
                     SizedBox(
                       height: 20.h,
                     ),
@@ -203,9 +205,8 @@ class _PhoneNumberCheckViewState extends State<PhoneNumberCheckView> {
                               if (formKey5.currentState!.validate()) {
                                 formKey5.currentState!.save();
                                 //! Send phone number to server to  check
-                                cubit.sendingPhoneNumberToRetrieveSMScode(
-                                    phoneNumber:
-                                        phoneNumber_controller.text.trim());
+                                cubit.sendingEmailToRetrieveSMScode(
+                                    email: widget.email);
                               }
                             })
                         : CustomButton(

@@ -146,28 +146,28 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
 
                       // //! Phone Number
-                      // CustomTextFormFieldWIdget(
-                      //   controller: phonecontroller,
-                      //   hinttext: S.of(context).phone,
-                      //   isEmail: false,
-                      //   isPassword: false,
-                      //   onsave: (newValue) {
-                      //     phonecontroller.text = newValue!;
-                      //   },
-                      //   onvalidate: (value) {
-                      //     if (value!.isNotEmpty && value.length < 11) {
-                      //       return S.of(context).errorPhone;
-                      //     }
-                      //     return null;
-                      //   },
-                      //   textInputType: TextInputType.number,
-                      //   textinputaction: TextInputAction.next,
-                      //   obsecure: false,
-                      // ),
+                      CustomTextFormFieldWIdget(
+                        controller: phonecontroller,
+                        hinttext: S.of(context).phone,
+                        isEmail: true,
+                        isPassword: false,
+                        onsave: (newValue) {
+                          phonecontroller.text = newValue!;
+                        },
+                        onvalidate: (value) {
+                          if (value!.isNotEmpty && value.length < 11) {
+                            return S.of(context).errorPhone;
+                          }
+                          return null;
+                        },
+                        textInputType: TextInputType.number,
+                        textinputaction: TextInputAction.next,
+                        obsecure: false,
+                      ),
 
-                      // SizedBox(
-                      //   height: 20.h,
-                      // ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
 
                       //! Password
                       CustomTextFormFieldWIdget(

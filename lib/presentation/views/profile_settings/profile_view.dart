@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 // Project imports:
 import 'package:maskany_app/core/app_resources/colors.dart';
+import 'package:maskany_app/presentation/view_model/CUBIT/cubit/app_cubit.dart';
 import 'package:maskany_app/presentation/view_model/CUBIT/cubit/auth_cubit.dart';
 import 'package:maskany_app/presentation/views/Auth/login_view.dart';
 import 'package:maskany_app/presentation/views/packages_view.dart';
@@ -191,12 +192,14 @@ class ProfileView extends StatelessWidget {
                       // ),
                       ListTile(
                         onTap: () async {
-                          await cubit.logout(context).then((value) =>
-                              Navigator.of(context).pushReplacement(
-                                  PageAnimationTransition(
-                                      page: const LoginView(),
-                                      pageAnimationType:
-                                          BottomToTopTransition())));
+                          await cubit.logout(context).then((value) {
+                            // BlocProvider.of<AppCubit>(context).btmNavBar(0);
+                            Navigator.of(context).pushReplacement(
+                                PageAnimationTransition(
+                                    page: const LoginView(),
+                                    pageAnimationType:
+                                        BottomToTopTransition()));
+                          });
                         },
                         leading: const Icon(
                           Icons.logout,

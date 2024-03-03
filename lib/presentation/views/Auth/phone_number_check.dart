@@ -84,7 +84,7 @@ class _PhoneNumberCheckViewState extends State<PhoneNumberCheckView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        'سيتم ارسال رمز التفعيل علي البريد الالكتروني التالي :',
+                        'سيتم ارسال رمز التأكيد علي البريد الالكتروني التالي :',
                         style: Theme.of(context).textTheme.bodyMedium),
                     // Text(S.of(context).enterPhoneNumber,
                     //     style: Theme.of(context)

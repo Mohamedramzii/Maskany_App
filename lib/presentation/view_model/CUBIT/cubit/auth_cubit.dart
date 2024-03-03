@@ -95,7 +95,7 @@ class AuthCubit extends Cubit<AuthState> {
         SnackBars.successSnackBar(
             context, S.of(context).CreateAccount, 'تم انشاء الحساب بنجاح');
         Navigator.of(context).pushReplacement(PageAnimationTransition(
-            page: const ServicesAnnouncementView(),
+            page: const AppLayout(),
             pageAnimationType: LeftToRightTransition()));
       } else {
         SnackBars.failureSnackBar(context, S.of(context).CreateAccount,

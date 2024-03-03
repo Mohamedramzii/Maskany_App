@@ -82,6 +82,9 @@ class AppCubit extends Cubit<AppState> {
       screen[3];
       // emit(NavBarIndexChangedSuccess());
     }
+    if(index == 0){
+      screen[0];
+    }
     emit(NavBarIndexChangedSuccess());
   }
 

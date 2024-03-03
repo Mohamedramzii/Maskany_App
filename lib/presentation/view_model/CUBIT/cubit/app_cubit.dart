@@ -669,7 +669,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
   Future<void> navigateToWhatsapp(String phone_number) async {
-    var whatsappUrl = "https://wa.me/phone=2$phone_number";
+    var whatsappUrl = "https://wa.me/phone=+2$phone_number";
     if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
       await launchUrl(
         Uri.parse(whatsappUrl),
